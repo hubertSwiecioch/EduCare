@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.hswie.educaremobile.helper.DatabaseConnector;
 import com.hswie.educaremobile.resident.NursePanel;
 
 import java.util.ArrayList;
@@ -334,9 +335,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connectToDatabase();
 
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 return false;
             }
 
