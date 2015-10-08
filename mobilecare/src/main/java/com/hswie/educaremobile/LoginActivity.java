@@ -70,6 +70,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    private DatabaseConnector databaseConnector = new DatabaseConnector();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +105,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        mEmailView.setText("foo@example.com");
-        mPasswordView.setText("hello");
+        mEmailView.setText("hswie@hswie.com");
+        mPasswordView.setText("hswie");
     }
 
     private void populateAutoComplete() {
@@ -335,20 +337,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                DatabaseConnector databaseConnector = new DatabaseConnector();
-                databaseConnector.connectToDatabase();
+
+                Log.d(TAG, mEmail + " " + mPassword);
+                databaseConnector.connectToDatabase(mEmail, mPassword);
+
+                if (mEmail.equals(mEmail)) {
+                    // Account exists, return true if the password matches.
+                    return  databaseConnector.connectToDatabase(mEmail, mPassword).equals(mPassword);
+                }
 
             } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals("foo@example.com:hello")) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+
+
+
 
             // TODO: register the new account here.
             return true;

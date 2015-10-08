@@ -14,45 +14,44 @@ import java.sql.Statement;
  */
 public class DatabaseConnector {
 
-    private static final String HOSTNAME = "eu-cdbr-azure-west-c.cloudapp.net";
+    private static final String HOSTNAME = "192.168.1.201";
     private static final String PORT = "3306";
-    private static final String USERNAME = "b6fd11d286cd1b";
-    private static final String PASSWORD = "a8f6b4a1";
-    private static final String DATABASE = "EduCare";
+//    private static final String USERNAME = "b6fd11d286cd1b";
+//    private static final String PASSWORD = "a8f6b4a1";
+    private static final String DATABASE = "educare";
     private static final String URL = "jdbc:mysql://" + HOSTNAME + ":" + PORT + "/" + DATABASE;
-    private static final String CONNECTION_STRING = "Database=EduCare;Data Source=eu-cdbr-azure-west-c.cloudapp.net;" +
-                                                    "User Id=b6fd11d286cd1b;Password=a8f6b4a1";
+    ;
 
     private static final String TAG = "DatabaseConnector";
 
-    public void connectToDatabase() {
+    public String connectToDatabase(String username, String password) {
 
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Log.d(TAG, username + " " + password);
+            Connection con = DriverManager.getConnection(URL, username, password);
             /* System.out.println("Database connection success"); */
 
-            String result = "Database connection success\n";
+            String result = "";
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from nurse");
-            ResultSetMetaData rsmd = rs.getMetaData();
+            ResultSet rs = st.executeQuery("select Password from nurse where Login = '" + username + "'");
+
+            Log.d(TAG, "Result" + result);
 
             while(rs.next()) {
-                result += rsmd.getColumnName(1) + ": " + rs.getInt(1) + "\n";
-                result += rsmd.getColumnName(2) + ": " + rs.getString(2) + "\n";
-                result += rsmd.getColumnName(3) + ": " + rs.getString(3) + "\n";
+                result = rs.getString("Password");
+                Log.d(TAG, result);
+                return  result;
+
             }
-
-            Log.d(TAG, result);
-
         }
         catch(Exception e) {
             e.printStackTrace();
 
         }
 
-
+        return "";
     }
 
 }
