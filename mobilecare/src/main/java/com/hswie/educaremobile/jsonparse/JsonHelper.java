@@ -9,6 +9,7 @@ package com.hswie.educaremobile.jsonparse;
 public class JsonHelper {
 
     public static final String HOSTNAME = "http://serwer1552055.home.pl/educare/login.php";
+    public static final String MOD_LOG_IN = "?mod=LogIn";
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";
@@ -18,10 +19,6 @@ public class JsonHelper {
 
     private static final String TAG = "JsonHelper";
 
-    public String connectToDatabase(String login, String password) {
-
-        return "";
-    }
 
 }
 

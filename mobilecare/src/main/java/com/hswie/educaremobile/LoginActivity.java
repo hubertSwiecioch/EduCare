@@ -355,6 +355,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Log.d("request!", "starting");
 
 
+
                     JSONObject json = JSONParser.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
 
 
