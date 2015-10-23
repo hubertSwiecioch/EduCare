@@ -3,22 +3,20 @@ package com.hswie.educaremobile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -31,12 +29,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hswie.educaremobile.jsonparse.JSONParser;
+import com.hswie.educaremobile.jsonparse.JsonHelper;
+import com.hswie.educaremobile.nurse.NursePanel;
 
-import com.hswie.educaremobile.helper.DatabaseConnector;
-import com.hswie.educaremobile.resident.NursePanel;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -44,6 +48,9 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+
+
+
 
     public static final String TAG = "LoginActivity";
 
@@ -70,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
-    private DatabaseConnector databaseConnector = new DatabaseConnector();
+    private JsonHelper jsonHelper = new JsonHelper();
 
 
     @Override
@@ -106,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
 
         mEmailView.setText("hswie@hswie.com");
-        mPasswordView.setText("hswie");
+        mPasswordView.setText("hubert");
     }
 
     private void populateAutoComplete() {
@@ -119,7 +126,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean mayRequestContacts() {
-        Log.d(TAG, "mayRequestContacts");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
@@ -336,27 +342,56 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Log.d(TAG, "doInBackground");
             // TODO: attempt authentication against a network service.
 
+
+
             try {
+                int success;
 
-                Log.d(TAG, mEmail + " " + mPassword);
-                databaseConnector.connectToDatabase(mEmail, mPassword);
 
-                if (mEmail.equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return  databaseConnector.connectToDatabase(mEmail, mPassword).equals(mPassword);
+                    List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_USERNAME, mEmail));
+                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_PASSWORD, mPassword));
+
+                    Log.d("request!", "starting");
+
+
+                    JSONObject json = JSONParser.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+
+
+                    Log.d("Login attempt", json.toString());
+
+
+                    success = json.getInt(JsonHelper.TAG_SUCCESS);
+
+
+                    if (success == 1) {
+                        Log.d("Login Successful!", json.toString());
+
+                        Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                    } else {
+                        Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
+                        Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+
+                    }
+
+
+                if (success == 1) {
+                    Log.d("Login Successful!", json.toString());
+                    return true;
+                } else {
+                    Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
+                    return false;
+
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+
             }
 
-
-
-
-
             // TODO: register the new account here.
-            return true;
+
         }
 
         @Override

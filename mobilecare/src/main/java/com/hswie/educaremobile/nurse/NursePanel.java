@@ -1,4 +1,4 @@
-package com.hswie.educaremobile.resident;
+package com.hswie.educaremobile.nurse;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
