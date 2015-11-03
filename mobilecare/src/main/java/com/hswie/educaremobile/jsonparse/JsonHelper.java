@@ -8,8 +8,9 @@ package com.hswie.educaremobile.jsonparse;
  */
 public class JsonHelper {
 
-    public static final String HOSTNAME = "http://serwer1552055.home.pl/educare/login.php";
-    public static final String MOD_LOG_IN = "?mod=LogIn";
+    public static final String LOGIN_HOSTNAME = "http://serwer1552055.home.pl/EduCare/index.php";
+    public static final String TAG_MOD = "mod";
+    public static final String MOD_LOGIN = "LogIn";
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";

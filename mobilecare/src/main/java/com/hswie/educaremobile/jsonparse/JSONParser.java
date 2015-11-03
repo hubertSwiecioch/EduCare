@@ -27,6 +27,8 @@ import cz.msebera.android.httpclient.client.utils.URLEncodedUtils;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 public class JSONParser {
+
+	public static final String TAG = "JSONParser";
 	static InputStream is = null;
 	static JSONObject jObj = null;
 	static JSONArray jarray = null;
@@ -136,8 +138,10 @@ public class JSONParser {
 		try {
 			// check for request method
 			if(method == "POST"){
+				Log.d(TAG, "POST");
 				DefaultHttpClient httpClient = new DefaultHttpClient();
 				HttpPost httpPost = new HttpPost(loginUrl);
+				Log.d(TAG, " " + params);
 				httpPost.setEntity(new UrlEncodedFormEntity(params));
 				HttpResponse httpResponse = httpClient.execute(httpPost);
 				
@@ -146,6 +150,7 @@ public class JSONParser {
 			}else 
 				// check for request method
 				if(method == "GET"){
+					Log.d(TAG, "GET");
 					DefaultHttpClient httpClient = new DefaultHttpClient();
 					String paramString = URLEncodedUtils.format(params, "utf-8");
 					loginUrl += "?" + paramString;

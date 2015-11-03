@@ -332,6 +332,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
 
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -349,6 +350,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
                     List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_LOGIN));
                     paramss.add(new BasicNameValuePair(JsonHelper.TAG_USERNAME, mEmail));
                     paramss.add(new BasicNameValuePair(JsonHelper.TAG_PASSWORD, mPassword));
 
@@ -356,7 +358,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
-                    JSONObject json = JSONParser.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+                    JSONObject json = JSONParser.makeHttpRequest(JsonHelper.LOGIN_HOSTNAME, "POST", paramss);
 
 
                     Log.d("Login attempt", json.toString());
