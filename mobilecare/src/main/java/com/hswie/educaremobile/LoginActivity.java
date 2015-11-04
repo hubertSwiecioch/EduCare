@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -349,10 +350,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 int success;
 
 
+                    Long tsLong = System.currentTimeMillis()/1000;
+                    String time = tsLong.toString();
+
                     List<NameValuePair> paramss = new ArrayList<NameValuePair>();
                     paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_LOGIN));
                     paramss.add(new BasicNameValuePair(JsonHelper.TAG_USERNAME, mEmail));
                     paramss.add(new BasicNameValuePair(JsonHelper.TAG_PASSWORD, mPassword));
+                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_ONLINETEST, time));
 
                     Log.d("request!", "starting");
 

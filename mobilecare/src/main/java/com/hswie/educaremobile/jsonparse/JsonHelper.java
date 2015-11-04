@@ -16,6 +16,7 @@ public class JsonHelper {
     public static final String TAG_USERNAME = "username";
     public static final String TAG_PASSWORD = "password";
     public static final String TAG_DISPLAYNAME = "displayname";
+    public static final String TAG_ONLINETEST = "onlineTestTime";
 
 
     private static final String TAG = "JsonHelper";
