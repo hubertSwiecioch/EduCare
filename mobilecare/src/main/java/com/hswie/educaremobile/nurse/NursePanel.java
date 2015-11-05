@@ -23,9 +23,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
-import com.hswie.educaremobile.jsonparse.JSONParser;
+
+import com.hswie.educaremobile.api.dao.ResidentRDH;
+import com.hswie.educaremobile.helper.ResidentsModel;
 import com.hswie.educaremobile.jsonparse.JsonHelper;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -35,6 +39,8 @@ import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class NursePanel extends AppCompatActivity {
+
+    public static final String TAG = "NursePanel";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -183,15 +189,12 @@ public class NursePanel extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            List<NameValuePair> paramss = new ArrayList<NameValuePair>();
-            paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_GET_RESIDENTS));
+            ResidentRDH residentRDH = new ResidentRDH();
 
-            Log.d("request!", "starting");
+            ResidentsModel.get().setResidents(residentRDH.getAllResidents());
 
-            JSONObject json = JSONParser.makeHttpRequest(JsonHelper.LOGIN_HOSTNAME, "POST", paramss);
-
-            Log.d("Login attempt", json.toString());
-
+//            Log.d(TAG, "SUCCESS:" + ResidentsModel.get().getResidents().get(0).getFirstName());
+//            Log.d(TAG, "SUCCESS:" + ResidentsModel.get().getResidents().get(1).getFirstName());
 
             return null;
         }

@@ -18,7 +18,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,10 +29,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.hswie.educaremobile.jsonparse.JSONParser;
 import com.hswie.educaremobile.jsonparse.JsonHelper;
 import com.hswie.educaremobile.nurse.NursePanel;
-
 
 import org.json.JSONObject;
 
@@ -361,9 +358,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     Log.d("request!", "starting");
 
-
-
-                    JSONObject json = JSONParser.makeHttpRequest(JsonHelper.LOGIN_HOSTNAME, "POST", paramss);
+                    String JSONString = (JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss));
+                    JSONObject json = JsonHelper.getJSONObjectFromString(JSONString);
 
 
                     Log.d("Login attempt", json.toString());
