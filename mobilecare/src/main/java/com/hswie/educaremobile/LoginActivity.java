@@ -30,7 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.jsonparse.JsonHelper;
-import com.hswie.educaremobile.nurse.NursePanel;
+import com.hswie.educaremobile.nurse.CarerPanel;
 
 import org.json.JSONObject;
 
@@ -407,7 +407,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 finish();
 
-                Intent intent = new Intent(LoginActivity.this, NursePanel.class);
+                Intent intent = new Intent(LoginActivity.this, CarerPanel.class);
                 startActivity(intent);
 
 

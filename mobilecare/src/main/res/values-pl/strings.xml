@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EduCareMobile</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Hasło (opcjonalnie)</string>
+    <string name="action_sign_in">Zaloguj</string>
+    <string name="action_sign_in_short">Zaloguj</string>
+    <string name="error_invalid_email">Ten adres e-mail jest nieprawidłowy</string>
+    <string name="error_invalid_password">To hasło jest za krótkie</string>
+    <string name="error_incorrect_password">To hasło jest nieprawidłowe</string>
+    <string name="error_field_required">To pole jest wymagane</string>
+    <string name="permission_rationale">"Kontakt uprawnienia są potrzebne do zapewnienia uzupełnienia e-mail."</string>
+    <string name="title_activity_nurse_panel">Panel opiekuna</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_login_activityl">Zaloguj</string>
+    <string name="residents_list_tab">Rezydenci</string>
+    <string name="carers_list_tab">Opiekunowie</string>
+    <string name="call_tab">Rozmowy</string>
+</resources>

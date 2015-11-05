@@ -13,8 +13,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_nurse_panel">NursePanel</string>
+    <string name="title_activity_nurse_panel">Carer panel</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_login_activityl">Sign in</string>
+    <string name="residents_list_tab">Residents</string>
+    <string name="carers_list_tab">Carers</string>
+    <string name="call_tab">Calls</string>
 </resources>

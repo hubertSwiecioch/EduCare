@@ -1,46 +1,31 @@
 package com.hswie.educaremobile.nurse;
 
-import android.content.AsyncTaskLoader;
 import android.os.AsyncTask;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
-
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.helper.ResidentsModel;
-import com.hswie.educaremobile.jsonparse.JsonHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+public class CarerPanel extends AppCompatActivity {
 
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
-
-public class NursePanel extends AppCompatActivity {
-
-    public static final String TAG = "NursePanel";
+    public static final String TAG = "CarerPanel";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -74,6 +59,7 @@ public class NursePanel extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,11 +125,11 @@ public class NursePanel extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.residents_list_tab);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.carers_list_tab);
                 case 2:
-                    return "SECTION 3";
+                    return getString(R.string.call_tab);
             }
             return null;
         }
