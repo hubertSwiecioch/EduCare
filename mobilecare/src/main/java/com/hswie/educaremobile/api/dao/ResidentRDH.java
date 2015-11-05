@@ -54,6 +54,9 @@ public class ResidentRDH {
             resident.setDateOfAdoption((obj.getString(DatabaseColumns.COL_DATE_OF_ADOPTION)));
             resident.setFirstName((obj.getString(DatabaseColumns.COL_FIRST_NAME)));
             resident.setLastName((obj.getString(DatabaseColumns.COL_LAST_NAME)));
+            resident.setAddress((obj.getString(DatabaseColumns.COL_ADDRESS)));
+            resident.setCity((obj.getString(DatabaseColumns.COL_CITY)));
+            resident.setImage((obj.get(DatabaseColumns.COL_PHOTO)));
 
         } catch (JSONException e) {
             Log.d(TAG,"parseCarerMessage " +  "JSONException e = " + e.getMessage());

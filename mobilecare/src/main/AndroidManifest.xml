@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".nurse.CarerPanel"
+            android:name=".carer.CarerPanel"
             android:label="@string/title_activity_nurse_panel"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

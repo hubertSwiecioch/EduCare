@@ -12,5 +12,8 @@ public class DatabaseColumns {
     public static final String COL_BIRTH_DATE = "birth_date";
     public static final String COL_FULL_NAME = "carer_full_name";
     public static final String COL_ONLINE_TEST = "carer_online_test";
+    public static final String COL_ADDRESS = "address";
+    public static final String COL_CITY = "city";
+    public static final String COL_PHOTO = "photo";
 
 }

@@ -30,7 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.jsonparse.JsonHelper;
-import com.hswie.educaremobile.nurse.CarerPanel;
+import com.hswie.educaremobile.carer.CarerPanel;
 
 import org.json.JSONObject;
 

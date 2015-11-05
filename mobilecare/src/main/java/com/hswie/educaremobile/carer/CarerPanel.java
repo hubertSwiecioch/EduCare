@@ -1,4 +1,4 @@
-package com.hswie.educaremobile.nurse;
+package com.hswie.educaremobile.carer;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;

@@ -1,6 +1,7 @@
 package com.hswie.educaremobile.api.pojo;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 /**
  * Created by hswie on 11/5/2015.
@@ -12,6 +13,11 @@ public class Resident implements Serializable {
     private String dateOfAdoption;
     private String birthDate;
     private String ID;
+    private String address;
+    private String city;
+    private Blob image;
+
+
 
     public String getID() {
         return ID;
@@ -51,5 +57,29 @@ public class Resident implements Serializable {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
     }
 }
