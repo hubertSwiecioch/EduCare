@@ -10,4 +10,7 @@ public class DatabaseColumns {
     public static final String COL_LAST_NAME = "last_name";
     public static final String COL_DATE_OF_ADOPTION = "date_of_adoption";
     public static final String COL_BIRTH_DATE = "birth_date";
+    public static final String COL_FULL_NAME = "carer_full_name";
+    public static final String COL_ONLINE_TEST = "carer_online_test";
+
 }

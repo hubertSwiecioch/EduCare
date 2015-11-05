@@ -33,6 +33,7 @@ public class JsonHelper {
     public static final String TAG_MOD = "mod";
     public static final String MOD_LOGIN = "LogIn";
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
+    public static final String MOD_GET_CARERS = "getCarersList";
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";
