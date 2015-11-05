@@ -141,10 +141,9 @@ public class JSONParser {
 				Log.d(TAG, "POST");
 				DefaultHttpClient httpClient = new DefaultHttpClient();
 				HttpPost httpPost = new HttpPost(loginUrl);
-				Log.d(TAG, " " + params);
 				httpPost.setEntity(new UrlEncodedFormEntity(params));
 				HttpResponse httpResponse = httpClient.execute(httpPost);
-				
+				Log.d(TAG, " " + httpPost);
 				HttpEntity httpEntity = httpResponse.getEntity();
 				is = httpEntity.getContent();
 			}else 
@@ -179,6 +178,9 @@ public class JSONParser {
 				}
 				is.close();
 				json = sb.toString();
+				if (json.startsWith("["))
+					json = removeBrackets(json);
+				Log.d(TAG, "resultFromAPI:" +  json);
 			} catch (IOException e) {
 				Log.d("Buffer Error","Error Converting Reesult "+e.toString());
 			}
@@ -192,6 +194,10 @@ public class JSONParser {
 
 		// return JSON String
 		return jObj;
+	}
+
+	private static String removeBrackets(String str) {
+		return str.substring(1,str.length()-1);
 	}
 
 	public static JSONObject getJSONfromURL(String url) {

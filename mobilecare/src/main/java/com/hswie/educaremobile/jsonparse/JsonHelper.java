@@ -11,6 +11,7 @@ public class JsonHelper {
     public static final String LOGIN_HOSTNAME = "http://serwer1552055.home.pl/EduCare/index.php";
     public static final String TAG_MOD = "mod";
     public static final String MOD_LOGIN = "LogIn";
+    public static final String MOD_GET_RESIDENTS = "getResidentsList";
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";

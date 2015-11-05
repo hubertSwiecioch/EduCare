@@ -1,5 +1,7 @@
 package com.hswie.educaremobile.nurse;
 
+import android.content.AsyncTaskLoader;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +23,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
+import com.hswie.educaremobile.jsonparse.JSONParser;
+import com.hswie.educaremobile.jsonparse.JsonHelper;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class NursePanel extends AppCompatActivity {
 
@@ -64,6 +77,8 @@ public class NursePanel extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        new GetResidents().execute();
 
     }
 
@@ -160,6 +175,25 @@ public class NursePanel extends AppCompatActivity {
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
+        }
+    }
+
+    private class GetResidents extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+            paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_GET_RESIDENTS));
+
+            Log.d("request!", "starting");
+
+            JSONObject json = JSONParser.makeHttpRequest(JsonHelper.LOGIN_HOSTNAME, "POST", paramss);
+
+            Log.d("Login attempt", json.toString());
+
+
+            return null;
         }
     }
 }
