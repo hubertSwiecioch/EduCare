@@ -18,7 +18,7 @@ import java.net.HttpURLConnection;
  */
 public class ImageHelper {
 
-    public static int AVATAR_SIZE = 50;
+    public static int AVATAR_SIZE = 100;
     public static int AVATAR_QUALITY = 100;
 
     public static byte[] readFile(File file) throws IOException {
