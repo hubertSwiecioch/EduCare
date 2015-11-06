@@ -1,5 +1,7 @@
 package com.hswie.educaremobile.api.pojo;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,7 @@ public class Carer implements Serializable {
     private String photo;
     private String photoCache;
     private byte[] photoByte;
+    private String TAG = "Carer";
 
 
     public boolean contains(String query) {
@@ -79,6 +82,7 @@ public class Carer implements Serializable {
     }
 
     public void setPhotoCache(String photoCache) {
+        Log.d(TAG, "photoCache = " + photoCache);
         this.photoCache = photoCache;
     }
 }

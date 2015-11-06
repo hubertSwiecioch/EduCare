@@ -1,5 +1,7 @@
 package com.hswie.educaremobile.api.pojo;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.sql.Blob;
 
@@ -18,7 +20,7 @@ public class Resident implements Serializable {
     private String photo;
     private String photoCache;
     private byte[] photoByte;
-
+    private String TAG = "Resident";
 
 
     public boolean contains(String query) {
@@ -112,6 +114,7 @@ public class Resident implements Serializable {
     }
 
     public void setPhotoCache(String photoCache) {
+        Log.d(TAG, "photoCache = " + photoCache);
         this.photoCache = photoCache;
     }
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -73,6 +74,15 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
                 });
 
         viewHolder.firstnameView.setText(carer.getFullName());
+
+        viewHolder.callView.setBackgroundResource(R.drawable.icon_call);
+        viewHolder.callView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d(TAG, "clickCall");
+            }
+        });
 
 
 
@@ -144,6 +154,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
+        public Button callView;
         public TextView firstnameView;
         public TextView lastnameView;
         public ImageView photoView;
@@ -157,6 +168,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
             parentLayout = (RelativeLayout) itemLayoutView.findViewById(R.id.resident_row);
             firstnameView = (TextView) itemLayoutView.findViewById(R.id.text_firstname);
+            callView = (Button) itemLayoutView.findViewById(R.id.button_call);
             lastnameView = (TextView) itemLayoutView.findViewById(R.id.text_lastname);
             photoView = (ImageView) itemLayoutView.findViewById(R.id.image_photo);
             imageBorderLayout = (LinearLayout) itemLayoutView.findViewById(R.id.image_border);

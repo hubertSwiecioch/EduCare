@@ -40,6 +40,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
                 byte[] imageByte = ImageHelper.scaleFromHttp(url,50,50);
                 ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
                 Log.d(TAG, "GetResidentImageFromHttpSuccess");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
