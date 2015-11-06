@@ -34,12 +34,16 @@ public class JsonHelper {
     public static final String MOD_LOGIN = "LogIn";
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
     public static final String MOD_GET_CARERS = "getCarersList";
+    public static final String MOD_GET_PHOTO = "getPhoto";
+
+
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";
     public static final String TAG_PASSWORD = "password";
     public static final String TAG_DISPLAYNAME = "displayname";
     public static final String TAG_ONLINETEST = "onlineTestTime";
+    public static final String TAG_IDPOHOTO = "photoID";
 
 
     private static final String TAG = "JsonHelper";

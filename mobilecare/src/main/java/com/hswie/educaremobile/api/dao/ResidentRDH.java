@@ -46,6 +46,7 @@ public class ResidentRDH {
         return residents;
     }
 
+
     public Resident parseResident(JSONObject obj) {
         Resident resident = new Resident();
         try {
@@ -56,7 +57,7 @@ public class ResidentRDH {
             resident.setLastName((obj.getString(DatabaseColumns.COL_LAST_NAME)));
             resident.setAddress((obj.getString(DatabaseColumns.COL_ADDRESS)));
             resident.setCity((obj.getString(DatabaseColumns.COL_CITY)));
-            resident.setImage((obj.get(DatabaseColumns.COL_PHOTO)));
+            resident.setPhoto((obj.getString(DatabaseColumns.COL_PHOTO)));
 
         } catch (JSONException e) {
             Log.d(TAG,"parseCarerMessage " +  "JSONException e = " + e.getMessage());

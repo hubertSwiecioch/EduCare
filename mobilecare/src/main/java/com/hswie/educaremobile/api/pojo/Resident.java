@@ -15,7 +15,8 @@ public class Resident implements Serializable {
     private String ID;
     private String address;
     private String city;
-    private Blob image;
+    private String photo;
+
 
 
 
@@ -75,11 +76,11 @@ public class Resident implements Serializable {
         this.city = city;
     }
 
-    public Blob getImage() {
-        return image;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setImage(Blob image) {
-        this.image = image;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
