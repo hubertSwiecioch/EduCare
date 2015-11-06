@@ -1,5 +1,6 @@
 package com.hswie.educaremobile.carer;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,7 +12,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,33 +20,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
-import com.hswie.educaremobile.api.dao.ResidentRDH;
-import com.hswie.educaremobile.helper.ResidentsModel;
 
 public class CarerPanel extends AppCompatActivity {
 
     public static final String TAG = "CarerPanel";
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    private Context context;
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nurse_panel);
-
+        context = getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -70,10 +59,9 @@ public class CarerPanel extends AppCompatActivity {
             }
         });
 
-        new GetResidents().execute();
+
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +86,8 @@ public class CarerPanel extends AppCompatActivity {
     }
 
 
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -110,9 +100,17 @@ public class CarerPanel extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0: // Fragment # 0 - This will show FirstFragment
+                    return ResidentListFragment.newInstance(0,"Page # 1");
+                case 1: // Fragment # 0 - This will show FirstFragment different title
+                    return ResidentListFragment.newInstance(1,"Page # 2");
+                case 2: // Fragment # 1 - This will show SecondFragment
+                    return ResidentListFragment.newInstance(2,"Page # 3");
+                default:
+                    return ResidentListFragment.newInstance(3,"Page # 4");
+            }
+
         }
 
         @Override
@@ -170,19 +168,5 @@ public class CarerPanel extends AppCompatActivity {
         }
     }
 
-    private class GetResidents extends AsyncTask<Void, Void, Void>{
 
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            ResidentRDH residentRDH = new ResidentRDH();
-
-            ResidentsModel.get().setResidents(residentRDH.getAllResidents());
-
-//            Log.d(TAG, "SUCCESS:" + ResidentsModel.get().getResidents().get(0).getFirstName());
-
-
-            return null;
-        }
-    }
 }

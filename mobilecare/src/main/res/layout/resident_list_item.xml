@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/resident_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp"
+    android:descendantFocusability="blocksDescendants">
+
+
+
+    <LinearLayout
+        android:id="@+id/image_border"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="6dp">
+
+        <ImageView
+            android:id="@+id/image_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/text_lastname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/image_border"
+        android:singleLine="false"
+        android:layout_marginRight="6dp"
+        android:textSize="16sp"
+        android:textColor="#000" />
+    
+    <TextView
+        android:id="@+id/text_firstname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/image_border"
+        android:layout_below="@id/text_lastname"
+        android:singleLine="false"
+        android:layout_marginRight="6dp"
+        android:textSize="16sp"
+        android:textColor="#000" />
+
+</RelativeLayout>

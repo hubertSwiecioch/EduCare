@@ -16,9 +16,31 @@ public class Resident implements Serializable {
     private String address;
     private String city;
     private String photo;
+    private String photoCache;
 
 
 
+    public boolean contains(String query) {
+        String[] queries = query.split(" ");
+
+        if (queries.length == 2) {
+            if ((firstName.toLowerCase().contains(queries[0].toLowerCase())
+                    && lastName.toLowerCase().contains(queries[1].toLowerCase()))
+                    || (firstName.toLowerCase().contains(queries[1].toLowerCase())
+                    && lastName.toLowerCase().contains(queries[0].toLowerCase()))) {
+                //Log.d(TAG, "TRUE. firstname = " + firstname + " lastname = " + lastname);
+                return true;
+            }
+        } else if (queries.length == 1) {
+            if (firstName.toLowerCase().contains(queries[0].toLowerCase())
+                    || lastName.toLowerCase().contains(queries[0].toLowerCase())) {
+                //Log.d(TAG, "TRUE. firstname = " + firstname + " lastname = " + lastname);
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public String getID() {
         return ID;
@@ -82,5 +104,13 @@ public class Resident implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getPhotoCache() {
+        return photoCache;
+    }
+
+    public void setPhotoCache(String photoCache) {
+        this.photoCache = photoCache;
     }
 }

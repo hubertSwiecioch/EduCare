@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hswie.educaremobile.helper.LoaderDataLoader;
 import com.hswie.educaremobile.jsonparse.JsonHelper;
 import com.hswie.educaremobile.carer.CarerPanel;
 
@@ -381,6 +382,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
+                    LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
+                    loaderDataLoader.loadInBackground();
+
                     return true;
                 } else {
                     Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));

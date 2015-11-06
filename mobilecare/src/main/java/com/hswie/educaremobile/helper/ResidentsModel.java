@@ -62,6 +62,8 @@ public class ResidentsModel {
         return false;
     }
 
+
+
     public ArrayList<Resident> getResidents() {
         return residents;
     }
