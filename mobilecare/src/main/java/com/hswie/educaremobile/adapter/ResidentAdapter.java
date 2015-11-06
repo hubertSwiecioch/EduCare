@@ -77,7 +77,9 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
 
         Bitmap bitmap;
         if(resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()){
-            bitmap = DrawableConverter.drawableToBitmap(context.getResources().getDrawable(R.drawable.noavatar));
+
+            Log.d(TAG, resident.getPhoto());
+            bitmap =BitmapFactory.decodeByteArray(resident.getPhotoByte() , 0, resident.getPhotoByte().length);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, ImageHelper.AVATAR_QUALITY, stream);
 

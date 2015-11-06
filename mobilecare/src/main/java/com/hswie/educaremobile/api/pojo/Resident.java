@@ -17,6 +17,7 @@ public class Resident implements Serializable {
     private String city;
     private String photo;
     private String photoCache;
+    private byte[] photoByte;
 
 
 
@@ -112,5 +113,13 @@ public class Resident implements Serializable {
 
     public void setPhotoCache(String photoCache) {
         this.photoCache = photoCache;
+    }
+
+    public byte[] getPhotoByte() {
+        return photoByte;
+    }
+
+    public void setPhotoByte(byte[] photoByte) {
+        this.photoByte = photoByte;
     }
 }
