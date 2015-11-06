@@ -55,6 +55,7 @@ public class ResidentsModel {
             residents.get(currentResidentIndex).setAddress(resident.getAddress());
             residents.get(currentResidentIndex).setCity(resident.getCity());
             residents.get(currentResidentIndex).setPhoto(resident.getPhoto());
+            residents.get(currentResidentIndex).setPhotoByte(resident.getPhotoByte());
 
 
             return true;

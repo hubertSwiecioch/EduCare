@@ -49,9 +49,10 @@ public class CarerRDH {
     public Carer parseCarer(JSONObject obj) {
         Carer carer = new Carer();
         try {
-            carer.setID((obj.getString(DatabaseColumns.COL_FIRST_NAME)));
+            carer.setID((obj.getString(DatabaseColumns.COL_ID)));
             carer.setFullName((obj.getString(DatabaseColumns.COL_FULL_NAME)));
-            carer.setFullName((obj.getString(DatabaseColumns.COL_ONLINE_TEST)));
+            carer.setOnlineTest((obj.getString(DatabaseColumns.COL_ONLINE_TEST)));
+            carer.setPhoto((obj.getString(DatabaseColumns.COL_PHOTO)));
 
         } catch (JSONException e) {
             Log.d(TAG,"parseCarerMessage " +  "JSONException e = " + e.getMessage());

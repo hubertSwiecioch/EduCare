@@ -10,6 +10,29 @@ public class Carer implements Serializable {
     private String fullName;
     private String onlineTest;
     private String ID;
+    private String photo;
+    private String photoCache;
+    private byte[] photoByte;
+
+
+    public boolean contains(String query) {
+        String[] queries = query.split(" ");
+
+        if (queries.length == 2) {
+            if ((fullName.toLowerCase().contains(queries[0].toLowerCase()))
+                    || (fullName.toLowerCase().contains(queries[1].toLowerCase()))) {
+                //Log.d(TAG, "TRUE. firstname = " + firstname + " lastname = " + lastname);
+                return true;
+            }
+        } else if (queries.length == 1) {
+            if (fullName.toLowerCase().contains(queries[0].toLowerCase())) {
+                //Log.d(TAG, "TRUE. firstname = " + firstname + " lastname = " + lastname);
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public String getFullName() {
         return fullName;
@@ -33,5 +56,29 @@ public class Carer implements Serializable {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public byte[] getPhotoByte() {
+        return photoByte;
+    }
+
+    public void setPhotoByte(byte[] photoByte) {
+        this.photoByte = photoByte;
+    }
+
+    public String getPhotoCache() {
+        return photoCache;
+    }
+
+    public void setPhotoCache(String photoCache) {
+        this.photoCache = photoCache;
     }
 }

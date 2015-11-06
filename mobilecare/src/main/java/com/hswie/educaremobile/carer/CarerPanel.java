@@ -102,13 +102,13 @@ public class CarerPanel extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return ResidentListFragment.newInstance(0,"Page # 1");
+                    return ResidentListFragment.newInstance(0, "Page # 1");
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return ResidentListFragment.newInstance(1,"Page # 2");
+                    return CarerListFragment.newInstance(1,"Page # 2");
                 case 2: // Fragment # 1 - This will show SecondFragment
-                    return ResidentListFragment.newInstance(2,"Page # 3");
+                    return CarerListFragment.newInstance(2,"Page # 3");
                 default:
-                    return ResidentListFragment.newInstance(3,"Page # 4");
+                    return CarerListFragment.newInstance(3,"Page # 4");
             }
 
         }

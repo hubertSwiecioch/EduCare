@@ -15,8 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
+import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.Resident;
-import com.hswie.educaremobile.helper.DrawableConverter;
+import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
@@ -27,31 +28,31 @@ import java.util.ArrayList;
 /**
  * Residents ListView's adapter.
  */
-public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHolder> {
+public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> {
     private static final String TAG = "ResidentAdapter";
 
 
 //    public static AnimationDrawable frameAnimation;
 
-    public interface ResidentAdapterCallbacks {
+    public interface CarerAdapterCallbacks {
         void onListItemClick(int position);
     }
 
     int itemSelected = -1;
-    private ArrayList<Resident> items = new ArrayList<>();
+    private ArrayList<Carer> items = new ArrayList<>();
     private Context context;
-    private ResidentAdapterCallbacks residentAdapterCallbacks;
+    private CarerAdapterCallbacks carerAdapterCallbacks;
 
-    public ResidentAdapter(ResidentAdapterCallbacks residentAdapterCallbacks) {
-        this.residentAdapterCallbacks = residentAdapterCallbacks;
-        items = ResidentsModel.get().getResidents();
+    public CarerAdapter(CarerAdapterCallbacks residentAdapterCallbacks) {
+        this.carerAdapterCallbacks = residentAdapterCallbacks;
+        items = CarerModel.get().getCarers();
 
     }
 
     @Override
-    public ResidentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CarerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.resident_list_item, null);
+                R.layout.carer_list_item, null);
 
         context = parent.getContext();
 
@@ -61,32 +62,32 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        final Resident resident = items.get(position);
+        final Carer carer = items.get(position);
 
         viewHolder.parentLayout.setOnClickListener(
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        residentAdapterCallbacks.onListItemClick(position);
+                        carerAdapterCallbacks.onListItemClick(position);
                     }
                 });
 
-        viewHolder.firstnameView.setText(resident.getFirstName());
-        viewHolder.lastnameView.setText(resident.getLastName());
+        viewHolder.firstnameView.setText(carer.getFullName());
+
 
 
         Bitmap bitmap;
-        if(resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()){
+        if(carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()){
 
-            Log.d(TAG, resident.getPhoto());
-            bitmap =BitmapFactory.decodeByteArray(resident.getPhotoByte() , 0, resident.getPhotoByte().length);
+            Log.d(TAG, carer.getPhoto());
+            bitmap =BitmapFactory.decodeByteArray(carer.getPhotoByte() , 0, carer.getPhotoByte().length);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, ImageHelper.AVATAR_QUALITY, stream);
 
             String cachePath = ImageHelper.cacheImageOnDisk(context, stream.toByteArray(),
-                    "resident_" + resident.getID() + ".jpg",
+                    "resident_" + carer.getID() + ".jpg",
                     ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
-            resident.setPhotoCache(cachePath);
+            carer.setPhotoCache(cachePath);
             try {
                 stream.close();
                 stream = null;
@@ -97,7 +98,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
             bitmap = null;
         }
 
-        bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
+        bitmap = BitmapFactory.decodeFile(carer.getPhotoCache());
         viewHolder.photoView.setImageBitmap(bitmap);
 //        ImageManager.get().displayImage("file://" + resident.getPhotoCache(), viewHolder.photoView);
 
@@ -111,7 +112,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
         return items.size();
     }
 
-    public Resident getItem(int position){
+    public Carer getItem(int position){
         return items.get(position);
     }
 
@@ -124,9 +125,9 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
     }
 
     public void filterItems(String query){
-        ArrayList<Resident> filteredItems = new ArrayList<>();
+        ArrayList<Carer> filteredItems = new ArrayList<>();
         Log.d(TAG, "items size: " + items.size());
-        for (Resident item : ResidentsModel.get().getResidents()) {
+        for (Carer item : CarerModel.get().getCarers()) {
             if (item.contains(query))
                 filteredItems.add(item);
         }
@@ -138,7 +139,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
     }
 
     public void resetItems(){
-        items = ResidentsModel.get().getResidents();
+        items = CarerModel.get().getCarers();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
