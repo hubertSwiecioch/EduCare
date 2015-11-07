@@ -4,8 +4,11 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
+    <string name="prompt_first_name">Imię</string>
     <string name="prompt_password">Hasło (opcjonalnie)</string>
+    <string name="prompt_last_name">Nazwisko</string>
     <string name="action_sign_in">Zaloguj</string>
+    <string name="action_add_resident">Dodaj pacjenta</string>
     <string name="action_sign_in_short">Zaloguj</string>
     <string name="error_invalid_email">Ten adres e-mail jest nieprawidłowy</string>
     <string name="error_invalid_password">To hasło jest za krótkie</string>
@@ -19,4 +22,11 @@
     <string name="residents_list_tab">Rezydenci</string>
     <string name="carers_list_tab">Opiekunowie</string>
     <string name="call_tab">Rozmowy</string>
+
+    <string name="title_activity_add_resident">Dodaj Pacjenta</string>
+    <string name="prompt_dat_of_adoption">Data przyjęcia</string>
+    <string name="prompt_birth_date">Data urodzin</string>
+    <string name="prompt_address">Adres</string>
+    <string name="prompt_city">Miasto</string>
+    <string name="select_image">Wybierz zdjęcie</string>
 </resources>

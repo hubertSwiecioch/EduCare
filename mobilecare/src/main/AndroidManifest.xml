@@ -29,7 +29,11 @@
             android:label="@string/title_activity_nurse_panel"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-
+        <activity
+            android:name=".carer.AddResidentActivity"
+            android:label="@string/title_activity_add_resident"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

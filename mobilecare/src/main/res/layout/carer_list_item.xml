@@ -7,6 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     card_view:cardCornerRadius="4dp"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardUseCompatPadding="true"
     android:layout_marginLeft="@dimen/card_margin_horizontal"
     android:layout_marginRight="@dimen/card_margin_horizontal"
     android:layout_marginTop="@dimen/card_margin_horizontal">
