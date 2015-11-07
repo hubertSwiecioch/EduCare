@@ -59,7 +59,7 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
-        View rootView = inflater.inflate(R.layout.fragment_carer_list,
+        View rootView = inflater.inflate(R.layout.fragment_persons_list,
                 container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list);

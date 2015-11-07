@@ -84,7 +84,6 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
         if(carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()){
 
             Log.d(TAG, "loadPhotoFromByteArray");
-
             String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
                     "carer_" + carer.getID() + ".jpg",
                     ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);

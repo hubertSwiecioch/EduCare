@@ -112,7 +112,7 @@ public class CarerPanel extends AppCompatActivity {
                 case 0:
                     return ResidentListFragment.newInstance(0, "Page # 1");
                 case 1:
-                    return ResidentListFragment.newInstance(1,"Page # 2");
+                    return CarerListFragment.newInstance(1,"Page # 2");
                 case 2:
                     return ResidentListFragment.newInstance(2,"Page # 2");
                 default:
@@ -169,9 +169,8 @@ public class CarerPanel extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_nurse_panel, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate(R.layout.fragment_persons_list, container, false);
+
             return rootView;
         }
     }

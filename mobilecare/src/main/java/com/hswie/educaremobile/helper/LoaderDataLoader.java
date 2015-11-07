@@ -34,8 +34,8 @@ public class LoaderDataLoader extends AsyncTaskLoader {
         CarerModel.get().setCarers(carerRDH.getAllCarers());
 
 
-        ArrayList<Resident> residents = ResidentsModel.get().getResidents();
-        ArrayList<Carer> carers = CarerModel.get().getCarers();
+//        ArrayList<Resident> residents = ResidentsModel.get().getResidents();
+//        ArrayList<Carer> carers = CarerModel.get().getCarers();
 
 
         for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++){
