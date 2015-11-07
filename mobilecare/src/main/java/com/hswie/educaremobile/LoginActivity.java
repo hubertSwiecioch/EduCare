@@ -30,7 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.helper.LoaderDataLoader;
-import com.hswie.educaremobile.jsonparse.JsonHelper;
+import com.hswie.educaremobile.helper.JsonHelper;
 import com.hswie.educaremobile.carer.CarerPanel;
 
 import org.json.JSONObject;
@@ -47,9 +47,6 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
-
-
 
     public static final String TAG = "LoginActivity";
 
@@ -371,26 +368,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     if (success == 1) {
                         Log.d("Login Successful!", json.toString());
-
                         Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                        LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
+                        loaderDataLoader.loadInBackground();
+                        return true;
                     } else {
                         Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
                         Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
-
+                        return false;
                     }
 
-
-                if (success == 1) {
-                    Log.d("Login Successful!", json.toString());
-                    LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
-                    loaderDataLoader.loadInBackground();
-
-                    return true;
-                } else {
-                    Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
-                    return false;
-
-                }
 
                 } catch (Exception e) {
                     e.printStackTrace();

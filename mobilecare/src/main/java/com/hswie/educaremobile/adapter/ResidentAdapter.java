@@ -16,12 +16,9 @@ import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
-import com.hswie.educaremobile.helper.DrawableConverter;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -82,6 +79,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
                     "resident_" + resident.getID() + ".jpg",
                     ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
             resident.setPhotoCache(cachePath);
+            resident.setPhotoByte(null);
 
         }
         Log.d(TAG, "loadPhotoFromCache:"  + resident.getPhotoCache());
@@ -123,6 +121,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
 
     public void resetItems(){
         items = ResidentsModel.get().getResidents();
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

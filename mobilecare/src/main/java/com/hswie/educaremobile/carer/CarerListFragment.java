@@ -25,7 +25,7 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
 
     private Handler handler;
     private static final String TAG = "CarerListFragment";
-    private RecyclerView carersListView;
+    private RecyclerView recyclerView;
 
 
     public static CarerListFragment newInstance(int page, String title) {
@@ -62,15 +62,22 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
         View rootView = inflater.inflate(R.layout.fragment_carer_list,
                 container, false);
 
-        carersListView = (RecyclerView) rootView.findViewById(R.id.list);
-        carersListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        carersListView.setAdapter(carerAdapter);
-        carersListView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(carerAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         resetCarers();
 
         return rootView;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler = null;
+    }
+
 
     public void resetCarers(){
         carerAdapter.resetItems();

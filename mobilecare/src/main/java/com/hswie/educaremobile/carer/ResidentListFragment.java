@@ -24,7 +24,7 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
 
     private Handler handler;
     private static final String TAG = "ResidentListFragment";
-    private RecyclerView residentsListView;
+    private RecyclerView recyclerView;
 
 
     public static ResidentListFragment newInstance(int page, String title) {
@@ -61,10 +61,10 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         View rootView = inflater.inflate(R.layout.fragment_resident_list,
                 container, false);
 
-        residentsListView = (RecyclerView) rootView.findViewById(R.id.list);
-        residentsListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        residentsListView.setAdapter(residentAdapter);
-        residentsListView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(residentAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         resetResidents();
 
@@ -84,7 +84,7 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
     @Override
     public void onListItemClick(int position) {
 
-        Log.d(TAG, "Click: " + residentAdapter.getItem(position).getFirstName() );
+        Log.d(TAG, "Click: " + residentAdapter.getItem(position).getFirstName());
     }
 
 

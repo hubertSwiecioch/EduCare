@@ -6,8 +6,11 @@ import android.util.Log;
 
 import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
+import com.hswie.educaremobile.api.pojo.Carer;
+import com.hswie.educaremobile.api.pojo.Resident;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by hswie on 11/6/2015.
@@ -30,16 +33,18 @@ public class LoaderDataLoader extends AsyncTaskLoader {
         ResidentsModel.get().setResidents(residentRDH.getAllResidents());
         CarerModel.get().setCarers(carerRDH.getAllCarers());
 
-        Log.d(TAG, "testtest: " + CarerModel.get().getCarers().get(0).getFullName());
-        Log.d(TAG, "testtest: " + CarerModel.get().getCarers().get(0).getPhoto());
+
+        ArrayList<Resident> residents = ResidentsModel.get().getResidents();
+        ArrayList<Carer> carers = CarerModel.get().getCarers();
+
 
         for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++){
 
             String url = ResidentsModel.get().getResidents().get(i).getPhoto();
             try {
-                byte[] imageByte = ImageHelper.scaleFromHttp(url,50,50);
-                ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
-                Log.d(TAG, "GetResidentImageFromHttpSuccess");
+                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 50, 50);
+                    ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
+                    Log.d(TAG, "GetResidentImageFromHttpSuccess");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -50,9 +55,10 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
             String url = CarerModel.get().getCarers().get(i).getPhoto();
             try {
-                byte[] imageByte = ImageHelper.scaleFromHttp(url,50,50);
-                CarerModel.get().getCarers().get(i).setPhotoByte(imageByte);
-                Log.d(TAG, "GetCarerImageFromHttpSuccess");
+                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 50, 50);
+                    CarerModel.get().getCarers().get(i).setPhotoByte(imageByte);
+                    Log.d(TAG, "GetCarerImageFromHttpSuccess");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

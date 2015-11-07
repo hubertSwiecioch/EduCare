@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.hswie.educaremobile.api.DatabaseColumns;
 import com.hswie.educaremobile.api.pojo.Carer;
-import com.hswie.educaremobile.jsonparse.JsonHelper;
+import com.hswie.educaremobile.helper.JsonHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;

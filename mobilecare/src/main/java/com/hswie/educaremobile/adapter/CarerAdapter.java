@@ -17,13 +17,9 @@ import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Carer;
-import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.ImageHelper;
-import com.hswie.educaremobile.helper.ResidentsModel;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -90,9 +86,10 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
             Log.d(TAG, "loadPhotoFromByteArray");
 
             String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
-                    "resident_" + carer.getID() + ".jpg",
+                    "carer_" + carer.getID() + ".jpg",
                     ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
             carer.setPhotoCache(cachePath);
+            carer.setPhotoByte(null);
 
         }
         Log.d(TAG, "loadPhotoFromCache:"  + carer.getPhotoCache());
@@ -134,6 +131,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
     public void resetItems(){
         items = CarerModel.get().getCarers();
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

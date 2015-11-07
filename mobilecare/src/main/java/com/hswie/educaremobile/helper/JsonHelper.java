@@ -1,4 +1,4 @@
-package com.hswie.educaremobile.jsonparse;
+package com.hswie.educaremobile.helper;
 
 
 import android.util.Log;
@@ -63,7 +63,6 @@ public class JsonHelper {
                 HttpPost httpPost = new HttpPost(loginUrl);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
                 HttpResponse httpResponse = httpClient.execute(httpPost);
-                Log.d(TAG, " " + httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
             }else
@@ -98,17 +97,11 @@ public class JsonHelper {
             }
             is.close();
             json = sb.toString();
-//            if (json.startsWith("["))
-//                json = removeBrackets(json);
-            //Log.d(TAG, "resultFromAPI:" +  json);
+
         } catch (IOException e) {
             Log.d("Buffer Error","Error Converting Reesult "+e.toString());
         }
 
-        // try parse the string to JSON Object
-
-
-        // return JSON String
         return json;
     }
 
@@ -116,13 +109,12 @@ public class JsonHelper {
 
         try {
             jObj = new JSONObject(json);
-            Log.d(TAG, "JObject: " + jObj
+            Log.d(TAG, "SuccessGetJObject: " + jObj
             );
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error Parsing data" + e.toString());
         }
 
-        // return JSON String
         return jObj;
     }
 
@@ -131,7 +123,7 @@ public class JsonHelper {
 
         try {
             jarray = new JSONArray( json);
-            Log.d(TAG, "JArray: " + jarray);
+            Log.d(TAG, "SuccessGetJArray: " + jarray);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }

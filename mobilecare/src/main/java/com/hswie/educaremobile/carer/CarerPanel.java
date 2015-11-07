@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
+
+import java.util.List;
 
 public class CarerPanel extends AppCompatActivity {
 
@@ -41,7 +44,6 @@ public class CarerPanel extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -79,6 +81,12 @@ public class CarerPanel extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+            for (Fragment fragment:fragmentList) {
+
+                Log.d(TAG, "Fragment: " + fragment.getTag());
+            }
+
             return true;
         }
 
@@ -101,14 +109,14 @@ public class CarerPanel extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
+                case 0:
                     return ResidentListFragment.newInstance(0, "Page # 1");
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return CarerListFragment.newInstance(1,"Page # 2");
-                case 2: // Fragment # 1 - This will show SecondFragment
-                    return CarerListFragment.newInstance(2,"Page # 3");
+                case 1:
+                    return ResidentListFragment.newInstance(1,"Page # 2");
+                case 2:
+                    return ResidentListFragment.newInstance(2,"Page # 2");
                 default:
-                    return CarerListFragment.newInstance(3,"Page # 4");
+                    return null;
             }
 
         }
