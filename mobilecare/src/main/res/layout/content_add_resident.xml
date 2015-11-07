@@ -58,6 +58,7 @@
                     android:hint="@string/prompt_dat_of_adoption"
                     android:inputType="date"
                     android:maxLines="1"
+                    android:focusable="false"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -72,6 +73,7 @@
                     android:hint="@string/prompt_birth_date"
                     android:inputType="date"
                     android:maxLines="1"
+                    android:focusable="false"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -98,13 +100,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_city"
-                    android:inputType="date"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText android:id="@+id/getPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/select_image"
+                    android:inputType="textUri"
+                    android:maxLines="1"
+                    android:focusable="false"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Switch
+                android:id="@+id/imageSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
 
 

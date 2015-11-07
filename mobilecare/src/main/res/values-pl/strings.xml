@@ -29,4 +29,6 @@
     <string name="prompt_address">Adres</string>
     <string name="prompt_city">Miasto</string>
     <string name="select_image">Wybierz zdjęcie</string>
+    <string name="switch_gallery">Galeria</string>
+    <string name="switch_camera">Aparat</string>
 </resources>

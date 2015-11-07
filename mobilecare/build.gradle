@@ -20,6 +20,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -28,4 +34,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'cz.msebera.android:httpclient:4.4.1.1'
+    compile 'com.github.jkwiecien:EasyImage:1.0.6'
 }
