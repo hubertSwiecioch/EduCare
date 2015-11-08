@@ -3,6 +3,8 @@ package com.hswie.educaremobile.carer;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +20,13 @@ import android.widget.Switch;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.helper.FileHelper;
+import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +41,7 @@ public class AddResidentActivity extends AppCompatActivity {
     private static final String TAG = "AddResidentActivity";
 
     private Calendar myCalendar = Calendar.getInstance();
-    private EditText dateOfAdoption, birthDate, getPhoto, firstName, lastName, address, city, image;
+    private EditText dateOfAdoption, birthDate, getPhoto, firstName, lastName, address, city;
     private Switch switchImage;
     private Button addResidentButton;
 
@@ -61,7 +67,6 @@ public class AddResidentActivity extends AppCompatActivity {
         lastName = (EditText) findViewById(R.id.last_name);
         address = (EditText) findViewById(R.id.address);
         city = (EditText) findViewById(R.id.city);
-        image = (EditText) findViewById(R.id.getPhoto);
         dateOfAdoption = (EditText) findViewById(R.id.date_of_adoption);
         birthDate = (EditText) findViewById(R.id.birth_date);
         getPhoto = (EditText) findViewById(R.id.getPhoto);
@@ -89,6 +94,7 @@ public class AddResidentActivity extends AppCompatActivity {
 
             if(file !=null) {
 
+                Log.d(TAG, "TryAddResidentAndUploadPhoto");
                 ArrayList<String> params = new ArrayList<>();
 
                 params.add(firstName.getText().toString());
@@ -97,7 +103,7 @@ public class AddResidentActivity extends AppCompatActivity {
                 params.add(birthDate.getText().toString());
                 params.add(address.getText().toString());
                 params.add(city.getText().toString());
-                params.add(image.getText().toString());
+                params.add(JsonHelper.HOSTNAME_RESIDENTIMAGE + getPhoto.getText().toString());
 
                 for (String param:params) {
 
@@ -107,6 +113,7 @@ public class AddResidentActivity extends AppCompatActivity {
 
                 new UploadPhotoToServer(AddResidentActivity.this).execute(file, params);
             }
+            Log.d(TAG, "File = NUll");
 
         }
     };
@@ -183,7 +190,7 @@ public class AddResidentActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         EasyImage.handleActivityResult(requestCode, resultCode, data, this, new EasyImage.Callbacks() {
@@ -195,8 +202,29 @@ public class AddResidentActivity extends AppCompatActivity {
             @Override
             public void onImagePicked(File imageFile, EasyImage.ImageSource source) {
                 //Handle the image
+
                 onPhotoReturned(imageFile.getName());
-                file = imageFile;
+
+
+                try {
+
+                    byte[] resizeImage = ImageHelper.scale(imageFile.getPath(),ImageHelper.AVATAR_SIZE,
+                            ImageHelper.AVATAR_SIZE,ImageHelper.AVATAR_QUALITY);
+                    FileOutputStream fos = new FileOutputStream(imageFile.getPath());
+                    Log.d(TAG, "lengh" + resizeImage.length);
+                    fos.write(resizeImage);
+                    fos.close();
+                }
+                catch(FileNotFoundException ex)   {
+                    System.out.println("FileNotFoundException : " + ex);
+                }
+                catch(IOException ioe)  {
+                    System.out.println("IOException : " + ioe);
+                }
+
+
+                file =new File(imageFile.getPath());
+
             }
 
             @Override
@@ -208,7 +236,7 @@ public class AddResidentActivity extends AppCompatActivity {
 
     private void onPhotoReturned(String name) {
 
-        getPhoto.setText(JsonHelper.HOSTNAME_RESIDENTIMAGE + name);
+        getPhoto.setText(name);
 
     }
 

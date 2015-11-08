@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
  */
 public class ImageHelper {
 
+    private static final String TAG = "ImageHelper";
     public static int AVATAR_SIZE = 100;
     public static int AVATAR_QUALITY = 100;
 
@@ -60,7 +61,7 @@ public class ImageHelper {
         } catch (IOException e) {
             Log.e("ImageHelper", "IOException ", e);
         }
-
+        Log.d(TAG, "ScaleImageSuccessfull");
         return bytesArray;
     }
 
