@@ -2,7 +2,6 @@ package com.hswie.educaremobile.carer;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,18 +10,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
+import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -35,8 +35,11 @@ public class AddResidentActivity extends AppCompatActivity {
     private static final String TAG = "AddResidentActivity";
 
     private Calendar myCalendar = Calendar.getInstance();
-    private EditText dateOfAdoption, birthDate, getPhoto;
+    private EditText dateOfAdoption, birthDate, getPhoto, firstName, lastName, address, city, image;
     private Switch switchImage;
+    private Button addResidentButton;
+
+    private File file;
 
     private int currentEditDate = -1;
 
@@ -54,7 +57,11 @@ public class AddResidentActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+        firstName = (EditText) findViewById(R.id.first_name);
+        lastName = (EditText) findViewById(R.id.last_name);
+        address = (EditText) findViewById(R.id.address);
+        city = (EditText) findViewById(R.id.city);
+        image = (EditText) findViewById(R.id.getPhoto);
         dateOfAdoption = (EditText) findViewById(R.id.date_of_adoption);
         birthDate = (EditText) findViewById(R.id.birth_date);
         getPhoto = (EditText) findViewById(R.id.getPhoto);
@@ -68,8 +75,41 @@ public class AddResidentActivity extends AppCompatActivity {
 
         getPhoto.setOnClickListener(getPhotoListener);
 
+        addResidentButton = (Button) findViewById(R.id.add_resident);
+        addResidentButton.setOnClickListener(addResident);
+
 
     }
+
+
+    private View.OnClickListener addResident= new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            if(file !=null) {
+
+                ArrayList<String> params = new ArrayList<>();
+
+                params.add(firstName.getText().toString());
+                params.add(lastName.getText().toString());
+                params.add(dateOfAdoption.getText().toString());
+                params.add(birthDate.getText().toString());
+                params.add(address.getText().toString());
+                params.add(city.getText().toString());
+                params.add(image.getText().toString());
+
+                for (String param:params) {
+
+                    Log.d(TAG, param);
+                }
+
+
+                new UploadPhotoToServer(AddResidentActivity.this).execute(file, params);
+            }
+
+        }
+    };
 
 
     private View.OnClickListener getPhotoListener= new View.OnClickListener() {
@@ -155,7 +195,8 @@ public class AddResidentActivity extends AppCompatActivity {
             @Override
             public void onImagePicked(File imageFile, EasyImage.ImageSource source) {
                 //Handle the image
-                onPhotoReturned(imageFile);
+                onPhotoReturned(imageFile.getName());
+                file = imageFile;
             }
 
             @Override
@@ -165,10 +206,10 @@ public class AddResidentActivity extends AppCompatActivity {
         });
     }
 
-    private void onPhotoReturned(File photoFile) {
+    private void onPhotoReturned(String name) {
 
-        getPhoto.setText(photoFile.getName());
-        new UploadPhotoToServer(this).execute(photoFile, photoFile.getName());
+        getPhoto.setText(JsonHelper.HOSTNAME_RESIDENTIMAGE + name);
+
     }
 
     private class UploadPhotoToServer extends AsyncTask<Object, Void, Void>{
@@ -197,6 +238,10 @@ public class AddResidentActivity extends AppCompatActivity {
 
            FileHelper fileHelper = new FileHelper();
             fileHelper.uploadFile((File) params[0]);
+            ResidentRDH residentRDH = new ResidentRDH();
+
+
+            residentRDH.addResident((ArrayList<String>)params[1]);
             return null;
         }
 

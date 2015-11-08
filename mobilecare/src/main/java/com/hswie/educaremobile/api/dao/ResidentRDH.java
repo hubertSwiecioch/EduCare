@@ -46,6 +46,30 @@ public class ResidentRDH {
         return residents;
     }
 
+    public void addResident(ArrayList<String> params){
+
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        for (String param:params) {
+
+            Log.d(TAG, "RDH param: "  + param);
+        }
+
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_ADD_RESIDENT));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_FIRSTNAME, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_LASTNAME, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_DATEOFADOPTION, params.get(2)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_BIRTHDATE, params.get(3)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ADDRESS, params.get(4)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CITY, params.get(5)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_IMAGE, params.get(6)));
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+        Log.d(TAG, "JSONString: "  + JSONString);
+
+    }
+
 
     public Resident parseResident(JSONObject obj) {
         Resident resident = new Resident();

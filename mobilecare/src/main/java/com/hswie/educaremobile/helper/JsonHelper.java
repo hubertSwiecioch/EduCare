@@ -30,11 +30,13 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 public class JsonHelper {
 
     public static final String HOSTNAME = "http://serwer1552055.home.pl/EduCare/index.php";
+    public static final String HOSTNAME_RESIDENTIMAGE = "http://serwer1552055.home.pl/EduCare/images/residentsImages/";
     public static final String TAG_MOD = "mod";
     public static final String MOD_LOGIN = "LogIn";
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
     public static final String MOD_GET_CARERS = "getCarersList";
     public static final String MOD_GET_PHOTO = "getPhoto";
+    public static final String MOD_ADD_RESIDENT = "addResident";
 
 
     public static final String TAG_SUCCESS = "success";
@@ -44,6 +46,15 @@ public class JsonHelper {
     public static final String TAG_DISPLAYNAME = "displayname";
     public static final String TAG_ONLINETEST = "onlineTestTime";
     public static final String TAG_IDPOHOTO = "photoID";
+    public static final String TAG_FIRSTNAME = "firstname";
+    public static final String TAG_LASTNAME = "lastname";
+    public static final String TAG_DATEOFADOPTION = "dateofadoption";
+    public static final String TAG_BIRTHDATE = "birthdate";
+    public static final String TAG_ADDRESS = "address";
+    public static final String TAG_CITY = "city";
+    public static final String TAG_IMAGE = "image";
+
+
 
 
     private static final String TAG = "JsonHelper";
