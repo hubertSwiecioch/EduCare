@@ -12,6 +12,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 /**
@@ -36,7 +41,7 @@ public class FileHelper {
     private int serverResponseCode;
     private String serverResponseMessage;
 
-    public void uploadFile(File file) {
+    public void uploadFile(File file, String userType) {
 
 
         try {
@@ -46,6 +51,7 @@ public class FileHelper {
             URL url = new URL(JsonHelper.HOSTNAME);
             connection = (HttpURLConnection) url.openConnection();
 
+
             // Allow Inputs &amp; Outputs.
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -53,11 +59,12 @@ public class FileHelper {
 
             // Set HTTP method to POST.
             connection.setRequestMethod("POST");
-
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("userType", userType);
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-
             outputStream = new DataOutputStream( connection.getOutputStream() );
+
+
             outputStream.writeBytes(twoHyphens + boundary + lineEnd);
             outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + file.getAbsolutePath() +"\"" + lineEnd);
             outputStream.writeBytes(lineEnd);

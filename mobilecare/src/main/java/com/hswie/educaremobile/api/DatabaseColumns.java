@@ -15,5 +15,6 @@ public class DatabaseColumns {
     public static final String COL_ADDRESS = "address";
     public static final String COL_CITY = "city";
     public static final String COL_PHOTO = "image";
+    public static final String COL_PHONENUMBER = "phone_number";
 
 }

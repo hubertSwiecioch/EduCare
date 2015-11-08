@@ -31,12 +31,17 @@ public class JsonHelper {
 
     public static final String HOSTNAME = "http://serwer1552055.home.pl/EduCare/index.php";
     public static final String HOSTNAME_RESIDENTIMAGE = "http://serwer1552055.home.pl/EduCare/images/residentsImages/";
+    public static final String HOSTNAME_CARERIMAGE = "http://serwer1552055.home.pl/EduCare/images/carersImages/";
     public static final String TAG_MOD = "mod";
     public static final String MOD_LOGIN = "LogIn";
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
     public static final String MOD_GET_CARERS = "getCarersList";
     public static final String MOD_GET_PHOTO = "getPhoto";
     public static final String MOD_ADD_RESIDENT = "addResident";
+    public static final String MOD_REGISTER_CARER = "registerCarer";
+
+    public static final String PERSON_TYPE_CARER = "carer";
+    public static final String PERSON_TYPE_RESIDENT = "resident";
 
 
     public static final String TAG_SUCCESS = "success";
@@ -53,6 +58,12 @@ public class JsonHelper {
     public static final String TAG_ADDRESS = "address";
     public static final String TAG_CITY = "city";
     public static final String TAG_IMAGE = "image";
+
+
+    public static final String TAG_CARER_USERNAME = "carer_username";
+    public static final String TAG_CARER_PASSWORD = "carer_password";
+    public static final String TAG_CARER_FULLNAME = "carer_full_name";
+    public static final String TAG_PHONENUMBER = "phone_number";
 
 
 

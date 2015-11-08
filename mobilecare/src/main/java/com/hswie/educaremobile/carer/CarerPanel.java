@@ -114,7 +114,7 @@ public class CarerPanel extends AppCompatActivity{
                 case 1:
                     return CarerListFragment.newInstance(1,"Page # 2");
                 case 2:
-                    return ResidentListFragment.newInstance(2,"Page # 2");
+                    return MessagesFragment.newInstance(2, "Page # 2");
                 default:
                     return null;
             }
@@ -135,7 +135,7 @@ public class CarerPanel extends AppCompatActivity{
                 case 1:
                     return getString(R.string.carers_list_tab);
                 case 2:
-                    return getString(R.string.call_tab);
+                    return getString(R.string.messages_tab);
             }
             return null;
         }

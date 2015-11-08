@@ -8,6 +8,7 @@
     <string name="prompt_password">Hasło (opcjonalnie)</string>
     <string name="prompt_last_name">Nazwisko</string>
     <string name="action_sign_in">Zaloguj</string>
+    <string name="action_register_carer">Rejestruj Opiekuna</string>
     <string name="action_add_resident">Dodaj pacjenta</string>
     <string name="action_sign_in_short">Zaloguj</string>
     <string name="error_invalid_email">Ten adres e-mail jest nieprawidłowy</string>
@@ -21,9 +22,10 @@
     <string name="title_activity_login_activityl">Zaloguj</string>
     <string name="residents_list_tab">Rezydenci</string>
     <string name="carers_list_tab">Opiekunowie</string>
-    <string name="call_tab">Rozmowy</string>
+    <string name="messages_tab">Wiadomości</string>
 
     <string name="title_activity_add_resident">Dodaj Pacjenta</string>
+    <string name="title_activity_carer_register">Rejestruj Opiekuna</string>
     <string name="prompt_dat_of_adoption">Data przyjęcia</string>
     <string name="prompt_birth_date">Data urodzin</string>
     <string name="prompt_address">Adres</string>
@@ -31,4 +33,9 @@
     <string name="select_image">Wybierz zdjęcie</string>
     <string name="switch_gallery">Galeria</string>
     <string name="switch_camera">Aparat</string>
+
+    <string name="prompt_carer_username">Login(Email)</string>
+    <string name="prompt_carer_password">Hasło(6 znaków)</string>
+    <string name="prompt_carer_fullname">Nazwa</string>
+    <string name="prompt_carer_phonenumber">Numer telefonu</string>
 </resources>

@@ -1,10 +1,7 @@
 package com.hswie.educaremobile.carer;
 
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +10,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 
 import com.hswie.educaremobile.R;
-import com.hswie.educaremobile.api.dao.ResidentRDH;
+import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
@@ -27,32 +23,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 import pl.aprilapps.easyphotopicker.EasyImage;
 
-public class AddResidentActivity extends AppCompatActivity {
+public class RegisterCarerActivity extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 1;
 
-    private static final String TAG = "AddResidentActivity";
+    private static final String TAG = "RegisterCarerActivity";
 
-    private Calendar myCalendar = Calendar.getInstance();
-    private EditText dateOfAdoption, birthDate, getPhoto, firstName, lastName, address, city;
+    private EditText carerUsername, carerPassword, getPhoto, carerFullName, carerPhoneNumber;
+
+    private Button registerCarerButton;
     private Switch switchImage;
-    private Button addResidentButton;
 
     private File file;
 
-    private int currentEditDate = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_resident);
+        setContentView(R.layout.activity_register_carer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,47 +56,40 @@ public class AddResidentActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        firstName = (EditText) findViewById(R.id.first_name);
-        lastName = (EditText) findViewById(R.id.last_name);
-        address = (EditText) findViewById(R.id.address);
-        city = (EditText) findViewById(R.id.city);
-        dateOfAdoption = (EditText) findViewById(R.id.date_of_adoption);
-        birthDate = (EditText) findViewById(R.id.birth_date);
+        carerUsername = (EditText) findViewById(R.id.carer_username);
+        carerPassword = (EditText) findViewById(R.id.carer_password);
+        carerFullName = (EditText) findViewById(R.id.carer_full_name);
+        carerPhoneNumber = (EditText) findViewById(R.id.phone_number);
         getPhoto = (EditText) findViewById(R.id.getPhoto);
 
-        switchImage = (Switch) findViewById(R.id.imageSwitch);
+        switchImage = (Switch) findViewById(R.id.imageSwitchCarer);
         switchImage.setTextOn(getText(R.string.switch_camera));
         switchImage.setTextOff(getText(R.string.switch_gallery));
 
-        dateOfAdoption.setOnClickListener(setDateListener);
-        birthDate.setOnClickListener(setDateListener);
-
         getPhoto.setOnClickListener(getPhotoListener);
 
-        addResidentButton = (Button) findViewById(R.id.add_resident);
-        addResidentButton.setOnClickListener(addResident);
+        registerCarerButton = (Button) findViewById(R.id.register_carer);
+        registerCarerButton.setOnClickListener(registerCarer);
 
 
     }
 
 
-    private View.OnClickListener addResident= new View.OnClickListener() {
+    private View.OnClickListener registerCarer= new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
 
             if(file !=null) {
 
-                Log.d(TAG, "TryAddResidentAndUploadPhoto");
+                Log.d(TAG, "TryRegisterCarerAndUploadPhoto");
                 ArrayList<String> params = new ArrayList<>();
 
-                params.add(firstName.getText().toString());
-                params.add(lastName.getText().toString());
-                params.add(dateOfAdoption.getText().toString());
-                params.add(birthDate.getText().toString());
-                params.add(address.getText().toString());
-                params.add(city.getText().toString());
-                params.add(JsonHelper.HOSTNAME_RESIDENTIMAGE + getPhoto.getText().toString());
+                params.add(carerUsername.getText().toString());
+                params.add(carerPassword.getText().toString());
+                params.add(carerFullName.getText().toString());
+                params.add(JsonHelper.HOSTNAME_CARERIMAGE + getPhoto.getText().toString());
+                params.add(carerPhoneNumber.getText().toString());
 
                 for (String param:params) {
 
@@ -111,9 +97,10 @@ public class AddResidentActivity extends AppCompatActivity {
                 }
 
 
-                new UploadPhotoToServer(AddResidentActivity.this).execute(file, params);
+                new UploadPhotoToServer(RegisterCarerActivity.this).execute(file, params);
             }
-            Log.d(TAG, "File = NUll");
+            else{
+            Log.d(TAG, "File = NUll");}
 
         }
     };
@@ -125,55 +112,11 @@ public class AddResidentActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             if (switchImage.isChecked())
-            EasyImage.openCamera(AddResidentActivity.this);
+            EasyImage.openCamera(RegisterCarerActivity.this);
             else
-            EasyImage.openGalleryPicker(AddResidentActivity.this);
+            EasyImage.openGalleryPicker(RegisterCarerActivity.this);
         }
     };
-
-
-    private View.OnClickListener setDateListener= new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-            new DatePickerDialog(AddResidentActivity.this, date, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            currentEditDate = v.getId();
-        }
-    };
-
-
-
-    private DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
-
-    };
-
-    private void updateLabel() {
-
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-
-        if (currentEditDate == dateOfAdoption.getId())
-        dateOfAdoption.setText(sdf.format(myCalendar.getTime()));
-
-        if (currentEditDate == birthDate.getId())
-            birthDate.setText(sdf.format(myCalendar.getTime()));
-    }
-
-
-
 
 
     @Override
@@ -243,7 +186,7 @@ public class AddResidentActivity extends AppCompatActivity {
 
         private ProgressDialog dialog;
 
-        public UploadPhotoToServer(AddResidentActivity activity) {
+        public UploadPhotoToServer(RegisterCarerActivity activity) {
             dialog = new ProgressDialog(activity);
         }
 
@@ -264,11 +207,11 @@ public class AddResidentActivity extends AppCompatActivity {
         protected Void doInBackground(Object... params) {
 
            FileHelper fileHelper = new FileHelper();
-            fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_RESIDENT);
-            ResidentRDH residentRDH = new ResidentRDH();
+            fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_CARER);
+            CarerRDH carerRDH = new CarerRDH();
 
 
-            residentRDH.addResident((ArrayList<String>)params[1]);
+            carerRDH.addCarer((ArrayList<String>) params[1]);
             return null;
         }
 

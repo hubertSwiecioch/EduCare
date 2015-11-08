@@ -46,6 +46,29 @@ public class CarerRDH {
         return carers;
     }
 
+    public void addCarer(ArrayList<String> params){
+
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        for (String param:params) {
+
+            Log.d(TAG, "RDH param: "  + param);
+        }
+
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REGISTER_CARER));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_USERNAME, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_PASSWORD, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_FULLNAME, params.get(2)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_IMAGE, params.get(3)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_PHONENUMBER, params.get(4)));
+
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+        Log.d(TAG, "JSONString: "  + JSONString);
+
+    }
+
     public Carer parseCarer(JSONObject obj) {
         Carer carer = new Carer();
         try {
@@ -53,6 +76,9 @@ public class CarerRDH {
             carer.setFullName((obj.getString(DatabaseColumns.COL_FULL_NAME)));
             carer.setOnlineTest((obj.getString(DatabaseColumns.COL_ONLINE_TEST)));
             carer.setPhoto((obj.getString(DatabaseColumns.COL_PHOTO)));
+            carer.setPhoneNumber((obj.getString(DatabaseColumns.COL_PHONENUMBER)));
+
+
 
         } catch (JSONException e) {
             Log.d(TAG,"parseCarerMessage " +  "JSONException e = " + e.getMessage());

@@ -14,6 +14,7 @@ public class Carer implements Serializable {
     private String ID;
     private String photo;
     private String photoCache;
+    private String phoneNumber;
     private byte[] photoByte;
     private String TAG = "Carer";
 
@@ -84,5 +85,13 @@ public class Carer implements Serializable {
     public void setPhotoCache(String photoCache) {
         Log.d(TAG, "photoCache = " + photoCache);
         this.photoCache = photoCache;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

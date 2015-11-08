@@ -29,9 +29,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.hswie.educaremobile.helper.LoaderDataLoader;
-import com.hswie.educaremobile.helper.JsonHelper;
 import com.hswie.educaremobile.carer.CarerPanel;
+import com.hswie.educaremobile.carer.RegisterCarerActivity;
+import com.hswie.educaremobile.helper.JsonHelper;
+import com.hswie.educaremobile.helper.LoaderDataLoader;
 
 import org.json.JSONObject;
 
@@ -50,9 +51,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public static final String TAG = "LoginActivity";
 
+
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
+
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
@@ -94,6 +98,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return true;
                 }
                 return false;
+            }
+        });
+
+        Button registerCarer = (Button) findViewById(R.id.carer_register_button);
+        registerCarer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG, "StartRegisterCarerFragment");
+                Intent myIntent = new Intent(LoginActivity.this, RegisterCarerActivity.class);
+                LoginActivity.this.startActivity(myIntent);
+
+
             }
         });
 

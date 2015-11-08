@@ -74,7 +74,7 @@ public class ResidentRDH {
     public Resident parseResident(JSONObject obj) {
         Resident resident = new Resident();
         try {
-            resident.setID((obj.getString(DatabaseColumns.COL_FIRST_NAME)));
+            resident.setID((obj.getString(DatabaseColumns.COL_ID)));
             resident.setBirthDate((obj.getString(DatabaseColumns.COL_BIRTH_DATE)));
             resident.setDateOfAdoption((obj.getString(DatabaseColumns.COL_DATE_OF_ADOPTION)));
             resident.setFirstName((obj.getString(DatabaseColumns.COL_FIRST_NAME)));

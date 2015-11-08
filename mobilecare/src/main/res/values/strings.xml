@@ -7,6 +7,7 @@
     <string name="prompt_password">Password (optional)</string>
     <string name="prompt_last_name">Last Name</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_register_carer">Register Carer</string>
     <string name="action_add_resident">Add resident</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -23,11 +24,12 @@
     <string name="title_activity_login_activityl">Sign in</string>
     <string name="residents_list_tab">Residents</string>
     <string name="carers_list_tab">Carers</string>
-    <string name="call_tab">Calls</string>
+    <string name="messages_tab">Messages</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_resident">Add Resident</string>
+    <string name="title_activity_carer_register">Register Carer</string>
     <string name="prompt_dat_of_adoption">Date of adoption</string>
     <string name="prompt_birth_date">Birth date</string>
     <string name="prompt_address">Address</string>
@@ -35,5 +37,13 @@
     <string name="select_image">Select photo</string>
     <string name="switch_gallery">Gallery</string>
     <string name="switch_camera">Camera</string>
+
+
+    <string name="prompt_carer_username">Username(Email)</string>
+    <string name="prompt_carer_password">Password(6 signs)</string>
+    <string name="prompt_carer_fullname">Full Name</string>
+    <string name="prompt_carer_phonenumber">Phone Number</string>
+
+
 
 </resources>
