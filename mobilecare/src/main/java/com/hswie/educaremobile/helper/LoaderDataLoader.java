@@ -43,7 +43,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
             String url = ResidentsModel.get().getResidents().get(i).getPhoto();
             try {
-                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 50, 50);
+                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
                     ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
                     Log.d(TAG, "GetResidentImageFromHttpSuccess");
 
@@ -56,7 +56,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
             String url = CarerModel.get().getCarers().get(i).getPhoto();
             try {
-                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 50, 50);
+                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
                     CarerModel.get().getCarers().get(i).setPhotoByte(imageByte);
                     Log.d(TAG, "GetCarerImageFromHttpSuccess");
 

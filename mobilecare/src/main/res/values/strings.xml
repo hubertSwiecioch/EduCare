@@ -43,6 +43,23 @@
     <string name="prompt_carer_password">Password(6 signs)</string>
     <string name="prompt_carer_fullname">Full Name</string>
     <string name="prompt_carer_phonenumber">Phone Number</string>
+    <string name="title_activity_resident">Resident Overview</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="label_resident_name">Resident Name</string>
+    <string name="label_resident_address">Address</string>
+    <string name="label_resident_tasks">Tasks</string>
+    <string name="label_resident_no_tasks">No tasks</string>
+
+
+
+    <string name="drawer_label_overview">Overview</string>
+    <string name="drawer_label_medicines">Medicines</string>
+    <string name="drawer_label_family">Family</string>
+
+
 
 
 

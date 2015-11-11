@@ -1,6 +1,7 @@
 package com.hswie.educaremobile.carer;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,9 @@ import android.view.ViewGroup;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
+import com.hswie.educaremobile.helper.PreferencesManager;
+import com.hswie.educaremobile.helper.ResidentsModel;
+import com.hswie.educaremobile.resident.ResidentActivity;
 
 
 public class ResidentListFragment extends Fragment implements ResidentAdapter.ResidentAdapterCallbacks {
@@ -85,6 +89,11 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
     public void onListItemClick(int position) {
 
         Log.d(TAG, "Click: " + residentAdapter.getItem(position).getFirstName());
+        PreferencesManager.setCurrentResidentIndex(Integer.parseInt(residentAdapter.getItem(position).getID()));
+        ResidentsModel.get().setCurrentResidentIndex((position));
+
+        Intent myIntent = new Intent(getActivity(), ResidentActivity.class);
+        getActivity().startActivity(myIntent);
     }
 
 

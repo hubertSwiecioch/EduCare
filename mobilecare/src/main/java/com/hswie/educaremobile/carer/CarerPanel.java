@@ -33,6 +33,13 @@ public class CarerPanel extends AppCompatActivity{
 
     private ViewPager mViewPager;
     private boolean isLoading = false;
+    private FloatingActionButton fab;
+
+
+
+    public static int currentPage;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,32 @@ public class CarerPanel extends AppCompatActivity{
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                if (position == 0)
+                    fab.setVisibility(View.VISIBLE);
+                else fab.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -38,4 +38,14 @@
     <string name="prompt_carer_password">Hasło(6 znaków)</string>
     <string name="prompt_carer_fullname">Nazwa</string>
     <string name="prompt_carer_phonenumber">Numer telefonu</string>
+
+    <string name="title_activity_resident">Dane pacjenta</string>
+    <string name="label_resident_name">Imię i Nazwisko</string>
+    <string name="label_resident_address">Adres</string>
+    <string name="label_resident_tasks">Zadania</string>
+    <string name="label_resident_no_tasks">Brak zadań</string>
+
+    <string name="drawer_label_overview">Dane pacjenta</string>
+    <string name="drawer_label_medicines">Przepisane leki</string>
+    <string name="drawer_label_family">Rodzina</string>
 </resources>
