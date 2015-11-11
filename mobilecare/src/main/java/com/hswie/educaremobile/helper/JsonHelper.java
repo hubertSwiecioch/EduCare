@@ -45,6 +45,7 @@ public class JsonHelper {
 
 
     public static final String TAG_SUCCESS = "success";
+    public static final String TAG_ID = "ID";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";
     public static final String TAG_PASSWORD = "password";

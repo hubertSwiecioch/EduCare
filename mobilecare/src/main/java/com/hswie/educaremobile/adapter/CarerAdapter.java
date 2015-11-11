@@ -21,6 +21,7 @@ import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.ImageHelper;
+import com.hswie.educaremobile.helper.PreferencesManager;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,15 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
     public CarerAdapter(CarerAdapterCallbacks residentAdapterCallbacks) {
         this.carerAdapterCallbacks = residentAdapterCallbacks;
         items = CarerModel.get().getCarers();
+        for (int i = 0; i< items.size(); i++){
+
+            if(Integer.parseInt(items.get(i).getID()) == PreferencesManager.getCurrentCarerID()){
+                items.remove(items.get(i));
+                items.trimToSize();
+                break;
+            }
+
+        }
 
     }
 
@@ -61,45 +71,52 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        final Carer carer = items.get(position);
-
-        viewHolder.parentLayout.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        carerAdapterCallbacks.onListItemClick(position);
-                    }
-                });
-
-        viewHolder.firstnameView.setText(carer.getFullName());
-
-        viewHolder.callView.setBackgroundResource(R.drawable.icon_call);
-        viewHolder.callView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.d(TAG, "clickCall");
-                Intent intent = new Intent(Intent.ACTION_CALL);
-
-                intent.setData(Uri.parse("tel:" + carer.getPhoneNumber()));
-                context.startActivity(intent);
-            }
-        });
-
-        Bitmap bitmap;
-        if(carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()){
-
-            Log.d(TAG, "loadPhotoFromByteArray");
-            String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
-                    "carer_" + carer.getID() + ".jpg",
-                    ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
-            carer.setPhotoCache(cachePath);
-            carer.setPhotoByte(null);
-
+        final Carer carer;
+        try {
+            carer = items.get(position);
         }
-        Log.d(TAG, "loadPhotoFromCache:"  + carer.getPhotoCache());
-        bitmap = BitmapFactory.decodeFile(carer.getPhotoCache());
-        viewHolder.photoView.setImageBitmap(bitmap);
+        catch(IndexOutOfBoundsException e){
+            return;
+        }
+
+            viewHolder.parentLayout.setOnClickListener(
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            carerAdapterCallbacks.onListItemClick(position);
+                        }
+                    });
+
+            viewHolder.firstnameView.setText(carer.getFullName());
+
+            viewHolder.callView.setBackgroundResource(R.drawable.icon_call);
+            viewHolder.callView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.d(TAG, "clickCall");
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+
+                    intent.setData(Uri.parse("tel:" + carer.getPhoneNumber()));
+                    context.startActivity(intent);
+                }
+            });
+
+            Bitmap bitmap;
+            if (carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()) {
+
+                Log.d(TAG, "loadPhotoFromByteArray");
+                String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
+                        "carer_" + carer.getID() + ".jpg",
+                        ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
+                carer.setPhotoCache(cachePath);
+                carer.setPhotoByte(null);
+
+            }
+            Log.d(TAG, "loadPhotoFromCache:" + carer.getPhotoCache());
+            bitmap = BitmapFactory.decodeFile(carer.getPhotoCache());
+            viewHolder.photoView.setImageBitmap(bitmap);
+
 
     }
 

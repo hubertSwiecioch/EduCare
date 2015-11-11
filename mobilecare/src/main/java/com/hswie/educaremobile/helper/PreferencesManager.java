@@ -2,6 +2,7 @@ package com.hswie.educaremobile.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by hswie on 11/5/2015.
@@ -28,4 +29,21 @@ public class PreferencesManager {
 
         return index;
     }
+
+    public static void setCurrentCarerID(int id){
+        if(sp != null && id != -1) {
+            Log.d(TAG, "PreferenceManagerOK");
+            sp.edit().putInt("CURRENT_CARER_ID", id).commit();
+        }
+    }
+
+    public static int getCurrentCarerID(){
+        int id = -1;
+        if(sp != null)
+            id = sp.getInt("CURRENT_CARER_ID", -1);
+
+        return id;
+    }
+
+
 }

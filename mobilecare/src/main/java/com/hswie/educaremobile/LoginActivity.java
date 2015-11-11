@@ -29,10 +29,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.carer.CarerPanel;
 import com.hswie.educaremobile.carer.RegisterCarerActivity;
+import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.JsonHelper;
 import com.hswie.educaremobile.helper.LoaderDataLoader;
+import com.hswie.educaremobile.helper.PreferencesManager;
 
 import org.json.JSONObject;
 
@@ -84,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+        PreferencesManager.prepare(this);
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -360,6 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 int success;
+                int currentID;
 
 
                     Long tsLong = System.currentTimeMillis()/1000;
@@ -381,13 +386,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
                     success = json.getInt(JsonHelper.TAG_SUCCESS);
-
+                    currentID = json.getInt(JsonHelper.TAG_ID);
 
                     if (success == 1) {
                         Log.d("Login Successful!", json.toString());
+                        Log.d(TAG, "CurrnetCarerID: " + currentID);
+                        PreferencesManager.setCurrentCarerID(currentID);
+                        Log.d(TAG, "CurrnetCarerID: " + PreferencesManager.getCurrentCarerID());
                         Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
                         LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
                         loaderDataLoader.loadInBackground();
+
                         return true;
                     } else {
                         Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
