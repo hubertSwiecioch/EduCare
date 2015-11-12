@@ -1,7 +1,9 @@
 package com.hswie.educaremobile.resident;
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -167,12 +169,27 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
 
         TaskDialog newFragment = TaskDialog.newInstance(adapter.getItem(position));
         newFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+        newFragment.callback  = new TaskDialog.DismissCallback() {
+            @Override
+            public void dismissTaskDialog() {
+
+                Log.d(TAG, "DISMISS");
+
+            }
+        };
+
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.flContent, newFragment).commit();
         fragmentManager.beginTransaction().show(newFragment).commit();
 
+
+
+
     }
+
+
+
 
     private class GetCarerTasks extends AsyncTask<Void, Void, Void>{
 

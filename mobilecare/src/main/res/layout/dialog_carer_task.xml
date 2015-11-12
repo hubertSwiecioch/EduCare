@@ -46,16 +46,31 @@
         android:scrollbars = "vertical"
         android:textSize="16sp" />
 
-    <Button
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@id/message_body"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/done"
+            android:textColor="@color/colorPrimary"
+            android:width="120dp" />
+
+        <Button
         android:id="@+id/cancel_button"
+            android:layout_below="@id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/close"
-        android:layout_below="@id/message_body"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:textColor="@color/colorPrimary"
         android:width="120dp" />
 
+
+    </RelativeLayout>
 
 </RelativeLayout>

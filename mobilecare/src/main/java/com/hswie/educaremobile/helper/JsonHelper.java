@@ -38,6 +38,7 @@ public class JsonHelper {
     public static final String MOD_GET_CARERS = "getCarersList";
     public static final String MOD_GET_PHOTO = "getPhoto";
     public static final String MOD_ADD_RESIDENT = "addResident";
+    public static final String MOD_SET_TASK_IS_DONE = "setTaskIsDone";
     public static final String MOD_REGISTER_CARER = "registerCarer";
     public static final String MOD_GET_CARER_TASKS = "getCarerTasks";
     public static final String PERSON_TYPE_CARER = "carer";
@@ -60,6 +61,7 @@ public class JsonHelper {
     public static final String TAG_ADDRESS = "address";
     public static final String TAG_CITY = "city";
     public static final String TAG_IMAGE = "image";
+    public static final String TAG_ISDONE = "isDone";
 
 
     public static final String TAG_CARER_USERNAME = "carer_username";

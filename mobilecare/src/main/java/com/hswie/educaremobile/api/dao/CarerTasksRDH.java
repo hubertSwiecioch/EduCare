@@ -68,4 +68,21 @@ public class CarerTasksRDH {
 
         return task;
     }
+
+    public void setIsDone(ArrayList<String> params){
+
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        for (String param:params) {
+
+            Log.d(TAG, "RDH param: "  + param);
+        }
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_SET_TASK_IS_DONE));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ISDONE, params.get(1)));
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+        Log.d(TAG, "JSONString: "  + JSONString);
+    }
 }

@@ -51,6 +51,7 @@
 
     <string name="tasks_empty">Brak zadań</string>
     <string name="close">Zamknij</string>
+    <string name="done">Zrobione</string>
     <string name="date">Data</string>
 
 </resources>
