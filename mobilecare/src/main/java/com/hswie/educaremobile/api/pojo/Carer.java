@@ -3,11 +3,14 @@ package com.hswie.educaremobile.api.pojo;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by hswie on 11/5/2015.
  */
 public class Carer implements Serializable {
+
+    private static final String TAG = "Carer";
 
     private String fullName;
     private String onlineTest;
@@ -16,7 +19,8 @@ public class Carer implements Serializable {
     private String photoCache;
     private String phoneNumber;
     private byte[] photoByte;
-    private String TAG = "Carer";
+
+    private ArrayList<CarerTask> carerTasks;
 
 
     public boolean contains(String query) {
@@ -93,5 +97,14 @@ public class Carer implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+
+    public ArrayList<CarerTask> getCarerTasks() {
+        return carerTasks;
+    }
+
+    public void setCarerTasks(ArrayList<CarerTask> carerTasks) {
+        this.carerTasks = carerTasks;
     }
 }

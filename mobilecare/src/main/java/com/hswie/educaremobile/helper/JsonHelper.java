@@ -39,13 +39,14 @@ public class JsonHelper {
     public static final String MOD_GET_PHOTO = "getPhoto";
     public static final String MOD_ADD_RESIDENT = "addResident";
     public static final String MOD_REGISTER_CARER = "registerCarer";
-
+    public static final String MOD_GET_CARER_TASKS = "getCarerTasks";
     public static final String PERSON_TYPE_CARER = "carer";
     public static final String PERSON_TYPE_RESIDENT = "resident";
 
 
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_ID = "ID";
+    public static final String TAG_CARER_ID = "carerID";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";
     public static final String TAG_PASSWORD = "password";
@@ -85,6 +86,7 @@ public class JsonHelper {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(loginUrl);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
+                Log.d(TAG,"Params: " + new UrlEncodedFormEntity(params));
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();

@@ -42,7 +42,7 @@ public class ResidentActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
@@ -60,6 +60,8 @@ public class ResidentActivity extends AppCompatActivity
                 Log.d(TAG, "CurrentResident: " + resident.getFirstName());
                 Bitmap avatar = BitmapFactory.decodeFile(resident.getPhotoCache());
                 headerAvatar.setImageBitmap(avatar);
+
+
             }
         };
         drawer.setDrawerListener(toggle);
@@ -129,16 +131,16 @@ public class ResidentActivity extends AppCompatActivity
         Class fragmentClass = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_first_fragment) {
+        if (id == R.id.nav_overview_fragment) {
             fragmentClass  = OverviewFragment.newInstance("0", "Overview").getClass();
+            fab.setVisibility(View.VISIBLE);
 
-
-        } else if (id == R.id.nav_second_fragment) {
+        } else if (id == R.id.nav_medicines_fragment) {
             fragmentClass = PrescribedMedicines.newInstance("1", "PrescribedMedicines").getClass();
-
-        } else if (id == R.id.nav_third_fragment) {
+            fab.setVisibility(View.INVISIBLE);
+        } else if (id == R.id.nav_family_fragment) {
             fragmentClass = FamilyListFragment.newInstance("2", "FamilyList").getClass();
-
+            fab.setVisibility(View.INVISIBLE);
         }
 
         try {

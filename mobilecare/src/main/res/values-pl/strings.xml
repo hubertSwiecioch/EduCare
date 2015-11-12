@@ -48,4 +48,9 @@
     <string name="drawer_label_overview">Dane pacjenta</string>
     <string name="drawer_label_medicines">Przepisane leki</string>
     <string name="drawer_label_family">Rodzina</string>
+
+    <string name="tasks_empty">Brak zadań</string>
+    <string name="close">Zamknij</string>
+    <string name="date">Data</string>
+
 </resources>

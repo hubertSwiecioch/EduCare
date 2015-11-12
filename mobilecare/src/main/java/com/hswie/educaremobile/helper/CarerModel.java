@@ -29,12 +29,12 @@ public class CarerModel {
 
     public void setCurrentCarerIndex(Carer carer) {
         currentCarerIndex = carers.indexOf(carer);
-        PreferencesManager.setCurrentResidentIndex(currentCarerIndex);
+        PreferencesManager.setCurrentCarerIndex(currentCarerIndex);
     }
 
     public void setCurrentCarerIndex(int index) {
         currentCarerIndex = index;
-        PreferencesManager.setCurrentResidentIndex(currentCarerIndex);
+        PreferencesManager.setCurrentCarerIndex(currentCarerIndex);
     }
 
     public void setCurrentCarer(Carer carer) {

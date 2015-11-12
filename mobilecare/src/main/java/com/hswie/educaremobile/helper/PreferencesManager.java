@@ -30,6 +30,19 @@ public class PreferencesManager {
         return index;
     }
 
+    public static void setCurrentCarerIndex(int index){
+        if(sp != null && index != -1)
+            sp.edit().putInt("CURRENT_CARER", index).commit();
+    }
+
+    public static int getCurrentCarerIndex(){
+        int index = -1;
+        if(sp != null)
+            index = sp.getInt("CURRENT_CARER", -1);
+
+        return index;
+    }
+
     public static void setCurrentCarerID(int id){
         if(sp != null && id != -1) {
             Log.d(TAG, "PreferenceManagerOK");

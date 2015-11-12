@@ -59,6 +59,12 @@
     <string name="drawer_label_medicines">Medicines</string>
     <string name="drawer_label_family">Family</string>
 
+    <string name="tasks_empty">No tasks</string>
+    <string name="close">Close</string>
+    <string name="date">Date</string>
+
+
+
 
 
 

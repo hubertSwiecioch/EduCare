@@ -45,7 +45,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
     public CarerAdapter(CarerAdapterCallbacks residentAdapterCallbacks) {
         this.carerAdapterCallbacks = residentAdapterCallbacks;
-        items = CarerModel.get().getCarers();
+        items = (ArrayList<Carer>)CarerModel.get().getCarers().clone();
         for (int i = 0; i< items.size(); i++){
 
             if(Integer.parseInt(items.get(i).getID()) == PreferencesManager.getCurrentCarerID()){

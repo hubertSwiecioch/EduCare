@@ -3,4 +3,32 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+        <item name="indigo" type="color">#021831</item>
+        <item name="indigo_light" type="color">#f2f6fa</item>
+        <item name="green" type="color">#3aa300</item>
+        <item name="red" type="color">#de0000</item>
+        <item name="orange" type="color">#ff6600</item>
+        <item name="gray" type="color">#aaaaaa</item>
+
+
+        <item type="color" name="primary">#123761</item>
+        <item type="color" name="primary_grey">#6E6E6E</item>
+        <item type="color" name="primary_dark_grey">#4C4C4C</item>
+        <item type="color" name="primary_light">#315e91</item>
+        <item type="color" name="primary_dark">#0a2138</item>
+        <item type="color" name="accent">#f6272c</item>
+        <item type="color" name="accent_green">#4caf50</item>
+        <item type="color" name="accent_green_light">#7adc7e</item>
+        <item type="color" name="accent_yellow">#ffd600</item>
+        <item type="color" name="menu_text_primary">#ffffff</item>
+        <item type="color" name="window">#f2f6fa</item>
+        <item type="color" name="text_primary">#000000</item>
+        <item type="color" name="text_additional">#aaaaaa</item>
+        <item type="color" name="primary_pressed">#629bd4</item>
+
+        <item type="color" name="white">#FFFFFF</item>
+
+
 </resources>

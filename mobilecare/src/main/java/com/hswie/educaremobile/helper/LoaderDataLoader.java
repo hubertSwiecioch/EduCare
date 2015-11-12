@@ -5,8 +5,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hswie.educaremobile.api.dao.CarerRDH;
+import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
+import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.api.pojo.Resident;
 
 import java.io.IOException;
@@ -32,6 +34,24 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
         ResidentsModel.get().setResidents(residentRDH.getAllResidents());
         CarerModel.get().setCarers(carerRDH.getAllCarers());
+
+        for (Carer carer: CarerModel.get().getCarers()) {
+
+            if(Integer.parseInt(carer.getID()) == PreferencesManager.getCurrentCarerID()){
+                CarerModel.get().setCurrentCarerIndex(carer);
+                Log.d(TAG, "SetCurrentCarerID: " + CarerModel.get().getCurrentCarer().getID());
+            }
+
+
+        }
+
+        CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+        Log.d(TAG, "CurrentCarerPreferencesManager: " + PreferencesManager.getCurrentCarerID());
+        Log.d(TAG, "CurrentCarerCarerModel: " + CarerModel.get().getCurrentCarer().getID());
+
+        ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
+        CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
+        Log.d(TAG, "CurrentCarerTasksL: " + CarerModel.get().getCurrentCarer().getCarerTasks().get(0).getHeader());
 
 
 

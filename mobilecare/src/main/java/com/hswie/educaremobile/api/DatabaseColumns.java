@@ -16,5 +16,14 @@ public class DatabaseColumns {
     public static final String COL_CITY = "city";
     public static final String COL_PHOTO = "image";
     public static final String COL_PHONENUMBER = "phone_number";
+    public static final String COL_DESCRIPTION = "description";
+    public static final String COL_DATE = "date";
+    public static final String COL_RESIDENT_ID = "resident_ID";
+    public static final String COL_CARER_ID = "carer_ID";
+    public static final String COL_HEADER = "header";
+    public static final String COL_IS_DONE = "is_done";
+
+
+
 
 }

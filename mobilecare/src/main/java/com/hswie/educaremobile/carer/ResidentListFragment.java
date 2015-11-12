@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
+import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
 import com.hswie.educaremobile.resident.ResidentActivity;
@@ -91,6 +92,7 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         Log.d(TAG, "Click: " + residentAdapter.getItem(position).getFirstName());
         PreferencesManager.setCurrentResidentIndex(Integer.parseInt(residentAdapter.getItem(position).getID()));
         ResidentsModel.get().setCurrentResidentIndex((position));
+        //ResidentsModel.get().setCurrentResident(residentAdapter.getItem(position));
 
         Intent myIntent = new Intent(getActivity(), ResidentActivity.class);
         getActivity().startActivity(myIntent);
