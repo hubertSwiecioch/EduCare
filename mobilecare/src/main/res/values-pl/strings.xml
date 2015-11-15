@@ -62,4 +62,7 @@
     <string name="prompt_task_resident">Pacjent</string>
     <string name="title_add_task">NOWE ZADANIE</string>
 
+    <string name="carer">Opiekun</string>
+    <string name="resident">Pacjent</string>
+
 </resources>

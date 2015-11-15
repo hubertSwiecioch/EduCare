@@ -71,6 +71,9 @@
     <string name="prompt_task_resident">Resident</string>
     <string name="title_add_task">NEW TASK</string>
 
+    <string name="carer">Carer</string>
+    <string name="resident">Resident</string>
+
 
 
 

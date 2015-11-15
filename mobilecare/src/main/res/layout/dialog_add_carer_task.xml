@@ -3,8 +3,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:isScrollContainer="true"
     android:background="@drawable/rounded_layout"
     android:padding="@dimen/activity_padding" >
+
+
+
+    <RelativeLayout
+        android:id="@+id/message_scroll_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_layout"
+        android:padding="@dimen/activity_padding" >
 
 
     <TextView
@@ -53,11 +64,19 @@
         android:singleLine="true" />
 
 
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:nestedScrollingEnabled="true"
+        android:layout_below="@+id/date_task"
+        android:layout_height="100dp"
+        android:layout_width="wrap_content"/>
+
+
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_below="@id/date_task"
+            android:layout_below="@id/lvExp"
             android:layout_height="wrap_content">
 
             <Button
@@ -76,6 +95,10 @@
                 android:text="@string/close"
                 android:textColor="@color/colorPrimary"
                 android:width="120dp" />
+
+
+
+        </RelativeLayout>
 
 
     </RelativeLayout>

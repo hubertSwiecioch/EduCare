@@ -12,22 +12,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
+import com.hswie.educaremobile.adapter.ExpandableListAdapter;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
+import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.CarerTask;
+import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
+import com.hswie.educaremobile.helper.ResidentsModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class AddTaskDialog extends DialogFragment {
     private static final String TAG = "AddTaskDialog";
 
 
-
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
 
 
 
@@ -42,6 +52,7 @@ public class AddTaskDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         if(getArguments() != null){
 
@@ -65,6 +76,38 @@ public class AddTaskDialog extends DialogFragment {
         View rootView = inflater.inflate(R.layout.dialog_add_carer_task, container, false);
 
 
+        // get the listview
+        expListView = (ExpandableListView) rootView.findViewById(R.id.lvExp);
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                if(groupPosition == 0){
+
+                    expListView.setSelectedChild(groupPosition,childPosition,true);
+                    expListView.collapseGroup(groupPosition);
+
+                }
+
+                if(groupPosition == 1){
+
+                    expListView.setSelectedChild(groupPosition,childPosition,true);
+                    expListView.collapseGroup(groupPosition);
+
+                }
+                return false;
+            }
+        });
+
+        // preparing list data
+        prepareListData();
+
+        listAdapter = new ExpandableListAdapter(this.getContext(), listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
+
+
 
         Button cancelButton = (Button) rootView.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new OnClickListener() {
@@ -82,10 +125,41 @@ public class AddTaskDialog extends DialogFragment {
             public void onClick(View v) {
 
 
+
             }
         });
 
         return rootView;
+    }
+
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        // Adding child data
+        listDataHeader.add(getString(R.string.carer));
+        listDataHeader.add(getString(R.string.resident));
+
+        // Adding child data
+        List<String> carersList = new ArrayList<String>();
+
+        for (Carer carer: CarerModel.get().getCarers()) {
+
+            carersList.add(carer.getFullName());
+        }
+
+
+        List<String> residentsList = new ArrayList<String>();
+
+        for (Resident resident: ResidentsModel.get().getResidents()) {
+
+            residentsList.add(resident.getFirstName() + " " + resident.getLastName());
+        }
+
+
+        listDataChild.put(listDataHeader.get(0), carersList); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), residentsList);
     }
 
 
