@@ -1,14 +1,11 @@
 package com.hswie.educaremobile.resident;
 
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,13 +17,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.CarerTasksAdapter;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
-import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.dialog.TaskDialog;
@@ -56,6 +53,7 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
     private Context context;
     private RecyclerView messagesRV;
     private CarerTasksAdapter adapter;
+    private TaskDialog taskDialog;
 
 
     public static OverviewFragment newInstance(String param1, String param2) {
@@ -167,9 +165,10 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
     @Override
     public void onListItemClick(int position) {
 
-        TaskDialog newFragment = TaskDialog.newInstance(adapter.getItem(position));
-        newFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
-        newFragment.callback  = new TaskDialog.DismissCallback() {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        taskDialog = TaskDialog.newInstance(adapter.getItem(position));
+        taskDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+        taskDialog.callback  = new TaskDialog.DismissCallback() {
             @Override
             public void dismissTaskDialog() {
 
@@ -177,19 +176,20 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
 
             }
         };
-
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.flContent, newFragment).commit();
-        fragmentManager.beginTransaction().show(newFragment).commit();
-
-
+        taskDialog.show(fragmentTransaction, "taskDialog");
 
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "OnDestory");
 
+//        if(taskDialog != null)
+//            taskDialog.dismiss();
 
+    }
 
     private class GetCarerTasks extends AsyncTask<Void, Void, Void>{
 

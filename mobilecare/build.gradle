@@ -35,4 +35,5 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
     compile 'cz.msebera.android:httpclient:4.4.1.1'
     compile 'com.github.jkwiecien:EasyImage:1.0.6'
+
 }

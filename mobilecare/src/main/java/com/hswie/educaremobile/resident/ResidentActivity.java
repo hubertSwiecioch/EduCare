@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +26,8 @@ import android.widget.ImageView;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.carer.AddResidentActivity;
+import com.hswie.educaremobile.dialog.AddTaskDialog;
+import com.hswie.educaremobile.dialog.TaskDialog;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 public class ResidentActivity extends AppCompatActivity
@@ -32,7 +36,8 @@ public class ResidentActivity extends AppCompatActivity
     private static final String TAG = "ResidentActivity";
     private Resident resident;
     private ImageView headerAvatar;
-    private FloatingActionButton fab;
+    public static FloatingActionButton fab;
+    private AddTaskDialog addTaskDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,10 @@ public class ResidentActivity extends AppCompatActivity
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                if(addTaskDialog != null)
+                    addTaskDialog.dismiss();
+
+
                 headerAvatar = (ImageView) findViewById(R.id.imageViewHeaderAvatar);
                 resident = ResidentsModel.get().getCurrentResident();
                 Log.d(TAG, "CurrentResident: " + resident.getFirstName());
@@ -79,6 +88,37 @@ public class ResidentActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 Log.d(TAG, TAG);
+
+
+//                addTaskDialog = AddTaskDialog.newInstance();
+//                addTaskDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+//                addTaskDialog.callback  = new AddTaskDialog.DismissCallback() {
+//                    @Override
+//                    public void dismissTaskDialog() {
+//
+//                        Log.d(TAG, "DISMISS");
+//                        fab.setVisibility(View.VISIBLE);
+//
+//                    }
+//                };
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                fragmentManager.beginTransaction().add(R.id.flContent, addTaskDialog).commit();
+//                fragmentManager.beginTransaction().show(addTaskDialog).commit();
+
+
+
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                addTaskDialog = AddTaskDialog.newInstance();
+                addTaskDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+                addTaskDialog.callback  = new AddTaskDialog.DismissCallback() {
+                    @Override
+                    public void dismissTaskDialog() {
+
+                        Log.d(TAG, "DISMISS");
+
+                    }
+                };
+                addTaskDialog.show(fragmentTransaction, "addTaskDialog");
 
             }
         });
@@ -134,7 +174,6 @@ public class ResidentActivity extends AppCompatActivity
         if (id == R.id.nav_overview_fragment) {
             fragmentClass  = OverviewFragment.newInstance("0", "Overview").getClass();
             fab.setVisibility(View.VISIBLE);
-
         } else if (id == R.id.nav_medicines_fragment) {
             fragmentClass = PrescribedMedicines.newInstance("1", "PrescribedMedicines").getClass();
             fab.setVisibility(View.INVISIBLE);
@@ -142,7 +181,6 @@ public class ResidentActivity extends AppCompatActivity
             fragmentClass = FamilyListFragment.newInstance("2", "FamilyList").getClass();
             fab.setVisibility(View.INVISIBLE);
         }
-
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -150,7 +188,7 @@ public class ResidentActivity extends AppCompatActivity
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment, "currentFragment").commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

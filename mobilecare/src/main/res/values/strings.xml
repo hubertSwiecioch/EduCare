@@ -63,6 +63,13 @@
     <string name="close">Close</string>
     <string name="done">Done</string>
     <string name="date">Date</string>
+    <string name="add">Add</string>
+    <string name="prompt_task_title">Title</string>
+    <string name="prompt_task_description">Description</string>
+    <string name="prompt_task_date">Date</string>
+    <string name="prompt_task_carer">Carer</string>
+    <string name="prompt_task_resident">Resident</string>
+    <string name="title_add_task">NEW TASK</string>
 
 
 

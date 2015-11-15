@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/cardview_light_background"
         android:textSize="22sp" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_below="@id/message_title"
-        android:textColor="@color/text_additional"
+        android:textColor="@color/cardview_light_background"
         android:textSize="16sp" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_below="@id/message_sent"
-        android:textColor="@color/text_additional"
+        android:textColor="@color/cardview_light_background"
         android:textSize="16sp" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/message_date"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/cardview_light_background"
         android:maxLines = "10"
         android:scrollbars = "vertical"
         android:textSize="16sp" />

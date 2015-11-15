@@ -53,5 +53,13 @@
     <string name="close">Zamknij</string>
     <string name="done">Zrobione</string>
     <string name="date">Data</string>
+    <string name="add">Dodaj</string>
+
+    <string name="prompt_task_title">Tytuł</string>
+    <string name="prompt_task_description">Opis</string>
+    <string name="prompt_task_date">Date</string>
+    <string name="prompt_task_carer">Opiekun</string>
+    <string name="prompt_task_resident">Pacjent</string>
+    <string name="title_add_task">NOWE ZADANIE</string>
 
 </resources>

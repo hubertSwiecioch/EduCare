@@ -23,13 +23,10 @@ import com.hswie.educaremobile.helper.DateTimeConvert;
 import java.util.ArrayList;
 
 
-public class TaskDialog extends DialogFragment {
-    private static final String TAG = "ConfirmCallDialog";
+public class AddTaskDialog extends DialogFragment {
+    private static final String TAG = "AddTaskDialog";
 
-    private String title = "";
-    private String message = "";
-    private String id;
-    private long date = 0;
+
 
 
 
@@ -46,12 +43,8 @@ public class TaskDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if(getArguments() != null){
-            title = getArguments().getString("TITLE");
-            message = getArguments().getString("BODY");
-            date = getArguments().getLong("DATE");
-            id = getArguments().getString("ID");
+
         }
     }
 
@@ -69,17 +62,9 @@ public class TaskDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_carer_task, container, false);
+        View rootView = inflater.inflate(R.layout.dialog_add_carer_task, container, false);
 
-        TextView titleText = (TextView) rootView.findViewById(R.id.message_title);
-        titleText.setText(title);
 
-        TextView bodyText = (TextView) rootView.findViewById(R.id.message_body);
-        bodyText.setText(message);
-        bodyText.setMovementMethod(new ScrollingMovementMethod());
-
-        TextView dateText = (TextView) rootView.findViewById(R.id.message_date);
-        dateText.setText(getString(R.string.date) + " " + DateTimeConvert.getDateTime(getActivity(), date));
 
         Button cancelButton = (Button) rootView.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new OnClickListener() {
@@ -91,21 +76,12 @@ public class TaskDialog extends DialogFragment {
             }
         });
 
-        Button doneButton = (Button) rootView.findViewById(R.id.done_button);
-        doneButton.setOnClickListener(new OnClickListener() {
+        Button addButton = (Button) rootView.findViewById(R.id.add_button);
+        addButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ArrayList<String> params = new ArrayList<String>();
 
-                params.add(id);
-                params.add("1");
-
-
-                new setIsDone().execute(params);
-
-                onReturnToOverview();
-                dismiss();
             }
         });
 
@@ -113,29 +89,24 @@ public class TaskDialog extends DialogFragment {
     }
 
 
-    private class setIsDone extends AsyncTask<Object, Void, Void>{
+    private class addTask extends AsyncTask<Object, Void, Void>{
 
 
         @Override
         protected Void doInBackground(Object... params) {
 
-            CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
-            carerTasksRDH.setIsDone((ArrayList<String>) params[0]);
-            CarerModel.get().getCurrentCarer().setCarerTasks(carerTasksRDH.getCarerTasks(CarerModel.get().getCurrentCarer().getID()));
+
 
             return null;
 
         }
     }
 
-    public static TaskDialog newInstance(CarerTask task){
+    public static AddTaskDialog newInstance(){
         Bundle args = new Bundle();
-        args.putString("TITLE", task.getHeader());
-        args.putString("BODY", task.getDescription());
-        args.putLong("DATE", task.getDate());
-        args.putString("ID", task.getId());
 
-        TaskDialog dialog = new TaskDialog();
+
+        AddTaskDialog dialog = new AddTaskDialog();
         dialog.setArguments(args);
 
         return dialog;
