@@ -1,6 +1,7 @@
 package com.hswie.educaremobile.dialog;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -25,9 +28,12 @@ import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 
 public class AddTaskDialog extends DialogFragment {
@@ -36,12 +42,27 @@ public class AddTaskDialog extends DialogFragment {
 
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
-    private List<String> listDataHeader;
+    private ArrayList<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
+    private Calendar myCalendar = Calendar.getInstance();
+    private int currentEditDate = -1;
 
+
+    private ArrayList<Carer> carers;
+    private ArrayList<Resident> residents;
+    private String carersHeader;
+    private String residentsHeader;
+
+    int carerPosition;
+    int residentPosition;
+
+
+
+    private EditText taskDate, taskHeader, taskDescription;
 
 
     public DismissCallback callback;
+
 
     void onReturnToOverview() {
         callback.dismissTaskDialog();
@@ -52,6 +73,12 @@ public class AddTaskDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        carers = CarerModel.get().getCarers();
+        residents = ResidentsModel.get().getResidents();
+
+        carersHeader = (getString(R.string.carer));
+        residentsHeader =(getString(R.string.resident));
 
 
         if(getArguments() != null){
@@ -73,7 +100,14 @@ public class AddTaskDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.dialog_add_carer_task, container, false);
+
+        taskDate = (EditText) rootView.findViewById(R.id.date_task);
+        taskDate.setOnClickListener(setDateListener);
+
+        taskHeader = (EditText) rootView.findViewById(R.id.new_task_header);
+        taskDescription = (EditText) rootView.findViewById(R.id.new_task_description);
 
 
         // get the listview
@@ -84,15 +118,39 @@ public class AddTaskDialog extends DialogFragment {
 
                 if(groupPosition == 0){
 
-                    expListView.setSelectedChild(groupPosition,childPosition,true);
+                    expListView.setSelectedChild(groupPosition, childPosition, true);
+                    expListView.setItemChecked(childPosition, true);
                     expListView.collapseGroup(groupPosition);
+                    carerPosition = childPosition;
+
+                    Log.d(TAG, "GroupPosition " + groupPosition + "ChildPosition " + childPosition +
+                            "CarerFullName: " + CarerModel.get().getCarers().get(childPosition).getFullName());
+
+                    carersHeader = carers.get(childPosition).getFullName();
+                    prepareListData();
+                    Log.d(TAG, "listDataChild: " + listDataChild.size());
+                    listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                    expListView.setAdapter(listAdapter);
+
+
+
 
                 }
 
-                if(groupPosition == 1){
+                if(groupPosition == 1) {
 
-                    expListView.setSelectedChild(groupPosition,childPosition,true);
+                    expListView.setSelectedChild(groupPosition, childPosition, true);
+                    expListView.setItemChecked(childPosition, true);
                     expListView.collapseGroup(groupPosition);
+                    residentPosition = childPosition;
+                    Log.d(TAG, "GroupPosition " + groupPosition + "ChildPosition " + childPosition +
+                            "ResidentFullName : " + ResidentsModel.get().getResidents().get(childPosition).getFirstName());
+
+
+                    residentsHeader = residents.get(childPosition).getFirstName() + " " +  residents.get(childPosition).getLastName();
+                    prepareListData();
+                    listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+                    expListView.setAdapter(listAdapter);
 
                 }
                 return false;
@@ -125,6 +183,14 @@ public class AddTaskDialog extends DialogFragment {
             public void onClick(View v) {
 
 
+                ArrayList<String> params = new ArrayList<String>();
+
+                params.add(taskHeader.getText().toString());
+                params.add(taskDescription.getText().toString());
+                params.add(carers.get(carerPosition).getID());
+                params.add(residents.get(residentPosition).getID());
+
+
 
             }
         });
@@ -133,26 +199,66 @@ public class AddTaskDialog extends DialogFragment {
     }
 
 
+    private View.OnClickListener setDateListener= new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            new DatePickerDialog(getContext(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            currentEditDate = v.getId();
+        }
+    };
+
+
+
+    private DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
+
+    private void updateLabel() {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+
+        if (currentEditDate == taskDate.getId())
+            taskDate.setText(sdf.format(myCalendar.getTime()));
+
+
+    }
+
+
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
         // Adding child data
-        listDataHeader.add(getString(R.string.carer));
-        listDataHeader.add(getString(R.string.resident));
+        listDataHeader.add(carersHeader);
+        listDataHeader.add(residentsHeader);
 
         // Adding child data
-        List<String> carersList = new ArrayList<String>();
 
-        for (Carer carer: CarerModel.get().getCarers()) {
+        List<String> carersList = new ArrayList<String>();
+        for (Carer carer: carers) {
 
             carersList.add(carer.getFullName());
         }
 
 
-        List<String> residentsList = new ArrayList<String>();
 
-        for (Resident resident: ResidentsModel.get().getResidents()) {
+        List<String> residentsList = new ArrayList<String>();
+        for (Resident resident: residents) {
 
             residentsList.add(resident.getFirstName() + " " + resident.getLastName());
         }

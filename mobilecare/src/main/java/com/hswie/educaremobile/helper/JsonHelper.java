@@ -41,6 +41,7 @@ public class JsonHelper {
     public static final String MOD_SET_TASK_IS_DONE = "setTaskIsDone";
     public static final String MOD_REGISTER_CARER = "registerCarer";
     public static final String MOD_GET_CARER_TASKS = "getCarerTasks";
+    public static final String MOD_ADD_TASK = "addTask";
     public static final String PERSON_TYPE_CARER = "carer";
     public static final String PERSON_TYPE_RESIDENT = "resident";
 
@@ -48,6 +49,7 @@ public class JsonHelper {
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_ID = "ID";
     public static final String TAG_CARER_ID = "carerID";
+    public static final String TAG_RESIDENT_ID = "residentID";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_USERNAME = "username";
     public static final String TAG_PASSWORD = "password";
@@ -58,10 +60,13 @@ public class JsonHelper {
     public static final String TAG_LASTNAME = "lastname";
     public static final String TAG_DATEOFADOPTION = "dateofadoption";
     public static final String TAG_BIRTHDATE = "birthdate";
+    public static final String TAG_DATE = "date";
     public static final String TAG_ADDRESS = "address";
     public static final String TAG_CITY = "city";
     public static final String TAG_IMAGE = "image";
     public static final String TAG_ISDONE = "isDone";
+    public static final String TAG_HEADER = "header";
+    public static final String TAG_DESCRIPTION = "description";
 
 
     public static final String TAG_CARER_USERNAME = "carer_username";

@@ -1,5 +1,7 @@
 package com.hswie.educaremobile.helper;
 
+import android.util.Log;
+
 import com.hswie.educaremobile.api.pojo.Carer;
 
 
@@ -10,6 +12,7 @@ import java.util.ArrayList;
  */
 public class CarerModel {
 
+    private static final String TAG = "CarerModel";
     private static CarerModel carerModel = null;
     private ArrayList<Carer> carers;
     private int currentCarerIndex;
@@ -67,6 +70,28 @@ public class CarerModel {
 
     public ArrayList<Carer> getCarers() {
         return carers;
+    }
+
+    public ArrayList<Carer> getCarersWithoutCurrent() {
+
+        ArrayList<Carer> items  = new ArrayList<>();
+        items = (ArrayList<Carer>)CarerModel.get().getCarers().clone();
+        for (int i = 0; i< items.size(); i++){
+
+            if(Integer.parseInt(items.get(i).getID()) == PreferencesManager.getCurrentCarerID()){
+                Log.d(TAG, "RemoveCarer:" + items.get(i).getFullName() + "ItmesSize:" + items.size());
+
+                items.remove(items.get(i));
+                items.trimToSize();
+
+                break;
+            }
+
+        }
+
+        Log.d(TAG,"ItmesSize:" + items.size());
+
+        return items;
     }
 
     public void setCarers(ArrayList<Carer> carers) {

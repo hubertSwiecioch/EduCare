@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * Residents ListView's adapter.
  */
 public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> {
-    private static final String TAG = "ResidentAdapter";
+    private static final String TAG = "CarerAdapter";
 
 
 //    public static AnimationDrawable frameAnimation;
@@ -44,22 +44,18 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
     private CarerAdapterCallbacks carerAdapterCallbacks;
 
     public CarerAdapter(CarerAdapterCallbacks residentAdapterCallbacks) {
+        Log.d(TAG, "CarerAdapter");
         this.carerAdapterCallbacks = residentAdapterCallbacks;
-        items = (ArrayList<Carer>)CarerModel.get().getCarers().clone();
-        for (int i = 0; i< items.size(); i++){
+        items = (ArrayList<Carer>)CarerModel.get().getCarersWithoutCurrent().clone();
 
-            if(Integer.parseInt(items.get(i).getID()) == PreferencesManager.getCurrentCarerID()){
-                items.remove(items.get(i));
-                items.trimToSize();
-                break;
-            }
 
-        }
+        Log.d(TAG,"ItmesSize:" + items.size());
 
     }
 
     @Override
     public CarerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder");
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.carer_list_item, null);
 
@@ -71,6 +67,8 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        Log.d(TAG, "onBindViewHolder");
+        Log.d(TAG,"onBindViewHolderItmesSize:" + items.size());
         final Carer carer;
         try {
             carer = items.get(position);
@@ -122,10 +120,12 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount");
         return items.size();
     }
 
     public Carer getItem(int position){
+        Log.d(TAG, "getItem");
         return items.get(position);
     }
 
@@ -140,7 +140,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
     public void filterItems(String query){
         ArrayList<Carer> filteredItems = new ArrayList<>();
         Log.d(TAG, "items size: " + items.size());
-        for (Carer item : CarerModel.get().getCarers()) {
+        for (Carer item : CarerModel.get().getCarersWithoutCurrent()) {
             if (item.contains(query))
                 filteredItems.add(item);
         }
@@ -152,7 +152,8 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
     }
 
     public void resetItems(){
-        items = CarerModel.get().getCarers();
+        Log.d(TAG, "resetItems");
+        items = CarerModel.get().getCarersWithoutCurrent();
         notifyDataSetChanged();
     }
 
