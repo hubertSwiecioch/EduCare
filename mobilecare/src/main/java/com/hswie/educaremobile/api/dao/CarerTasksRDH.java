@@ -80,6 +80,11 @@ public class CarerTasksRDH {
 
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_ADD_TASK));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_ID, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_RESIDENT_ID, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_HEADER, params.get(2)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_DATE, params.get(3)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_DESCRIPTION, params.get(4)));
 
 
 

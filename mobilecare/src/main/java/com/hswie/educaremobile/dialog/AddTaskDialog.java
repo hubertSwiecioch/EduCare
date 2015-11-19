@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ExpandableListAdapter;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
-import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
@@ -183,12 +180,19 @@ public class AddTaskDialog extends DialogFragment {
             public void onClick(View v) {
 
 
+
                 ArrayList<String> params = new ArrayList<String>();
 
-                params.add(taskHeader.getText().toString());
-                params.add(taskDescription.getText().toString());
                 params.add(carers.get(carerPosition).getID());
                 params.add(residents.get(residentPosition).getID());
+                params.add(taskHeader.getText().toString());
+                params.add(Long.toString(myCalendar.getTimeInMillis() /1000));
+                params.add(taskDescription.getText().toString());
+
+                new addTask().execute(params);
+                dismiss();
+
+
 
 
 
@@ -275,6 +279,9 @@ public class AddTaskDialog extends DialogFragment {
         @Override
         protected Void doInBackground(Object... params) {
 
+
+            CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+            carerTasksRDH.addCarerTask((ArrayList<String>) params[0]);
 
 
             return null;

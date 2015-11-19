@@ -51,7 +51,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
         ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
         CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
-        Log.d(TAG, "CurrentCarerTasksL: " + CarerModel.get().getCurrentCarer().getCarerTasks().get(0).getHeader());
+        //Log.d(TAG, "CurrentCarerTasksL: " + CarerModel.get().getCurrentCarer().getCarerTasks().get(0).getHeader());
 
 
 
