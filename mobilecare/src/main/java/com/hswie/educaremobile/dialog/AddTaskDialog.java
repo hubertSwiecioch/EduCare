@@ -193,9 +193,6 @@ public class AddTaskDialog extends DialogFragment {
                 dismiss();
 
 
-
-
-
             }
         });
 

@@ -31,7 +31,7 @@
     <string name="title_activity_add_resident">Add Resident</string>
     <string name="title_activity_carer_register">Register Carer</string>
     <string name="prompt_dat_of_adoption">Date of adoption</string>
-    <string name="prompt_birth_date">Birth date</string>
+    <string name="prompt_birth_date">Birth sendDate</string>
     <string name="prompt_address">Address</string>
     <string name="prompt_city">City</string>
     <string name="select_image">Select photo</string>
@@ -73,6 +73,9 @@
 
     <string name="carer">Carer</string>
     <string name="resident">Resident</string>
+
+    <string name="from">From</string>
+    <string name="message_empty">Messsage list is empty</string>
 
 
 

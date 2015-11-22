@@ -52,6 +52,26 @@ public class CarerModel {
         return null;
     }
 
+    public Carer getCarerByID(String carerID){
+
+
+
+        for (Carer item: this.getCarers()) {
+
+            if(item.getID().equals(carerID)){
+
+                return item;
+            }
+
+        }
+
+        return null;
+    }
+
+
+
+
+
     public boolean setCurrentCarerOverview(Carer carer){
         if(currentCarerIndex >= 0 && carers.size() > 0 && carer != null) {
             carers.get(currentCarerIndex).setFullName(carer.getFullName());

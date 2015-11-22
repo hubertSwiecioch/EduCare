@@ -65,4 +65,8 @@
     <string name="carer">Opiekun</string>
     <string name="resident">Pacjent</string>
 
+    <string name="from">Od</string>
+    <string name="message_empty">Lista wiadomości jest pusta</string>
+
+
 </resources>

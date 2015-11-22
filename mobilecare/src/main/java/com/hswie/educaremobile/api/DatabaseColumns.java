@@ -22,6 +22,13 @@ public class DatabaseColumns {
     public static final String COL_CARER_ID = "carer_ID";
     public static final String COL_HEADER = "header";
     public static final String COL_IS_DONE = "is_done";
+    public static final String COL_CONTENT = "content";
+    public static final String COL_SEND_DATE = "send_date";
+    public static final String COL_IS_READ = "is_read";
+    public static final String COL_SENDER_ID = "sender_ID";
+    public static final String COL_TITLE = "title";
+    public static final String COL_TARGET_ID = "target_ID";
+
 
 
 

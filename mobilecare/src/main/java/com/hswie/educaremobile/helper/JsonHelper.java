@@ -39,9 +39,12 @@ public class JsonHelper {
     public static final String MOD_GET_PHOTO = "getPhoto";
     public static final String MOD_ADD_RESIDENT = "addResident";
     public static final String MOD_SET_TASK_IS_DONE = "setTaskIsDone";
+    public static final String MOD_SET_MESSAGE_IS_READ = "setMessageIsRead";
     public static final String MOD_REGISTER_CARER = "registerCarer";
     public static final String MOD_GET_CARER_TASKS = "getCarerTasks";
+    public static final String MOD_GET_CARER_MESSAGES = "getCarerMessages";
     public static final String MOD_ADD_TASK = "addTask";
+    public static final String MOD_ADD_CARER_MESSAGE = "addCarerMessage";
     public static final String PERSON_TYPE_CARER = "carer";
     public static final String PERSON_TYPE_RESIDENT = "resident";
 
@@ -65,6 +68,7 @@ public class JsonHelper {
     public static final String TAG_CITY = "city";
     public static final String TAG_IMAGE = "image";
     public static final String TAG_ISDONE = "isDone";
+    public static final String TAG_IS_READ = "isRead";
     public static final String TAG_HEADER = "header";
     public static final String TAG_DESCRIPTION = "description";
 

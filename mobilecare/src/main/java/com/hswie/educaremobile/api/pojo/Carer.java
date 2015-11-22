@@ -19,6 +19,7 @@ public class Carer implements Serializable {
     private String photoCache;
     private String phoneNumber;
     private byte[] photoByte;
+    private ArrayList<CarerMessage> carerMessages;
 
     private ArrayList<CarerTask> carerTasks;
 
@@ -40,6 +41,14 @@ public class Carer implements Serializable {
         }
 
         return false;
+    }
+
+    public ArrayList<CarerMessage> getCarerMessages() {
+        return carerMessages;
+    }
+
+    public void setCarerMessages(ArrayList<CarerMessage> carerMessages) {
+        this.carerMessages = carerMessages;
     }
 
     public String getFullName() {

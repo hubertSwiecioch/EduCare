@@ -4,10 +4,12 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
+import com.hswie.educaremobile.api.dao.CarerMessageRDH;
 import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
+import com.hswie.educaremobile.api.pojo.CarerMessage;
 import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.api.pojo.Resident;
 
@@ -51,12 +53,10 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
         ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
         CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
-        //Log.d(TAG, "CurrentCarerTasksL: " + CarerModel.get().getCurrentCarer().getCarerTasks().get(0).getHeader());
 
-
-
-//        ArrayList<Resident> residents = ResidentsModel.get().getResidents();
-//        ArrayList<Carer> carers = CarerModel.get().getCarers();
+        CarerMessageRDH carerMessageRDH = new CarerMessageRDH();
+        ArrayList<CarerMessage> carerMessages = carerMessageRDH.getCarerMessages(String.valueOf(PreferencesManager.getCurrentCarerID()));
+        CarerModel.get().getCurrentCarer().setCarerMessages(carerMessages);
 
 
         for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++){
