@@ -200,6 +200,10 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
         protected Boolean doInBackground(String... params) {
             CarerMessageRDH carerMessagesRDH = new CarerMessageRDH();
 
+
+
+            carerMessagesRDH.setIsRead(params[0]);
+
             Log.d(TAG, "ConfirmMessage doInBackground params[0] = " + params[0]);
             //return carerMessagesRDH.setIsRead(params[0]);
             return null;

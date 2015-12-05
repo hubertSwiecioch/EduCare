@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hswie.educaremobile.R;
+import com.hswie.educaremobile.dialog.AddMessageDialog;
+import com.hswie.educaremobile.dialog.AddTaskDialog;
 
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class CarerPanel extends AppCompatActivity{
     private ViewPager mViewPager;
     private boolean isLoading = false;
     private FloatingActionButton fab;
+    private AddMessageDialog addMessageDialog;
 
 
 
@@ -60,7 +64,9 @@ public class CarerPanel extends AppCompatActivity{
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                if (position == 0)
+                currentPage = position;
+
+                if (position == 0 || position == 2)
                     fab.setVisibility(View.VISIBLE);
                 else fab.setVisibility(View.INVISIBLE);
             }
@@ -86,8 +92,25 @@ public class CarerPanel extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                Intent myIntent = new Intent(CarerPanel.this, AddResidentActivity.class);
-                CarerPanel.this.startActivity(myIntent);
+                switch (currentPage) {
+
+                    case 0:  Intent myIntent = new Intent(CarerPanel.this, AddResidentActivity.class);
+                             CarerPanel.this.startActivity(myIntent);
+                             break;
+
+                    case 2:  FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                             addMessageDialog = AddMessageDialog.newInstance();
+                             addMessageDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+                             addMessageDialog.callback = new AddMessageDialog.DismissCallback() {
+                                 @Override
+                                 public void dismissAddMessageDialog() {
+
+                                     Log.d(TAG, "DISMISS");
+                                 }
+                             };
+                             addMessageDialog.show(fragmentTransaction, "AddCarerMessageDialog");
+                             break;
+                }
 
             }
         });

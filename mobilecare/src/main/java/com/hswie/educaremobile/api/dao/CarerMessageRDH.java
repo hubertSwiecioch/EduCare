@@ -84,6 +84,11 @@ public class CarerMessageRDH {
 
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_ADD_CARER_MESSAGE));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CONTENTS, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_SEND_DATE, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_SENDER_ID, params.get(2)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_TITLE, params.get(3)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_TARGET_ID, params.get(4)));
 
 
 
@@ -93,18 +98,15 @@ public class CarerMessageRDH {
 
     }
 
-    public void setIsRead(ArrayList<String> params){
+    public void setIsRead(String messageID){
 
         List<NameValuePair> paramss = new ArrayList<NameValuePair>();
 
-        for (String param:params) {
 
-            Log.d(TAG, "RDH param: "  + param);
-        }
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_SET_MESSAGE_IS_READ));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_IS_READ, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MESSAGE_ID, messageID));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_IS_READ, Integer.toString(1)));
 
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
         Log.d(TAG, "JSONString: "  + JSONString);

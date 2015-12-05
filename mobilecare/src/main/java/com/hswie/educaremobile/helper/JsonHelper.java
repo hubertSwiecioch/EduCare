@@ -71,6 +71,12 @@ public class JsonHelper {
     public static final String TAG_IS_READ = "isRead";
     public static final String TAG_HEADER = "header";
     public static final String TAG_DESCRIPTION = "description";
+    public static final String TAG_CONTENTS = "contents";
+    public static final String TAG_SEND_DATE = "sendDate";
+    public static final String TAG_SENDER_ID = "senderID";
+    public static final String TAG_TITLE = "title";
+    public static final String TAG_TARGET_ID = "targetID";
+    public static final String TAG_MESSAGE_ID = "messageID";
 
 
     public static final String TAG_CARER_USERNAME = "carer_username";

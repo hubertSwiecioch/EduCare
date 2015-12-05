@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">EduCareMobile</string>
     
-    <!-- Strings related to login -->
+
     <string name="prompt_email">Email</string>
     <string name="prompt_first_name">First Name</string>
     <string name="prompt_password">Password (optional)</string>
@@ -26,7 +26,7 @@
     <string name="carers_list_tab">Carers</string>
     <string name="messages_tab">Messages</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_resident">Add Resident</string>
     <string name="title_activity_carer_register">Register Carer</string>
@@ -76,6 +76,14 @@
 
     <string name="from">From</string>
     <string name="message_empty">Messsage list is empty</string>
+
+    <string name="new_carer_message">New Message</string>
+    <string name="new_carer_message_title">Title</string>
+    <string name="new_carer_message_target">Carer</string>
+    <string name="new_carer_message_content">Contents</string>
+    <string name="new_carer_message_send">Send</string>
+
+
 
 
 

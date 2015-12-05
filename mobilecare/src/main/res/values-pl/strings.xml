@@ -68,5 +68,11 @@
     <string name="from">Od</string>
     <string name="message_empty">Lista wiadomości jest pusta</string>
 
+    <string name="new_carer_message">Nowa Wiadomość</string>
+    <string name="new_carer_message_title">Tytuł</string>
+    <string name="new_carer_message_target">Opiekun</string>
+    <string name="new_carer_message_content">Treść wiadomości</string>
+    <string name="new_carer_message_send">Wyślij</string>
+
 
 </resources>
