@@ -28,6 +28,10 @@ public class DatabaseColumns {
     public static final String COL_SENDER_ID = "sender_ID";
     public static final String COL_TITLE = "title";
     public static final String COL_TARGET_ID = "target_ID";
+    public static final String COL_FAMILY_FULLNAME = "family_full_name";
+    public static final String COL_FAMILY_PASSWORD = "family_password";
+    public static final String COL_FAMILY_USERNAME = "family_username";
+
 
 
 
