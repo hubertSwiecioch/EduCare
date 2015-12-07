@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 
 /**
  * Created by hswie on 11/5/2015.
@@ -21,6 +22,7 @@ public class Resident implements Serializable {
     private String photoCache;
     private byte[] photoByte;
     private String TAG = "Resident";
+    private ArrayList<Family> families = new ArrayList<Family>();
 
 
     public boolean contains(String query) {
@@ -124,5 +126,17 @@ public class Resident implements Serializable {
 
     public void setPhotoByte(byte[] photoByte) {
         this.photoByte = photoByte;
+    }
+
+    public ArrayList<Family> getFamilies() {
+        return families;
+    }
+
+    public void setFamilies(ArrayList<Family> families) {
+        this.families = families;
+    }
+
+    public Family getFamily(int position) {
+        return families.get(position);
     }
 }

@@ -11,6 +11,7 @@ public class ResidentsModel {
 
     private static ResidentsModel residentsModel = null;
     private ArrayList<Resident> residents;
+    private ArrayList<Resident> familyResidents;
     private int currentResidentIndex;
 
     private ResidentsModel() {
@@ -19,6 +20,7 @@ public class ResidentsModel {
     public static ResidentsModel get() {
         if (residentsModel == null) {
             residentsModel = new ResidentsModel();
+            residentsModel.familyResidents = new ArrayList<>();
             residentsModel.residents = new ArrayList<>();
             residentsModel.currentResidentIndex = -1;
         }
@@ -61,6 +63,14 @@ public class ResidentsModel {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<Resident> getFamilyResidents() {
+        return familyResidents;
+    }
+
+    public void setFamilyResidents(ArrayList<Resident> familyResidents) {
+        this.familyResidents = familyResidents;
     }
 
 

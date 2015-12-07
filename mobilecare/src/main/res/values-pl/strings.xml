@@ -74,5 +74,7 @@
     <string name="new_carer_message_content">Treść wiadomości</string>
     <string name="new_carer_message_send">Wyślij</string>
 
+    <string name="empty_family_list">Lista rodzin jest pusta</string>
+
 
 </resources>

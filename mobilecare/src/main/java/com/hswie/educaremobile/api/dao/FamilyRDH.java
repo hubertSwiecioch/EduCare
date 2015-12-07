@@ -108,4 +108,28 @@ public class FamilyRDH {
 
         return family;
     }
+
+    public ArrayList<Family> getResidentFamily(String residentID) {
+        ArrayList<Family> families = new ArrayList<Family>();
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_GET_CURRENT_RESIDENT_FAMILY));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_RESIDENT_ID,  residentID));
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+
+        JSONArray jsonArray = JsonHelper.getJSONArrayFromString(JSONString);
+
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    families.add(parseFamily(obj));
+                } catch (JSONException e) {
+                    Log.d(TAG, "getResidentMessages " +  "JSONException e = " + e.getMessage());
+                }
+            }
+        }
+
+        return families;
+    }
 }

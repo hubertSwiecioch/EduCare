@@ -7,6 +7,7 @@ import android.util.Log;
 import com.hswie.educaremobile.api.dao.CarerMessageRDH;
 import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
+import com.hswie.educaremobile.api.dao.FamilyRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.CarerMessage;
@@ -33,9 +34,11 @@ public class LoaderDataLoader extends AsyncTaskLoader {
 
         ResidentRDH residentRDH = new ResidentRDH();
         CarerRDH carerRDH = new CarerRDH();
+        FamilyRDH familyRDH = new FamilyRDH();
 
         ResidentsModel.get().setResidents(residentRDH.getAllResidents());
         CarerModel.get().setCarers(carerRDH.getAllCarers());
+        FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
 
         for (Carer carer: CarerModel.get().getCarers()) {
 

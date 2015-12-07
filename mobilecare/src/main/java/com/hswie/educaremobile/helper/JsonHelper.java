@@ -37,6 +37,7 @@ public class JsonHelper {
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
     public static final String MOD_GET_CARERS = "getCarersList";
     public static final String MOD_GET_FAMILIES = "getFamiliesList";
+    public static final String MOD_GET_CURRENT_RESIDENT_FAMILY = "getCurrentResidentFamily";
     public static final String MOD_REMOVE_FAMILY = "removeFamily";
     public static final String MOD_GET_PHOTO = "getPhoto";
     public static final String MOD_ADD_RESIDENT = "addResident";

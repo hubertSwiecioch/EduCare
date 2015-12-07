@@ -58,5 +58,33 @@ public class PreferencesManager {
         return id;
     }
 
+    public static void setCurrentFamilyIndex(int index){
+        if(sp != null && index != -1)
+            sp.edit().putInt("CURRENT_FAMILY", index).commit();
+    }
+
+    public static int getCurrentFamilyIndex(){
+        int index = -1;
+        if(sp != null)
+            index = sp.getInt("CURRENT_FAMILY", -1);
+
+        return index;
+    }
+
+    public static void setCurrentFamilyID(int id){
+        if(sp != null && id != -1) {
+            Log.d(TAG, "PreferenceManagerOK");
+            sp.edit().putInt("CURRENT_FAMILY_ID", id).commit();
+        }
+    }
+
+    public static int getCurrentFamilyID(){
+        int id = -1;
+        if(sp != null)
+            id = sp.getInt("CURRENT_FAMILY_ID", -1);
+
+        return id;
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.hswie.educaremobile.api.dao;
 import android.util.Log;
 
 import com.hswie.educaremobile.api.DatabaseColumns;
+import com.hswie.educaremobile.api.pojo.Family;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.JsonHelper;
 
@@ -45,6 +46,8 @@ public class ResidentRDH {
 
         return residents;
     }
+
+
 
     public void addResident(ArrayList<String> params){
 
