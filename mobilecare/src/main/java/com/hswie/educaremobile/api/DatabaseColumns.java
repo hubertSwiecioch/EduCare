@@ -11,6 +11,10 @@ public class DatabaseColumns {
     public static final String COL_DATE_OF_ADOPTION = "date_of_adoption";
     public static final String COL_BIRTH_DATE = "birth_date";
     public static final String COL_FULL_NAME = "carer_full_name";
+    public static final String COL_NAME = "name";
+    public static final String COL_DOSE = "dose";
+    public static final String COL_START_DATE = "start_date";
+    public static final String COL_END_DATE = "end_date";
     public static final String COL_ONLINE_TEST = "carer_online_test";
     public static final String COL_ADDRESS = "address";
     public static final String COL_CITY = "city";

@@ -35,6 +35,11 @@ public class JsonHelper {
     public static final String TAG_MOD = "mod";
     public static final String MOD_LOGIN = "LogIn";
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
+    public static final String MOD_GET_RESIDENT_MEDICINES = "getMedicines";
+    public static final String MOD_ADD_RESIDENT_MEDICINE = "addMedicine";
+    public static final String MOD_UPDATE_RESIDENT_MEDICINE = "updateMedicine";
+    public static final String MOD_REMOVE_RESIDENT_MEDICINE = "removeMedicine";
+    public static final String MOD_GET_CURRENT_RESIDENT_MEDICINES = "getCurrentResidentMedicines";
     public static final String MOD_GET_CARERS = "getCarersList";
     public static final String MOD_GET_FAMILIES = "getFamiliesList";
     public static final String MOD_GET_CURRENT_RESIDENT_FAMILY = "getCurrentResidentFamily";
@@ -84,6 +89,10 @@ public class JsonHelper {
     public static final String TAG_FAMILY_USERNAME = "familyUsername";
     public static final String TAG_FAMILY_PASSWORD = "familyPassword";
     public static final String TAG_FAMILY_FULLNAME = "familyFullName";
+    public static final String TAG_NAME = "name";
+    public static final String TAG_DOSE = "dose";
+    public static final String TAG_START_DATE = "startDate";
+    public static final String TAG_END_DATE = "endDate";
 
 
     public static final String TAG_CARER_USERNAME = "carer_username";

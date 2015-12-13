@@ -1,5 +1,6 @@
 package com.hswie.educaremobile.helper;
 
+import com.hswie.educaremobile.api.pojo.Medicine;
 import com.hswie.educaremobile.api.pojo.Resident;
 
 import java.util.ArrayList;
@@ -81,5 +82,18 @@ public class ResidentsModel {
 
     public void setResidents(ArrayList<Resident> residents) {
         this.residents = residents;
+    }
+
+    public void setResidentsMedicines(ArrayList<Medicine> medicines){
+
+        for (Resident resident: residents) {
+
+            for (Medicine medicine: medicines) {
+
+                if (resident.getID().equals(medicine.getResidentID()))
+                    resident.getMedicines().add(medicine);
+            }
+
+        }
     }
 }

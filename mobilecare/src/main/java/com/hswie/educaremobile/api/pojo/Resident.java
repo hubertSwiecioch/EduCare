@@ -23,6 +23,7 @@ public class Resident implements Serializable {
     private byte[] photoByte;
     private String TAG = "Resident";
     private ArrayList<Family> families = new ArrayList<Family>();
+    private ArrayList<Medicine> medicines = new ArrayList<>();
 
 
     public boolean contains(String query) {
@@ -138,5 +139,13 @@ public class Resident implements Serializable {
 
     public Family getFamily(int position) {
         return families.get(position);
+    }
+
+    public ArrayList<Medicine> getMedicines() {
+        return medicines;
+    }
+
+    public void setMedicines(ArrayList<Medicine> medicines) {
+        this.medicines = medicines;
     }
 }

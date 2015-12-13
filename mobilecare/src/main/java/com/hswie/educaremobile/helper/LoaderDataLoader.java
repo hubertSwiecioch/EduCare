@@ -37,6 +37,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
         FamilyRDH familyRDH = new FamilyRDH();
 
         ResidentsModel.get().setResidents(residentRDH.getAllResidents());
+        ResidentsModel.get().setResidentsMedicines(residentRDH.getMedicines());
         CarerModel.get().setCarers(carerRDH.getAllCarers());
         FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
 
