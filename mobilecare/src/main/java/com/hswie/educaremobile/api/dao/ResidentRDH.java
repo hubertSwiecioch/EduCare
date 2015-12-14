@@ -142,13 +142,13 @@ public class ResidentRDH {
         Log.d(TAG, "JSONString: "  + JSONString);
     }
 
-    public void removeResidentMedicine(String residentID){
+    public void removeResidentMedicine(String ID){
 
         List<NameValuePair> paramss = new ArrayList<NameValuePair>();
 
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_RESIDENT_MEDICINE));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, residentID));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, ID));
 
 
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);

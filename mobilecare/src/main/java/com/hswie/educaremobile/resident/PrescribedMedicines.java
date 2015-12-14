@@ -23,7 +23,7 @@ import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 
-public class PrescribedMedicines extends Fragment {
+public class PrescribedMedicines extends Fragment implements MedicineAdapter.MedicineAdapterCallbacks {
 
 
     private static final String TAG = "MedicineFragment";
@@ -84,7 +84,7 @@ public class PrescribedMedicines extends Fragment {
 
         medicineRV = (RecyclerView) rootView.findViewById(R.id.list);
         medicineRV.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new MedicineAdapter(context);
+        adapter = new MedicineAdapter(context, this);
         medicineRV.setAdapter(adapter);
         medicineRV.setItemAnimator(new DefaultItemAnimator());
 
@@ -116,6 +116,35 @@ public class PrescribedMedicines extends Fragment {
     private void downloadMedicines() {
         if (!asyncTaskWorking)
             new DownloadMedicines().execute();
+    }
+
+    @Override
+    public void onListItemClick(int position) {
+
+        new RemoveMedicine().execute(ResidentsModel.get().getCurrentResident().getMedicines().get(position).getId());
+        ResidentsModel.get().getCurrentResident().getMedicines().remove(position);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    private class RemoveMedicine extends AsyncTask<String, Void, Void>{
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            ResidentRDH residentRDH = new ResidentRDH();
+            residentRDH.removeResidentMedicine(params[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            asyncTaskWorking = true;
+
+        }
+
     }
 
     private class DownloadMedicines extends AsyncTask<Void, Void, Void> {
