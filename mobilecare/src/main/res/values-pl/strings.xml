@@ -82,6 +82,7 @@
     <string name="medicine_dose">Dawka</string>
     <string name="medicine_to">do</string>
     <string name="medicine_empty">Lista leków jest pusta</string>
+    <string name="add_medicine">Dodaj lek</string>
 
 
 </resources>

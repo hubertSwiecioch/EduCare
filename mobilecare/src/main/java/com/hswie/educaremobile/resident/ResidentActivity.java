@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.carer.AddResidentActivity;
+import com.hswie.educaremobile.dialog.AddMedicineDialog;
+import com.hswie.educaremobile.dialog.AddMessageDialog;
 import com.hswie.educaremobile.dialog.AddTaskDialog;
 import com.hswie.educaremobile.dialog.TaskDialog;
 import com.hswie.educaremobile.helper.ResidentsModel;
@@ -38,6 +40,9 @@ public class ResidentActivity extends AppCompatActivity
     private ImageView headerAvatar;
     public static FloatingActionButton fab;
     private AddTaskDialog addTaskDialog;
+    private AddMedicineDialog addMedicineDialog;
+
+    public static int currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,36 +94,40 @@ public class ResidentActivity extends AppCompatActivity
 
                 Log.d(TAG, TAG);
 
-
-//                addTaskDialog = AddTaskDialog.newInstance();
-//                addTaskDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
-//                addTaskDialog.callback  = new AddTaskDialog.DismissCallback() {
-//                    @Override
-//                    public void dismissTaskDialog() {
-//
-//                        Log.d(TAG, "DISMISS");
-//                        fab.setVisibility(View.VISIBLE);
-//
-//                    }
-//                };
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction().add(R.id.flContent, addTaskDialog).commit();
-//                fragmentManager.beginTransaction().show(addTaskDialog).commit();
-
-
-
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                addTaskDialog = AddTaskDialog.newInstance();
-                addTaskDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
-                addTaskDialog.callback  = new AddTaskDialog.DismissCallback() {
-                    @Override
-                    public void dismissTaskDialog() {
+                switch (currentPage) {
 
-                        Log.d(TAG, "DISMISS");
+                    case 0:
 
-                    }
-                };
-                addTaskDialog.show(fragmentTransaction, "addTaskDialog");
+                        addTaskDialog = AddTaskDialog.newInstance();
+                        addTaskDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+                        addTaskDialog.callback  = new AddTaskDialog.DismissCallback() {
+                            @Override
+                            public void dismissTaskDialog() {
+
+                                Log.d(TAG, "DISMISS");
+
+                            }
+                        };
+                        addTaskDialog.show(fragmentTransaction, "addTaskDialog");
+                        break;
+
+                    case 1:
+
+                        addMedicineDialog = AddMedicineDialog.newInstance();
+                        addMedicineDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+                        addMedicineDialog.callback  = new AddMedicineDialog.DismissCallback() {
+                            @Override
+                            public void dismissMedicineDialog() {
+
+                                Log.d(TAG, "DISMISS");
+                            }
+                        };
+                        addMedicineDialog.show(fragmentTransaction, "addMedicineDialog");
+                        break;
+                }
+
+
 
             }
         });
@@ -174,12 +183,15 @@ public class ResidentActivity extends AppCompatActivity
         if (id == R.id.nav_overview_fragment) {
             fragmentClass  = OverviewFragment.newInstance("0", "Overview").getClass();
             fab.setVisibility(View.VISIBLE);
+            currentPage = 0;
         } else if (id == R.id.nav_medicines_fragment) {
             fragmentClass = PrescribedMedicines.newInstance("1", "PrescribedMedicines").getClass();
-            fab.setVisibility(View.INVISIBLE);
+            fab.setVisibility(View.VISIBLE);
+            currentPage = 1;
         } else if (id == R.id.nav_family_fragment) {
             fragmentClass = FamilyListFragment.newInstance("2", "FamilyList").getClass();
             fab.setVisibility(View.INVISIBLE);
+            currentPage = 2;
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();

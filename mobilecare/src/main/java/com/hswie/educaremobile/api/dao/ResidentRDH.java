@@ -131,13 +131,12 @@ public class ResidentRDH {
         }
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_ADD_RESIDENT_MEDICINE));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_NAME, params.get(1)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_DOSE, params.get(2)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_RESIDENT_ID, params.get(3)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_START_DATE, params.get(4)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_END_DATE, params.get(5)));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_ID, params.get(6)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_NAME, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_DOSE, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_RESIDENT_ID, params.get(2)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_START_DATE, params.get(3)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_END_DATE, params.get(4)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_ID, params.get(5)));
 
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
         Log.d(TAG, "JSONString: "  + JSONString);
