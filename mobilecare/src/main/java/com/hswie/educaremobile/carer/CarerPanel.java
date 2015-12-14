@@ -134,13 +134,7 @@ public class CarerPanel extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-            for (Fragment fragment:fragmentList) {
 
-                Log.d(TAG, "Fragment: " + fragment.getTag());
-            }
-
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

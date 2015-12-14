@@ -76,5 +76,12 @@
 
     <string name="empty_family_list">Lista rodzin jest pusta</string>
 
+    <string name="medicine_name">Nazwa leku</string>
+    <string name="medicine_start_date">Data rozpoczęcia</string>
+    <string name="medicine_end_date">Data zakończenia</string>
+    <string name="medicine_dose">Dawka</string>
+    <string name="medicine_to">do</string>
+    <string name="medicine_empty">Lista leków jest pusta</string>
+
 
 </resources>

@@ -86,6 +86,14 @@
     <string name="empty_family_list">Family list empty</string>
 
 
+    <string name="medicine_name">Medicine name</string>
+    <string name="medicine_start_date">Start date</string>
+    <string name="medicine_end_date">End date</string>
+    <string name="medicine_dose">Dose</string>
+    <string name="medicine_to">to</string>
+    <string name="medicine_empty">Medicine list is empty</string>
+
+
 
 
 
