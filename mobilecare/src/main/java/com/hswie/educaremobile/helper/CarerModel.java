@@ -3,8 +3,10 @@ package com.hswie.educaremobile.helper;
 import android.util.Log;
 
 import com.hswie.educaremobile.api.dao.CarerMessageRDH;
+import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.CarerMessage;
+import com.hswie.educaremobile.api.pojo.CarerTask;
 
 
 import java.io.IOException;
@@ -89,6 +91,13 @@ public class CarerModel {
         CarerMessageRDH carerMessageRDH = new CarerMessageRDH();
         ArrayList<CarerMessage> carerMessages = carerMessageRDH.getCarerMessages(String.valueOf(PreferencesManager.getCurrentCarerID()));
         CarerModel.get().getCurrentCarer().setCarerMessages(carerMessages);
+    }
+
+    public void setCurrentCarrerTasks(){
+
+        CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+        ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
+        CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
     }
 
 

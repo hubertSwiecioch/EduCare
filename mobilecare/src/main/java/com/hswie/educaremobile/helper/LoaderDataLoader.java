@@ -36,26 +36,20 @@ public class LoaderDataLoader extends AsyncTaskLoader {
         CarerRDH carerRDH = new CarerRDH();
         FamilyRDH familyRDH = new FamilyRDH();
 
+
         ResidentsModel.get().setResidents(residentRDH.getAllResidents());
         ResidentsModel.get().setResidentsMedicines(residentRDH.getMedicines());
-        CarerModel.get().setCarers(carerRDH.getAllCarers());
-        FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
-
-        CarerModel.get().setCurrentCarrer();
-
-        CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
-        Log.d(TAG, "CurrentCarerPreferencesManager: " + PreferencesManager.getCurrentCarerID());
-        Log.d(TAG, "CurrentCarerCarerModel: " + CarerModel.get().getCurrentCarer().getID());
-
-        ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
-        CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
-
-        CarerModel.get().setCurrentCarrerMessages();
-
-
         ResidentsModel.get().getResidentsImages();
 
+        CarerModel.get().setCarers(carerRDH.getAllCarers());
+        CarerModel.get().setCurrentCarrer();
+        CarerModel.get().setCurrentCarrerTasks();
+        CarerModel.get().setCurrentCarrerMessages();
         CarerModel.get().getCarerImages();
+
+        FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
+
+
 
 
         return null;

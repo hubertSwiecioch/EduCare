@@ -118,6 +118,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
             }catch (NullPointerException e){
 
                 e.printStackTrace();
+                viewHolder.photoView.setImageResource(R.drawable.noavatar);
             }
 
 

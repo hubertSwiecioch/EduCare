@@ -3,6 +3,7 @@ package com.hswie.educaremobile.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,8 +88,8 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
             bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
             viewHolder.photoView.setImageBitmap(bitmap);
         }catch (NullPointerException e){
-
             e.printStackTrace();
+            viewHolder.photoView.setImageResource(R.drawable.noavatar);
         }
 
     }

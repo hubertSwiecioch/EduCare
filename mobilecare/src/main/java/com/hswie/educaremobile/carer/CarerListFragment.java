@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.CarerAdapter;
 import com.hswie.educaremobile.api.dao.CarerRDH;
+import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.helper.CarerModel;
 
 
@@ -131,7 +132,7 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
 
             CarerModel.get().setCarers(carerRDH.getAllCarers());
             CarerModel.get().setCurrentCarrerMessages();
-
+            CarerModel.get().setCurrentCarrerTasks();
             CarerModel.get().getCarerImages();
 
             return null;
