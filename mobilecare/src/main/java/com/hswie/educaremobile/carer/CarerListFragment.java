@@ -140,11 +140,10 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
 
         @Override
         protected void onPostExecute(Void bitmap) {
-            carerAdapter.notifyDataSetChanged();
-
             asyncTaskWorking = false;
-            checkAdapterIsEmpty();
             carerAdapter.resetItems();
+            carerAdapter.notifyDataSetChanged();
+            checkAdapterIsEmpty();
             swipeRefreshLayout.setRefreshing(false);
         }
     }

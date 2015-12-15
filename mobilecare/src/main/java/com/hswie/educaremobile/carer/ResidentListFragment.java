@@ -157,7 +157,6 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
            ResidentRDH residentRDH = new ResidentRDH();
 
             ResidentsModel.get().setResidents(residentRDH.getAllResidents());
-
             ResidentsModel.get().getResidentsImages();
 
             return null;
@@ -165,11 +164,11 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
 
         @Override
         protected void onPostExecute(Void bitmap) {
-            residentAdapter.notifyDataSetChanged();
 
             asyncTaskWorking = false;
-            checkAdapterIsEmpty();
             residentAdapter.resetItems();
+            residentAdapter.notifyDataSetChanged();
+            checkAdapterIsEmpty();
             swipeRefreshLayout.setRefreshing(false);
         }
     }

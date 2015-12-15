@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.CarerTasksAdapter;
+import com.hswie.educaremobile.adapter.ResidentAdapter;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.api.pojo.Resident;
@@ -50,10 +54,15 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
     private TextView nameTV, addressTV,emptyTV;
     private ImageView photoIV;
 
+    private Handler handler;
     private Context context;
     private RecyclerView messagesRV;
     private CarerTasksAdapter adapter;
     private TaskDialog taskDialog;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private boolean asyncTaskWorking = false;
 
 
     public static OverviewFragment newInstance(String param1, String param2) {
@@ -76,8 +85,17 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-
         }
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Log.d(TAG, "msg = " + msg.toString());
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        adapter = new CarerTasksAdapter(this);
     }
 
     @Override
@@ -88,12 +106,19 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
         context = getActivity();
         View rootView =  inflater.inflate(R.layout.fragment_overview, container, false);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+
+            }
+        });
+
         nameTV = (TextView)rootView.findViewById(R.id.nameTV);
         addressTV = (TextView)rootView.findViewById(R.id.text_address);
         emptyTV = (TextView)rootView.findViewById(R.id.text_empty_list);
         photoIV = (ImageView)rootView.findViewById(R.id.overviewResidentPhoto);
-
-
 
         setData(rootView);
 
@@ -154,12 +179,38 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
             messagesRV.setAdapter(adapter);
             messagesRV.setItemAnimator(new DefaultItemAnimator());
 
+            resetTasks();
             checkAdapterIsEmpty();
 
         }
         catch(NullPointerException e){
             Log.e(TAG, "NullPointerException ", e);
         }
+    }
+
+    public void refreshData() {
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+            new GetCarerTasks().execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler = null;
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+        refreshData();
+
+    }
+
+    public void resetTasks(){
+        adapter.resetItems();
     }
 
     @Override
@@ -173,6 +224,7 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
             public void dismissTaskDialog() {
 
                 Log.d(TAG, "DISMISS");
+                refreshData();
 
             }
         };
@@ -193,23 +245,27 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
 
     private class GetCarerTasks extends AsyncTask<Void, Void, Void>{
 
+        @Override
+        protected void onPreExecute() {
+            asyncTaskWorking = true;
+            super.onPreExecute();
+        }
 
         @Override
         protected Void doInBackground(Void... params) {
 
-            CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
-            Log.d(TAG, "CurrentCarerPreferencesManager: " + PreferencesManager.getCurrentCarerID());
-            Log.d(TAG, "CurrentCarerCarerModel: " + CarerModel.get().getCurrentCarer().getID());
-
-            ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
-            CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
-            Log.d(TAG, "CurrentCarerTasksL: " + CarerModel.get().getCurrentCarer().getCarerTasks().get(0).getHeader());
+            CarerModel.get().setCurrentCarrerTasks();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+
+            asyncTaskWorking = false;
+            adapter.resetItems();
+            adapter.notifyDataSetChanged();
+            checkAdapterIsEmpty();
+            swipeRefreshLayout.setRefreshing(false);
 
         }
     }

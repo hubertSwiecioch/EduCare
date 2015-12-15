@@ -1,8 +1,11 @@
 package com.hswie.educaremobile.dialog;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +32,22 @@ public class MessageDialog extends DialogFragment {
     private String message = "";
     private String sentBy = "";
     private long date = 0;
+
+    public DismissCallback callback;
+
+    void onReturnToMessagesFragment() {
+        callback.dismissMessageDialog();
+    }
+
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Log.d(TAG, "OnDismiss");
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +83,8 @@ public class MessageDialog extends DialogFragment {
         cancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                onReturnToMessagesFragment();
                 dismiss();
             }
         });
@@ -82,5 +103,9 @@ public class MessageDialog extends DialogFragment {
         dialog.setArguments(args);
 
         return dialog;
+    }
+
+    public interface DismissCallback {
+        void dismissMessageDialog();
     }
 }

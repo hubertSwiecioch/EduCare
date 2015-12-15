@@ -58,6 +58,7 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
     private static ArrayList<CarerMessage> messages;
     private final static String TAG = "MessagesFragment";
+    private MessageDialog messageDialog;
 
 
     public static MessagesFragment newInstance(int page, String title) {
@@ -153,14 +154,18 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
         confirmMessage(position);
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment oldFragment = getActivity().getSupportFragmentManager().findFragmentByTag("Message Dialog");
-        if (oldFragment != null) {
-            fragmentTransaction.remove(oldFragment);
-        }
+        messageDialog = MessageDialog.newInstance(adapter.getItem(position));
+        messageDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+        messageDialog.callback = new MessageDialog.DismissCallback(){
 
-        MessageDialog newFragment = MessageDialog.newInstance(adapter.getItem(position));
-        newFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
-        newFragment.show(fragmentTransaction, "Message Dialog");
+            @Override
+            public void dismissMessageDialog() {
+
+                Log.d(TAG, "DISMISS");
+                refreshData();
+            }
+        };
+        messageDialog.show(fragmentTransaction, "taskDialog");
 
 
     }
@@ -240,10 +245,11 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
         @Override
         protected void onPostExecute(Boolean result) {
-            adapter.notifyDataSetChanged();
-
             asyncTaskWorking = false;
+            adapter.resetItems();
+            adapter.notifyDataSetChanged();
             checkAdapterIsEmpty();
+            swipeRefreshLayout.setRefreshing(false);
 
         }
     }

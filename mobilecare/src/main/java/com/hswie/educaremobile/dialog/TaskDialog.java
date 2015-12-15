@@ -141,8 +141,8 @@ public class TaskDialog extends DialogFragment {
         return dialog;
     }
 
+
     public interface DismissCallback {
         void dismissTaskDialog();
     }
-
 }

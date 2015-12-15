@@ -40,16 +40,7 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
 
     public CarerTasksAdapter(CarerTasksAdapterCallbacks carerTasksAdapterCallbacks){
         this.carerTasksAdapterCallbacks = carerTasksAdapterCallbacks;
-        residentTasks = new ArrayList<>();
-        for (CarerTask carerTask:CarerModel.get().getCurrentCarer().getCarerTasks()) {
-
-            if(carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
-                residentTasks.add(carerTask);
-
-            Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
-            Log.d(TAG, "getCurrentResident: " +  ResidentsModel.get().getCurrentResident().getID());
-        }
-
+        resetItems();
         Log.d(TAG, "ResidentTasksSize: "  + residentTasks.size());
     }
 
@@ -122,6 +113,19 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
             viewHolder.dividerView.setVisibility(View.INVISIBLE);
         else
             viewHolder.dividerView.setVisibility(View.VISIBLE);
+    }
+
+    public void resetItems(){
+        residentTasks = new ArrayList<>();
+        for (CarerTask carerTask:CarerModel.get().getCurrentCarer().getCarerTasks()) {
+
+            if(carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
+                residentTasks.add(carerTask);
+
+            Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
+            Log.d(TAG, "getCurrentResident: " +  ResidentsModel.get().getCurrentResident().getID());
+        }
+        notifyDataSetChanged();
     }
 
     public CarerTask getItem(int position){
