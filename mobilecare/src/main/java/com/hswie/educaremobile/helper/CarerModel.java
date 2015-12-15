@@ -2,9 +2,12 @@ package com.hswie.educaremobile.helper;
 
 import android.util.Log;
 
+import com.hswie.educaremobile.api.dao.CarerMessageRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
+import com.hswie.educaremobile.api.pojo.CarerMessage;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -68,6 +71,42 @@ public class CarerModel {
         return null;
     }
 
+    public void setCurrentCarrer(){
+
+        for (Carer carer: CarerModel.get().getCarers()) {
+
+            if(Integer.parseInt(carer.getID()) == PreferencesManager.getCurrentCarerID()){
+                CarerModel.get().setCurrentCarerIndex(carer);
+                Log.d(TAG, "SetCurrentCarerID: " + CarerModel.get().getCurrentCarer().getID());
+            }
+
+
+        }
+    }
+
+    public void setCurrentCarrerMessages(){
+
+        CarerMessageRDH carerMessageRDH = new CarerMessageRDH();
+        ArrayList<CarerMessage> carerMessages = carerMessageRDH.getCarerMessages(String.valueOf(PreferencesManager.getCurrentCarerID()));
+        CarerModel.get().getCurrentCarer().setCarerMessages(carerMessages);
+    }
+
+
+    public void getCarerImages(){
+
+        for ( int i = 0; i<CarerModel.get().getCarers().size(); i++){
+
+            String url = CarerModel.get().getCarers().get(i).getPhoto();
+            try {
+                byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
+                CarerModel.get().getCarers().get(i).setPhotoByte(imageByte);
+                Log.d(TAG, "GetCarerImageFromHttpSuccess");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 

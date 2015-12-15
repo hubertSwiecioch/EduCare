@@ -71,20 +71,25 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
         viewHolder.firstnameView.setText(resident.getFirstName());
         viewHolder.lastnameView.setText(resident.getLastName());
 
-        Bitmap bitmap;
-        if(resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()){
+        try {
+            Bitmap bitmap;
+            if (resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()) {
 
-            Log.d(TAG, "loadPhotoFromByteArray");
-            String cachePath = ImageHelper.cacheImageOnDisk(context, resident.getPhotoByte(),
-                    "resident_" + resident.getID() + ".jpg",
-                    ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
-            resident.setPhotoCache(cachePath);
-            resident.setPhotoByte(null);
+                Log.d(TAG, "loadPhotoFromByteArray");
+                String cachePath = ImageHelper.cacheImageOnDisk(context, resident.getPhotoByte(),
+                        "resident_" + resident.getID() + ".jpg",
+                        ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
+                resident.setPhotoCache(cachePath);
+                resident.setPhotoByte(null);
 
+            }
+            Log.d(TAG, "loadPhotoFromCache:" + resident.getPhotoCache());
+            bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
+            viewHolder.photoView.setImageBitmap(bitmap);
+        }catch (NullPointerException e){
+
+            e.printStackTrace();
         }
-        Log.d(TAG, "loadPhotoFromCache:"  + resident.getPhotoCache());
-        bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
-        viewHolder.photoView.setImageBitmap(bitmap);
 
     }
 

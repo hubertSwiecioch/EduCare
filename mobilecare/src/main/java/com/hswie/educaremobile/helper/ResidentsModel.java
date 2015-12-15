@@ -1,8 +1,11 @@
 package com.hswie.educaremobile.helper;
 
+import android.util.Log;
+
 import com.hswie.educaremobile.api.pojo.Medicine;
 import com.hswie.educaremobile.api.pojo.Resident;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -10,6 +13,7 @@ import java.util.ArrayList;
  */
 public class ResidentsModel {
 
+    private static final String TAG = "ResidentsModel";
     private static ResidentsModel residentsModel = null;
     private ArrayList<Resident> residents;
     private ArrayList<Resident> familyResidents;
@@ -27,6 +31,23 @@ public class ResidentsModel {
         }
 
         return residentsModel;
+    }
+
+
+    public void getResidentsImages(){
+
+        for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++){
+
+            String url = ResidentsModel.get().getResidents().get(i).getPhoto();
+            try {
+                byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
+                ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
+                Log.d(TAG, "GetResidentImageFromHttpSuccess");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void setCurrentResidentIndex(Resident resident) {

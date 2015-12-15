@@ -41,15 +41,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
         CarerModel.get().setCarers(carerRDH.getAllCarers());
         FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
 
-        for (Carer carer: CarerModel.get().getCarers()) {
-
-            if(Integer.parseInt(carer.getID()) == PreferencesManager.getCurrentCarerID()){
-                CarerModel.get().setCurrentCarerIndex(carer);
-                Log.d(TAG, "SetCurrentCarerID: " + CarerModel.get().getCurrentCarer().getID());
-            }
-
-
-        }
+        CarerModel.get().setCurrentCarrer();
 
         CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
         Log.d(TAG, "CurrentCarerPreferencesManager: " + PreferencesManager.getCurrentCarerID());
@@ -58,38 +50,19 @@ public class LoaderDataLoader extends AsyncTaskLoader {
         ArrayList<CarerTask> carerTasks = carerTasksRDH.getCarerTasks(String.valueOf(PreferencesManager.getCurrentCarerID()));
         CarerModel.get().getCurrentCarer().setCarerTasks(carerTasks);
 
-        CarerMessageRDH carerMessageRDH = new CarerMessageRDH();
-        ArrayList<CarerMessage> carerMessages = carerMessageRDH.getCarerMessages(String.valueOf(PreferencesManager.getCurrentCarerID()));
-        CarerModel.get().getCurrentCarer().setCarerMessages(carerMessages);
+        CarerModel.get().setCurrentCarrerMessages();
 
 
-        for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++){
+        ResidentsModel.get().getResidentsImages();
 
-            String url = ResidentsModel.get().getResidents().get(i).getPhoto();
-            try {
-                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
-                    ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
-                    Log.d(TAG, "GetResidentImageFromHttpSuccess");
+        CarerModel.get().getCarerImages();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
-        for ( int i = 0; i<CarerModel.get().getCarers().size(); i++){
-
-            String url = CarerModel.get().getCarers().get(i).getPhoto();
-            try {
-                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
-                    CarerModel.get().getCarers().get(i).setPhotoByte(imageByte);
-                    Log.d(TAG, "GetCarerImageFromHttpSuccess");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         return null;
     }
+
+
+
 }
 
 

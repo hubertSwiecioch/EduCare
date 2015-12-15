@@ -100,20 +100,25 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
                 }
             });
 
-            Bitmap bitmap;
-            if (carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()) {
+            try {
+                Bitmap bitmap;
+                if (carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()) {
 
-                Log.d(TAG, "loadPhotoFromByteArray");
-                String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
-                        "carer_" + carer.getID() + ".jpg",
-                        ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
-                carer.setPhotoCache(cachePath);
-                carer.setPhotoByte(null);
+                    Log.d(TAG, "loadPhotoFromByteArray");
+                    String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
+                            "carer_" + carer.getID() + ".jpg",
+                            ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
+                    carer.setPhotoCache(cachePath);
+                    carer.setPhotoByte(null);
 
+                }
+                Log.d(TAG, "loadPhotoFromCache:" + carer.getPhotoCache());
+                bitmap = BitmapFactory.decodeFile(carer.getPhotoCache());
+                viewHolder.photoView.setImageBitmap(bitmap);
+            }catch (NullPointerException e){
+
+                e.printStackTrace();
             }
-            Log.d(TAG, "loadPhotoFromCache:" + carer.getPhotoCache());
-            bitmap = BitmapFactory.decodeFile(carer.getPhotoCache());
-            viewHolder.photoView.setImageBitmap(bitmap);
 
 
     }

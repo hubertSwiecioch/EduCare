@@ -2,10 +2,12 @@ package com.hswie.educaremobile.carer;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +18,7 @@ import android.view.ViewGroup;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
-import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
 import com.hswie.educaremobile.resident.ResidentActivity;
@@ -30,6 +32,10 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
     private Handler handler;
     private static final String TAG = "ResidentListFragment";
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private boolean asyncTaskWorking = false;
+
 
 
     public static ResidentListFragment newInstance(int page, String title) {
@@ -53,6 +59,8 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
             }
         };
 
+
+
         setHasOptionsMenu(true);
         residentAdapter = new ResidentAdapter(this);
     }
@@ -66,6 +74,15 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         View rootView = inflater.inflate(R.layout.fragment_persons_list,
                 container, false);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+
+            }
+        });
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(residentAdapter);
@@ -76,8 +93,38 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         return rootView;
     }
 
+    public void refreshData() {
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+            new DownloadResidentsList().execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler = null;
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+        refreshData();
+
+    }
+
     public void resetResidents(){
         residentAdapter.resetItems();
+    }
+
+    private void checkAdapterIsEmpty() {
+        if (residentAdapter.getItemCount() == 0) {
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+
     }
 
 
@@ -96,6 +143,35 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
 
         Intent myIntent = new Intent(getActivity(), ResidentActivity.class);
         getActivity().startActivity(myIntent);
+    }
+
+    private class DownloadResidentsList extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            asyncTaskWorking = true;
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+           ResidentRDH residentRDH = new ResidentRDH();
+
+            ResidentsModel.get().setResidents(residentRDH.getAllResidents());
+
+            ResidentsModel.get().getResidentsImages();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void bitmap) {
+            residentAdapter.notifyDataSetChanged();
+
+            asyncTaskWorking = false;
+            checkAdapterIsEmpty();
+            residentAdapter.resetItems();
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
 

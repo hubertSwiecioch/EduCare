@@ -3,6 +3,7 @@ package com.hswie.educaremobile.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,17 +23,19 @@ import java.util.Date;
 
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> {
 
+    private static final String TAG = "MessagesAdapter";
+
     public interface MessagesAdapterCallbacks {
         public void onListItemClick(int position);
     }
 
     private MessagesAdapterCallbacks messagesAdapterCallbacks;
     private Context context;
-//    private ArrayList<CarerMessage> items;
+
 
     public MessagesAdapter(MessagesAdapterCallbacks messagesAdapterCallbacks){
         this.messagesAdapterCallbacks = messagesAdapterCallbacks;
-//        items = new ArrayList<>();
+
     }
 
     @Override
@@ -111,6 +114,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     public CarerMessage getItem(int position){
         return CarerModel.get().getCurrentCarer().getCarerMessages().get(position);
+    }
+
+
+    public void resetItems(){
+        Log.d(TAG, "resetItems");
+        CarerModel.get().getCurrentCarer().setCarerMessages(CarerModel.get().getCurrentCarer().getCarerMessages());
+        notifyDataSetChanged();
     }
 
     @Override

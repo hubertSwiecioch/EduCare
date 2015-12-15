@@ -79,6 +79,16 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
         if (getArguments() != null) {
 
         }
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Log.d(TAG, "msg = " + msg.toString());
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        adapter = new MessagesAdapter(this);
     }
 
     @Override
@@ -87,6 +97,15 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
         context = getActivity();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+
+            }
+        });
 
 
         emptyTV = (TextView)rootView.findViewById(R.id.text_empty_list);
@@ -98,22 +117,37 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
         messagesRV.setItemAnimator(new DefaultItemAnimator());
 
         checkAdapterIsEmpty();
-
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                downloadMessages();
-            }
-        };
+        resetMessages();
 
         return rootView;
     }
 
+    public void refreshData() {
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+            new DownloadMessages().execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler = null;
+    }
+
     @Override
     public void onResume() {
-        super.onResume();
         Log.d(TAG, "onResume");
+        super.onResume();
+        refreshData();
+
     }
+
+    public void resetMessages(){
+        adapter.resetItems();
+    }
+
+
 
     public void onListItemClick(int position) {
         confirmMessage(position);
@@ -145,10 +179,7 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
 
 
-    private void downloadMessages() {
-        if (!asyncTaskWorking)
-            new DownloadMessages().execute();
-    }
+
 
     private void confirmMessage(int position){
         if (!asyncTaskWorking){
@@ -170,10 +201,8 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
         @Override
         protected Void doInBackground(Void... params) {
-            CarerMessageRDH carerMessagesRDH = new CarerMessageRDH();
-            String id_mobile_user = String.valueOf(PreferencesManager.getCurrentCarerID());
 
-            CarerModel.get().getCurrentCarer().setCarerMessages(carerMessagesRDH.getCarerMessages(id_mobile_user));
+            CarerModel.get().setCurrentCarrerMessages();
 
             return null;
         }
@@ -184,7 +213,7 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
             asyncTaskWorking = false;
             checkAdapterIsEmpty();
-
+            adapter.resetItems();
             swipeRefreshLayout.setRefreshing(false);
         }
     }
