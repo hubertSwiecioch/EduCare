@@ -122,7 +122,7 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
 
     public void resetItems(){
         filterItems = false;
-        filteredItems = null;
+        filteredItems = ResidentsModel.get().getCurrentResident().getFamilies();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

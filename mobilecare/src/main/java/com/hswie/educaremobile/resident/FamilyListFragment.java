@@ -37,7 +37,6 @@ public class FamilyListFragment extends Fragment {
 
 
     private FamilyAdapter familyAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     private Context context;
 
@@ -46,7 +45,9 @@ public class FamilyListFragment extends Fragment {
     private RecyclerView familyListView;
     private TextView emptyTV;
 
-    public boolean asyncTaskWorking = false;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private boolean asyncTaskWorking = false;
 
 
     public static FamilyListFragment newInstance(String param1, String param2) {
@@ -91,13 +92,13 @@ public class FamilyListFragment extends Fragment {
 
         context = getActivity();
 
-//        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshData();
-//            }
-//        });
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
 
         emptyTV = (TextView) rootView.findViewById(R.id.text_empty_list);
         emptyTV.setText(R.string.empty_family_list);
@@ -118,8 +119,23 @@ public class FamilyListFragment extends Fragment {
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume");
         super.onResume();
         refreshData();
+
+    }
+
+    public void refreshData() {
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+            new DownloadFamily().execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler = null;
     }
 
     private void checkAdapterIsEmpty() {
@@ -138,10 +154,6 @@ public class FamilyListFragment extends Fragment {
     }
 
 
-    private void downloadFamily() {
-        if (!asyncTaskWorking)
-            new DownloadFamily().execute();
-    }
 
 
     private class DownloadFamily extends AsyncTask<Void, Void, Void> {
@@ -167,7 +179,7 @@ public class FamilyListFragment extends Fragment {
         @Override
         protected void onPostExecute(Void bitmap) {
             if (isCancelled()){
-                Log.d(TAG, "DownloadPills isCancelled");
+                Log.d(TAG, "DownloadFamilies isCancelled");
                 return;
             }
 
@@ -176,18 +188,14 @@ public class FamilyListFragment extends Fragment {
             familyAdapter.notifyDataSetChanged();
 
             asyncTaskWorking = false;
+            familyAdapter.resetItems();
+            familyAdapter.notifyDataSetChanged();
             checkAdapterIsEmpty();
-
-            //swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
 
-
-    public void refreshData() {
-
-        downloadFamily();
-    }
 
 
 

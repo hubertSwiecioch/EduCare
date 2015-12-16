@@ -119,6 +119,7 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         return rootView;
     }
 
+
     public void refreshData() {
         Log.d(TAG, "refreshData");
         if (!asyncTaskWorking) {
@@ -155,24 +156,16 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
 
     @Override
     public void onListItemClick(int position) {
-
-        new RemoveMedicine().execute(ResidentsModel.get().getCurrentResident().getMedicines().get(position).getId());
-        ResidentsModel.get().getCurrentResident().getMedicines().remove(position);
-        adapter.notifyDataSetChanged();
-
+        Log.d(TAG, "removeItem");
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+            new RemoveMedicine().execute(ResidentsModel.get().getCurrentResident().getMedicines().get(position).getId());
+        }
     }
 
 
     private class RemoveMedicine extends AsyncTask<String, Void, Void>{
-
-        @Override
-        protected Void doInBackground(String... params) {
-
-            ResidentRDH residentRDH = new ResidentRDH();
-            residentRDH.removeResidentMedicine(params[0]);
-            return null;
-        }
-
+        ResidentRDH residentRDH = new ResidentRDH();
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -181,6 +174,21 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
 
         }
 
+        @Override
+        protected Void doInBackground(String... params) {
+
+
+            residentRDH.removeResidentMedicine(params[0]);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            asyncTaskWorking = false;
+            refreshData();
+        }
     }
 
     private class DownloadMedicines extends AsyncTask<Void, Void, Void> {
