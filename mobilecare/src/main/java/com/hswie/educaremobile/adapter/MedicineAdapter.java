@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Medicine;
+import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
@@ -68,6 +70,12 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
         else
             viewHolder.dividerView.setVisibility(View.VISIBLE);
     }
+
+    public void resetItems(){
+        ResidentsModel.get().getCurrentResident().setMedicines(ResidentsModel.get().getCurrentResident().getMedicines());
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

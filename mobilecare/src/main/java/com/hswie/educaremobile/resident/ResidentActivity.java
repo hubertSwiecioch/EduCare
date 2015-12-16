@@ -1,6 +1,5 @@
 package com.hswie.educaremobile.resident;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,30 +9,28 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
-import com.hswie.educaremobile.carer.AddResidentActivity;
 import com.hswie.educaremobile.dialog.AddMedicineDialog;
-import com.hswie.educaremobile.dialog.AddMessageDialog;
 import com.hswie.educaremobile.dialog.AddTaskDialog;
-import com.hswie.educaremobile.dialog.TaskDialog;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
+import java.util.List;
+
 public class ResidentActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "ResidentActivity";
     private Resident resident;
@@ -43,6 +40,8 @@ public class ResidentActivity extends AppCompatActivity
     private AddMedicineDialog addMedicineDialog;
 
     public static int currentPage;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +104,8 @@ public class ResidentActivity extends AppCompatActivity
                             @Override
                             public void dismissTaskDialog() {
 
+
+
                                 Log.d(TAG, "DISMISS");
 
                             }
@@ -121,6 +122,13 @@ public class ResidentActivity extends AppCompatActivity
                             public void dismissMedicineDialog() {
 
                                 Log.d(TAG, "DISMISS");
+                                List<Fragment>  fragmentList= getSupportFragmentManager().getFragments();
+                                for (Fragment f:fragmentList) {
+
+                                    if (f instanceof PrescribedMedicines)
+                                        ((PrescribedMedicines) f).refreshData();
+
+                                }
                             }
                         };
                         addMedicineDialog.show(fragmentTransaction, "addMedicineDialog");
@@ -206,4 +214,6 @@ public class ResidentActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

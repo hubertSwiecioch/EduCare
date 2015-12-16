@@ -4,7 +4,8 @@ package com.hswie.educaremobile.resident;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,7 +27,7 @@ import com.hswie.educaremobile.helper.ResidentsModel;
 public class PrescribedMedicines extends Fragment implements MedicineAdapter.MedicineAdapterCallbacks {
 
 
-    private static final String TAG = "MedicineFragment";
+    private static final String TAG = "PrescribedMedicines";
 
     private RecyclerView medicineRV;
     private TextView emptyTV;
@@ -35,7 +36,11 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
 
     private Context context;
 
-    public boolean asyncTaskWorking = false;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private boolean asyncTaskWorking = false;
+
+    private Handler handler;
 
 
 
@@ -62,6 +67,8 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         // Required empty public constructor
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +76,16 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Log.d(TAG, "msg = " + msg.toString());
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        adapter = new MedicineAdapter(context, this);
     }
 
     @Override
@@ -78,6 +95,15 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         context = getActivity().getApplicationContext();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+
+            }
+        });
 
         emptyTV = (TextView)rootView.findViewById(R.id.text_empty_list);
         emptyTV.setText(R.string.medicine_empty);
@@ -93,11 +119,28 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         return rootView;
     }
 
+    public void refreshData() {
+        Log.d(TAG, "refreshData");
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+            new DownloadMedicines().execute();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler = null;
+    }
+
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume");
         super.onResume();
         refreshData();
+
     }
+
 
     private void checkAdapterIsEmpty() {
         if (adapter.getItemCount() == 0) {
@@ -109,14 +152,6 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         }
     }
 
-    public void refreshData() {
-        downloadMedicines();
-    }
-
-    private void downloadMedicines() {
-        if (!asyncTaskWorking)
-            new DownloadMedicines().execute();
-    }
 
     @Override
     public void onListItemClick(int position) {
@@ -126,6 +161,7 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         adapter.notifyDataSetChanged();
 
     }
+
 
     private class RemoveMedicine extends AsyncTask<String, Void, Void>{
 
@@ -164,6 +200,7 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
 
                 ResidentRDH residentRDH = new ResidentRDH();
                 resident.setMedicines(residentRDH.getResidentMedicines(resident.getID()));
+                ResidentsModel.get().getCurrentResident().setMedicines(resident.getMedicines());
 
             return null;
         }
@@ -177,10 +214,11 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
 
             ResidentsModel.get().setCurrentResident(resident);
 
-            adapter.notifyDataSetChanged();
-
             asyncTaskWorking = false;
+            adapter.resetItems();
+            adapter.notifyDataSetChanged();
             checkAdapterIsEmpty();
+            swipeRefreshLayout.setRefreshing(false);
 
         }
     }

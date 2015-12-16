@@ -18,12 +18,8 @@ import android.widget.ExpandableListView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ExpandableListAdapter;
-import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
-import com.hswie.educaremobile.api.pojo.Carer;
-import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.CarerModel;
-import com.hswie.educaremobile.helper.DateTimeConvert;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 import java.text.SimpleDateFormat;
@@ -38,10 +34,7 @@ public class AddMedicineDialog extends DialogFragment {
     private static final String TAG = "AddMedicineDialog";
 
 
-    private ExpandableListAdapter listAdapter;
-    private ExpandableListView expListView;
-    private ArrayList<String> listDataHeader;
-    private HashMap<String, List<String>> listDataChild;
+
     private Calendar myCalendar = Calendar.getInstance();
     private int currentEditDate = -1;
 
@@ -128,6 +121,7 @@ public class AddMedicineDialog extends DialogFragment {
                 }
 
                 new AddMedicine().execute(params);
+                onReturnToOverview();
                 dismiss();
 
 
@@ -179,6 +173,7 @@ public class AddMedicineDialog extends DialogFragment {
         if (currentEditDate == endDate.getId()) {
             endDateCalendar = myCalendar.getTimeInMillis();
             endDate.setText(sdf.format(myCalendar.getTime()));
+
         }
     }
 
