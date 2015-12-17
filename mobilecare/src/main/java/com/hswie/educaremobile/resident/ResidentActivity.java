@@ -38,6 +38,7 @@ public class ResidentActivity extends AppCompatActivity
     public static FloatingActionButton fab;
     private AddTaskDialog addTaskDialog;
     private AddMedicineDialog addMedicineDialog;
+    private Toolbar toolbar;
 
     public static int currentPage;
 
@@ -47,7 +48,7 @@ public class ResidentActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resident);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -85,6 +86,7 @@ public class ResidentActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, OverviewFragment.newInstance("0", "OverviewFragment")).commit();
+
 
         fab = (FloatingActionButton) findViewById(R.id.fabResidentActivity);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -190,15 +192,21 @@ public class ResidentActivity extends AppCompatActivity
 
         if (id == R.id.nav_overview_fragment) {
             fragmentClass  = OverviewFragment.newInstance("0", "Overview").getClass();
+            toolbar.setTitle(R.string.drawer_label_overview);
             fab.setVisibility(View.VISIBLE);
+            fab.setImageResource(R.drawable.ic_event_white_48dp);
             currentPage = 0;
         } else if (id == R.id.nav_medicines_fragment) {
             fragmentClass = PrescribedMedicines.newInstance("1", "PrescribedMedicines").getClass();
+            toolbar.setTitle(R.string.drawer_label_medicines);
             fab.setVisibility(View.VISIBLE);
+            fab.setImageResource(R.drawable.ic_local_hospital_white_48dp);
             currentPage = 1;
         } else if (id == R.id.nav_family_fragment) {
             fragmentClass = FamilyListFragment.newInstance("2", "FamilyList").getClass();
-            fab.setVisibility(View.INVISIBLE);
+            toolbar.setTitle(R.string.drawer_label_family);
+            fab.setVisibility(View.VISIBLE);
+            fab.setImageResource(R.drawable.ic_group_add_white_48dp);
             currentPage = 2;
         }
         try {

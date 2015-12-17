@@ -89,7 +89,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
             viewHolder.photoView.setImageBitmap(bitmap);
         }catch (NullPointerException e){
             e.printStackTrace();
-            viewHolder.photoView.setImageResource(R.drawable.noavatar);
+            viewHolder.photoView.setImageResource(R.drawable.ic_person_black_48dp);
         }
 
     }

@@ -41,7 +41,7 @@
 			android:layout_height="30dp"
 	        android:focusable="false"
 	  		android:focusableInTouchMode="false"
-	        android:src="@drawable/icon_call"/>
+	        android:src="@drawable/ic_phone_black_48dp"/>
 
     </LinearLayout>
     

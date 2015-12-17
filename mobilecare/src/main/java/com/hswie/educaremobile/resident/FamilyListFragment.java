@@ -183,7 +183,7 @@ public class FamilyListFragment extends Fragment {
                 return;
             }
 
-            ResidentsModel.get().setCurrentResident(resident);
+            ResidentsModel.get().getCurrentResident().setFamilies(resident.getFamilies());
 
             familyAdapter.notifyDataSetChanged();
 

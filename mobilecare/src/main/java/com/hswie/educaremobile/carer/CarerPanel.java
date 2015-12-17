@@ -66,8 +66,19 @@ public class CarerPanel extends AppCompatActivity{
 
                 currentPage = position;
 
-                if (position == 0 || position == 2)
+                if (position == 0 ){
+
                     fab.setVisibility(View.VISIBLE);
+                    fab.setImageResource(R.drawable.ic_person_add_white_48dp);
+
+                }
+
+                else if (position == 2){
+
+                    fab.setVisibility(View.VISIBLE);
+                    fab.setImageResource(R.drawable.ic_email_white_48dp);
+
+                }
                 else fab.setVisibility(View.INVISIBLE);
             }
 

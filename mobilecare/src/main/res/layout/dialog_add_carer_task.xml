@@ -69,7 +69,7 @@
         android:nestedScrollingEnabled="true"
         android:choiceMode="singleChoice"
         android:listSelector="@drawable/selector"
-        android:childIndicator="@drawable/icon_plus"
+        android:childIndicator="@drawable/ic_add_white_48dp"
         android:layout_below="@+id/date_task"
         android:layout_height="100dp"
         android:layout_width="wrap_content"/>

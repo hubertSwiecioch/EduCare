@@ -58,7 +58,7 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
         viewHolder.fullnameView.setText(family.getFullName());
 
 
-        viewHolder.callView.setBackgroundResource(R.drawable.icon_call);
+        viewHolder.callView.setBackgroundResource(R.drawable.ic_phone_black_48dp);
         viewHolder.callView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,10 +1,13 @@
 package com.hswie.educaremobile.adapter;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,10 +49,10 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
     public CarerAdapter(CarerAdapterCallbacks residentAdapterCallbacks) {
         Log.d(TAG, "CarerAdapter");
         this.carerAdapterCallbacks = residentAdapterCallbacks;
-        items = (ArrayList<Carer>)CarerModel.get().getCarersWithoutCurrent().clone();
+        items = (ArrayList<Carer>) CarerModel.get().getCarersWithoutCurrent().clone();
 
 
-        Log.d(TAG,"ItmesSize:" + items.size());
+        Log.d(TAG, "ItmesSize:" + items.size());
 
     }
 
@@ -68,35 +71,44 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Log.d(TAG, "onBindViewHolder");
-        Log.d(TAG,"onBindViewHolderItmesSize:" + items.size());
+        Log.d(TAG, "onBindViewHolderItmesSize:" + items.size());
         final Carer carer;
         try {
             carer = items.get(position);
-        }
-        catch(IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return;
         }
 
-            viewHolder.parentLayout.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            carerAdapterCallbacks.onListItemClick(position);
-                        }
-                    });
+        viewHolder.parentLayout.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        carerAdapterCallbacks.onListItemClick(position);
+                    }
+                });
 
-            viewHolder.firstnameView.setText(carer.getFullName());
+        viewHolder.firstnameView.setText(carer.getFullName());
 
-            viewHolder.callView.setBackgroundResource(R.drawable.icon_call);
-            viewHolder.callView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        viewHolder.callView.setBackgroundResource(R.drawable.ic_phone_black_48dp);
+        viewHolder.callView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    Log.d(TAG, "clickCall");
-                    Intent intent = new Intent(Intent.ACTION_CALL);
+                Log.d(TAG, "clickCall");
+                Intent intent = new Intent(Intent.ACTION_CALL);
 
-                    intent.setData(Uri.parse("tel:" + carer.getPhoneNumber()));
-                    context.startActivity(intent);
+                intent.setData(Uri.parse("tel:" + carer.getPhoneNumber()));
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                context.startActivity(intent);
                 }
             });
 
@@ -118,7 +130,7 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
             }catch (NullPointerException e){
 
                 e.printStackTrace();
-                viewHolder.photoView.setImageResource(R.drawable.noavatar);
+                viewHolder.photoView.setImageResource(R.drawable.ic_person_black_48dp);
             }
 
 

@@ -146,7 +146,7 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
 
             Bitmap bitmap;
             if(resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()){
-                bitmap = DrawableConverter.drawableToBitmap(context.getResources().getDrawable(R.drawable.noavatar));
+                bitmap = DrawableConverter.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_person_black_48dp));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, ImageHelper.AVATAR_QUALITY, stream);
 
