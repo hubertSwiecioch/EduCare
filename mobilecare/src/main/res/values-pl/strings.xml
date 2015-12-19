@@ -5,7 +5,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_first_name">Imię</string>
-    <string name="prompt_password">Hasło (opcjonalnie)</string>
+    <string name="prompt_password">Hasło</string>
     <string name="prompt_last_name">Nazwisko</string>
     <string name="action_sign_in">Zaloguj</string>
     <string name="action_register_carer">Rejestruj Opiekuna</string>
@@ -23,6 +23,13 @@
     <string name="residents_list_tab">Rezydenci</string>
     <string name="carers_list_tab">Opiekunowie</string>
     <string name="messages_tab">Wiadomości</string>
+    <string name="field_is_required">To pole jest wymagane</string>
+    <string name="register_successful">Zarejstrowano nowego opiekuna</string>
+    <string name="register_resident_successful">Dodano nowego pacjenta</string>
+    <string name="register_error">Rejestracja nie powiodła się</string>
+    <string name="adding_error">Dodawanie nie powiodło się</string>
+    <string name="carer_is_current_adding">Rejstracja opiekuna...</string>
+    <string name="resident_is_current_adding">Dodawanie rezydenta...</string>
 
     <string name="title_activity_add_resident">Dodaj Pacjenta</string>
     <string name="title_activity_carer_register">Rejestruj Opiekuna</string>
@@ -35,7 +42,7 @@
     <string name="switch_camera">Aparat</string>
 
     <string name="prompt_carer_username">Login(Email)</string>
-    <string name="prompt_carer_password">Hasło(6 znaków)</string>
+    <string name="prompt_carer_password">Hasło</string>
     <string name="prompt_carer_fullname">Nazwa</string>
     <string name="prompt_carer_phonenumber">Numer telefonu</string>
 

@@ -1,6 +1,7 @@
 package com.hswie.educaremobile.helper;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -25,6 +26,8 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 public class FileHelper {
 
     private static final String TAG ="FileHelper";
+    public static final int RESIDENT_CACHE = 1;
+    public static final int CARER_CACHE = 2;
 
 
     private HttpURLConnection connection = null;
@@ -102,6 +105,25 @@ public class FileHelper {
         {
             //Exception handling
         }
+    }
+
+
+    public static boolean checkPhotoCache(Context context, String personID, int personType){
+
+        String filePath= "";
+
+        if (personType == RESIDENT_CACHE) {
+            filePath = context.getFilesDir() + "/resident_" + personID + ".jpg";
+        }
+        else if (personType == CARER_CACHE) {
+            filePath = context.getFilesDir() + "/carer_" + personID + ".jpg";
+        }
+
+        File file = new File(filePath);
+        if(file.exists())
+            return true;
+        else
+            return false;
     }
 
 }

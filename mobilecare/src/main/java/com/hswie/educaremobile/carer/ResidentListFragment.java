@@ -157,7 +157,7 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
            ResidentRDH residentRDH = new ResidentRDH();
 
             ResidentsModel.get().setResidents(residentRDH.getAllResidents());
-            ResidentsModel.get().getResidentsImages();
+            ResidentsModel.get().getResidentsImages(getContext());
 
             return null;
         }

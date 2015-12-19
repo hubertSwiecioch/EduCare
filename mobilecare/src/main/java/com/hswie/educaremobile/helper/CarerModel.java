@@ -1,5 +1,6 @@
 package com.hswie.educaremobile.helper;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.hswie.educaremobile.api.dao.CarerMessageRDH;
@@ -101,19 +102,32 @@ public class CarerModel {
     }
 
 
-    public void getCarerImages(){
+    public void getCarerImages(Context context){
 
-        for ( int i = 0; i<CarerModel.get().getCarers().size(); i++){
+        for ( int i = 0; i<CarerModel.get().getCarers().size(); i++) {
 
-            String url = CarerModel.get().getCarers().get(i).getPhoto();
-            try {
-                byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
-                CarerModel.get().getCarers().get(i).setPhotoByte(imageByte);
-                Log.d(TAG, "GetCarerImageFromHttpSuccess");
+            Carer carer = CarerModel.get().getCarers().get(i);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                String url = carer.getPhoto();
+                try {
+                    if (!FileHelper.checkPhotoCache(context, carer.getID(), FileHelper.CARER_CACHE)) {
+                        byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
+                        carer.setPhotoByte(imageByte);
+                        //Log.d(TAG, "GetCarerImageFromHttpSuccess");
+                    }
+                    else {
+                        String filePath = context.getFilesDir() + "/carer_" + carer.getID() + ".jpg";
+                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
+                        carer.setPhotoByte(imageByte);
+                        //Log.d(TAG, "GetCarerImageFromCacheSuccess");
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
         }
     }
 

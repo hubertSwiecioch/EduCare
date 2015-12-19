@@ -12,18 +12,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
+import com.hswie.educaremobile.helper.PasswordValidator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.datatype.Duration;
 
 import pl.aprilapps.easyphotopicker.EasyImage;
 
@@ -80,7 +84,44 @@ public class RegisterCarerActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            if(file !=null) {
+
+            carerUsername.setError(null);
+            carerPassword.setError(null);
+            carerFullName.setError(null);
+            carerPhoneNumber.setError(null);
+            getPhoto.setError(null);
+
+            boolean error = false;
+
+
+            if (carerUsername.getText().toString().length() == 0 || !isEmailValid(carerUsername.getText().toString())) {
+                carerUsername.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (carerPassword.getText().toString().length() == 0 || !PasswordValidator.isValid(carerPassword.getText().toString()).isPasswordValid()) {
+                carerPassword.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (carerFullName.getText().toString().length() == 0) {
+                carerFullName.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (carerPhoneNumber.getText().toString().length() == 0) {
+                carerPhoneNumber.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (getPhoto.getText().toString().length() == 0) {
+                getPhoto.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+
+
+            if(file !=null && !error) {
 
                 Log.d(TAG, "TryRegisterCarerAndUploadPhoto");
                 ArrayList<String> params = new ArrayList<>();
@@ -117,6 +158,11 @@ public class RegisterCarerActivity extends AppCompatActivity {
             EasyImage.openGalleryPicker(RegisterCarerActivity.this);
         }
     };
+
+    private boolean isEmailValid(String email) {
+        Log.d(TAG, "isEmailValid");
+        return email.contains("@");
+    }
 
 
     @Override
@@ -192,8 +238,33 @@ public class RegisterCarerActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Upload Photo...");
+            dialog.setMessage(getString(R.string.carer_is_current_adding));
             dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Object... params) {
+
+            FileHelper fileHelper = new FileHelper();
+            CarerRDH carerRDH = new CarerRDH();
+
+            try {
+                fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_CARER);
+                carerRDH.addCarer((ArrayList<String>) params[1]);
+            }catch (Exception e){
+
+                cancel(true);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(getApplicationContext(), R.string.register_error, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -201,19 +272,13 @@ public class RegisterCarerActivity extends AppCompatActivity {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+
+            Toast.makeText(getApplicationContext(), R.string.register_successful, Toast.LENGTH_LONG).show();
+            finish();
+
         }
 
-        @Override
-        protected Void doInBackground(Object... params) {
 
-           FileHelper fileHelper = new FileHelper();
-            fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_CARER);
-            CarerRDH carerRDH = new CarerRDH();
-
-
-            carerRDH.addCarer((ArrayList<String>) params[1]);
-            return null;
-        }
 
 
     }

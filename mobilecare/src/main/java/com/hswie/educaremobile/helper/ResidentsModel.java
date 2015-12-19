@@ -1,5 +1,6 @@
 package com.hswie.educaremobile.helper;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.hswie.educaremobile.api.pojo.Medicine;
@@ -34,20 +35,31 @@ public class ResidentsModel {
     }
 
 
-    public void getResidentsImages(){
+    public void getResidentsImages(Context context){
 
-        for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++){
+        for ( int i = 0; i<ResidentsModel.get().getResidents().size(); i++) {
 
-            String url = ResidentsModel.get().getResidents().get(i).getPhoto();
-            try {
-                byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
-                ResidentsModel.get().getResidents().get(i).setPhotoByte(imageByte);
-                Log.d(TAG, "GetResidentImageFromHttpSuccess");
+            Resident resident = ResidentsModel.get().getResidents().get(i);
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                String url = resident.getPhoto();
+                try {
+                    if (!FileHelper.checkPhotoCache(context, resident.getID(), FileHelper.RESIDENT_CACHE)) {
+                        byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
+                        resident.setPhotoByte(imageByte);
+                        //Log.d(TAG, "GetResidentImageFromHttpSuccess");
+                    }else{
+                        String filePath = context.getFilesDir() + "/resident_" + resident.getID() + ".jpg";
+                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
+                        resident.setPhotoByte(imageByte);
+                        //Log.d(TAG, "GetResidentImageFromCacheSuccess");
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+
     }
 
     public void setCurrentResidentIndex(Resident resident) {

@@ -133,7 +133,7 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
             CarerModel.get().setCarers(carerRDH.getAllCarers());
             CarerModel.get().setCurrentCarrerMessages();
             CarerModel.get().setCurrentCarrerTasks();
-            CarerModel.get().getCarerImages();
+            CarerModel.get().getCarerImages(getContext());
 
             return null;
         }

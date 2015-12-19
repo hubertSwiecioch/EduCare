@@ -4,7 +4,7 @@
 
     <string name="prompt_email">Email</string>
     <string name="prompt_first_name">First Name</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="prompt_last_name">Last Name</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register_carer">Register Carer</string>
@@ -18,6 +18,13 @@
         completions."
     </string>
     <string name="title_activity_nurse_panel">Carer panel</string>
+    <string name="field_is_required">This field is required</string>
+    <string name="register_successful">Carer register successful</string>
+    <string name="register_resident_successful">Resident add successful</string>
+    <string name="register_error">Carer register unsuccessful</string>
+    <string name="adding_error">Adding unsuccessful</string>
+    <string name="carer_is_current_adding">Registering a carer...</string>
+    <string name="resident_is_current_adding">Adding resident...</string>
 
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
@@ -40,7 +47,7 @@
 
 
     <string name="prompt_carer_username">Username(Email)</string>
-    <string name="prompt_carer_password">Password(6 signs)</string>
+    <string name="prompt_carer_password">Password</string>
     <string name="prompt_carer_fullname">Full Name</string>
     <string name="prompt_carer_phonenumber">Phone Number</string>
     <string name="title_activity_resident">Resident Overview</string>

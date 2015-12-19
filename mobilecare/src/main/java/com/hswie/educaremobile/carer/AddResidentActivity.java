@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
@@ -92,7 +93,53 @@ public class AddResidentActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            if(file !=null) {
+
+            firstName.setError(null);
+            lastName.setError(null);
+            dateOfAdoption.setError(null);
+            birthDate.setError(null);
+            address.setError(null);
+            city.setError(null);
+            getPhoto.setError(null);
+
+            boolean error = false;
+
+            if (firstName.getText().toString().length() == 0) {
+                firstName.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (lastName.getText().toString().length() == 0) {
+                lastName.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (dateOfAdoption.getText().toString().length() == 0) {
+                dateOfAdoption.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (birthDate.getText().toString().length() == 0) {
+                birthDate.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (address.getText().toString().length() == 0) {
+                address.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (city.getText().toString().length() == 0) {
+                city.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if (getPhoto.getText().toString().length() == 0) {
+                getPhoto.setError(getString(R.string.error_field_required));
+                error = true;
+            }
+
+            if(file !=null && !error) {
 
                 Log.d(TAG, "TryAddResidentAndUploadPhoto");
                 ArrayList<String> params = new ArrayList<>();
@@ -113,7 +160,8 @@ public class AddResidentActivity extends AppCompatActivity {
 
                 new UploadPhotoToServer(AddResidentActivity.this).execute(file, params);
             }
-            Log.d(TAG, "File = NUll");
+            else{
+                Log.d(TAG, "File = NUll");}
 
         }
     };
@@ -249,27 +297,47 @@ public class AddResidentActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Upload Photo...");
+            dialog.setMessage(getString(R.string.resident_is_current_adding));
             dialog.show();
         }
+
+
+
+        @Override
+        protected Void doInBackground(Object... params) {
+
+            FileHelper fileHelper = new FileHelper();
+            ResidentRDH residentRDH = new ResidentRDH();
+
+            try {
+                fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_RESIDENT);
+                residentRDH.addResident((ArrayList<String>)params[1]);
+            }catch (Exception e){
+
+                cancel(true);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(getApplicationContext(), R.string.adding_error, Toast.LENGTH_LONG).show();
+        }
+
 
         @Override
         protected void onPostExecute(Void result) {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
-        }
 
-        @Override
-        protected Void doInBackground(Object... params) {
-
-           FileHelper fileHelper = new FileHelper();
-            fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_RESIDENT);
-            ResidentRDH residentRDH = new ResidentRDH();
-
-
-            residentRDH.addResident((ArrayList<String>)params[1]);
-            return null;
+            Toast.makeText(getApplicationContext(), R.string.register_resident_successful, Toast.LENGTH_LONG).show();
+            finish();
         }
 
 

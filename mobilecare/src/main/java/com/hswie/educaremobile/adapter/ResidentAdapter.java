@@ -76,7 +76,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
             Bitmap bitmap;
             if (resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()) {
 
-                Log.d(TAG, "loadPhotoFromByteArray");
+                //Log.d(TAG, "loadPhotoFromByteArray");
                 String cachePath = ImageHelper.cacheImageOnDisk(context, resident.getPhotoByte(),
                         "resident_" + resident.getID() + ".jpg",
                         ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
@@ -84,7 +84,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
                 resident.setPhotoByte(null);
 
             }
-            Log.d(TAG, "loadPhotoFromCache:" + resident.getPhotoCache());
+            //Log.d(TAG, "loadPhotoFromCache:" + resident.getPhotoCache());
             bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
             viewHolder.photoView.setImageBitmap(bitmap);
         }catch (NullPointerException e){
