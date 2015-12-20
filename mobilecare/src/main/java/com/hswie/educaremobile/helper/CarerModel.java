@@ -111,17 +111,17 @@ public class CarerModel {
 
                 String url = carer.getPhoto();
                 try {
-                    if (!FileHelper.checkPhotoCache(context, carer.getID(), FileHelper.CARER_CACHE)) {
+                    if (!FileHelper.checkPhotoCache(context,url, "/carer_" +carer.getID(), FileHelper.CARER_CACHE) && !CarerModel.get().getCurrentCarer().getID().equals(carer.getID())) {
                         byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
                         carer.setPhotoByte(imageByte);
-                        //Log.d(TAG, "GetCarerImageFromHttpSuccess");
+                        Log.d(TAG, "GetCarerImageFromHttpSuccess" + "carerID: " + carer.getID());
                     }
-                    else {
-                        String filePath = context.getFilesDir() + "/carer_" + carer.getID() + ".jpg";
-                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
-                        carer.setPhotoByte(imageByte);
-                        //Log.d(TAG, "GetCarerImageFromCacheSuccess");
-                    }
+//                    else {
+//                        String filePath = context.getFilesDir() + "/carer_" + carer.getID() + ".jpg";
+//                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
+//                        carer.setPhotoByte(imageByte);
+//                        //Log.d(TAG, "GetCarerImageFromCacheSuccess");
+//                    }
 
 
                 } catch (IOException e) {

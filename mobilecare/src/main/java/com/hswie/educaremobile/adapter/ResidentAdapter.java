@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -72,24 +74,34 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
         viewHolder.firstnameView.setText(resident.getFirstName());
         viewHolder.lastnameView.setText(resident.getLastName());
 
+        Bitmap bitmap;
+        String cachePath;
         try {
-            Bitmap bitmap;
+
             if (resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()) {
 
-                //Log.d(TAG, "loadPhotoFromByteArray");
-                String cachePath = ImageHelper.cacheImageOnDisk(context, resident.getPhotoByte(),
-                        "resident_" + resident.getID() + ".jpg",
+
+                cachePath = ImageHelper.cacheImageOnDisk(context, resident.getPhotoByte(),
+                        FileHelper.parsePhotoString(resident.getPhoto(), "/resident_" + resident.getID()),
                         ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
                 resident.setPhotoCache(cachePath);
                 resident.setPhotoByte(null);
 
             }
-            //Log.d(TAG, "loadPhotoFromCache:" + resident.getPhotoCache());
+
+
             bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
             viewHolder.photoView.setImageBitmap(bitmap);
         }catch (NullPointerException e){
+
+            cachePath = context.getFilesDir() +  FileHelper.parsePhotoString(resident.getPhoto(), "/resident_" + resident.getID());
+            resident.setPhotoCache(cachePath);
+            resident.setPhotoByte(null);
+
+            bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
+            viewHolder.photoView.setImageBitmap(bitmap);
             e.printStackTrace();
-            viewHolder.photoView.setImageResource(R.drawable.ic_person_black_48dp);
+            //viewHolder.photoView.setImageResource(R.drawable.ic_person_black_48dp);
         }
 
     }

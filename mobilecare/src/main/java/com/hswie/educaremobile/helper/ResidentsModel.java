@@ -43,16 +43,17 @@ public class ResidentsModel {
 
                 String url = resident.getPhoto();
                 try {
-                    if (!FileHelper.checkPhotoCache(context, resident.getID(), FileHelper.RESIDENT_CACHE)) {
+                    if (!FileHelper.checkPhotoCache(context,url, "/resident_" + resident.getID(), FileHelper.RESIDENT_CACHE)) {
                         byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
                         resident.setPhotoByte(imageByte);
-                        //Log.d(TAG, "GetResidentImageFromHttpSuccess");
-                    }else{
-                        String filePath = context.getFilesDir() + "/resident_" + resident.getID() + ".jpg";
-                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
-                        resident.setPhotoByte(imageByte);
-                        //Log.d(TAG, "GetResidentImageFromCacheSuccess");
+                        Log.d(TAG, "GetResidentImageFromHttpSuccess");
                     }
+//                    else{
+//                        String filePath = context.getFilesDir() + "/resident_" + resident.getID() + ".jpg";
+//                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
+//                        resident.setPhotoByte(imageByte);
+//                        //Log.d(TAG, "GetResidentImageFromCacheSuccess");
+//                    }
 
 
                 } catch (IOException e) {

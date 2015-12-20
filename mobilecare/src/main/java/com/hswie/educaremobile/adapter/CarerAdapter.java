@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.helper.CarerModel;
+import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 
@@ -111,14 +112,16 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
                 context.startActivity(intent);
                 }
             });
+           Bitmap bitmap;
+           String cachePath;
 
             try {
-                Bitmap bitmap;
+
                 if (carer.getPhotoCache() == null || carer.getPhotoCache().isEmpty()) {
 
                     Log.d(TAG, "loadPhotoFromByteArray");
-                    String cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
-                            "carer_" + carer.getID() + ".jpg",
+                    cachePath = ImageHelper.cacheImageOnDisk(context, carer.getPhotoByte(),
+                            FileHelper.parsePhotoString(carer.getPhoto(), "/carer_" + carer.getID()),
                             ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
                     carer.setPhotoCache(cachePath);
                     carer.setPhotoByte(null);
@@ -129,8 +132,14 @@ public class CarerAdapter extends RecyclerView.Adapter<CarerAdapter.ViewHolder> 
                 viewHolder.photoView.setImageBitmap(bitmap);
             }catch (NullPointerException e){
 
+                cachePath = context.getFilesDir() +  FileHelper.parsePhotoString(carer.getPhoto(), "/carer_" + carer.getID());
+                carer.setPhotoCache(cachePath);
+                carer.setPhotoByte(null);
+
+                bitmap = BitmapFactory.decodeFile(carer.getPhotoCache());
+                viewHolder.photoView.setImageBitmap(bitmap);
                 e.printStackTrace();
-                viewHolder.photoView.setImageResource(R.drawable.ic_person_black_48dp);
+                //viewHolder.photoView.setImageResource(R.drawable.ic_person_black_48dp);
             }
 
 

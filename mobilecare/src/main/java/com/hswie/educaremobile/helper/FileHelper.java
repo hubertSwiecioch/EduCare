@@ -40,7 +40,7 @@ public class FileHelper {
 
     int bytesRead, bytesAvailable, bufferSize;
     byte[] buffer;
-    int maxBufferSize = 1*1024*1024;
+    int maxBufferSize = 1*100*100;
     private int serverResponseCode;
     private String serverResponseMessage;
 
@@ -108,22 +108,31 @@ public class FileHelper {
     }
 
 
-    public static boolean checkPhotoCache(Context context, String personID, int personType){
+    public static boolean checkPhotoCache(Context context, String url, String personID, int personType){
 
         String filePath= "";
 
         if (personType == RESIDENT_CACHE) {
-            filePath = context.getFilesDir() + "/resident_" + personID + ".jpg";
+            filePath = context.getFilesDir()  + parsePhotoString(url, personID);
         }
         else if (personType == CARER_CACHE) {
-            filePath = context.getFilesDir() + "/carer_" + personID + ".jpg";
+            filePath = context.getFilesDir() + parsePhotoString(url, personID);
         }
 
+        Log.d(TAG,"checkPhotoCache: " + filePath );
         File file = new File(filePath);
         if(file.exists())
             return true;
         else
             return false;
+    }
+
+    public static String parsePhotoString(String photoString, String personID){
+
+        String part[] = photoString.split("/");
+        photoString =personID + "_" + part[part.length-1];
+        Log.d(TAG, "parsePhotoString: " + photoString);
+        return photoString;
     }
 
 }
