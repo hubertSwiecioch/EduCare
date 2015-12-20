@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.dialog.AddFamilyDialog;
 import com.hswie.educaremobile.dialog.AddMedicineDialog;
 import com.hswie.educaremobile.dialog.AddTaskDialog;
 import com.hswie.educaremobile.helper.ResidentsModel;
@@ -39,6 +40,7 @@ public class ResidentActivity extends AppCompatActivity
     public static FloatingActionButton fab;
     private AddTaskDialog addTaskDialog;
     private AddMedicineDialog addMedicineDialog;
+    private AddFamilyDialog addFamilyDialog;
     private Toolbar toolbar;
 
     public static int currentPage;
@@ -68,6 +70,10 @@ public class ResidentActivity extends AppCompatActivity
                 super.onDrawerOpened(drawerView);
                 if(addTaskDialog != null)
                     addTaskDialog.dismiss();
+                if(addMedicineDialog != null)
+                    addMedicineDialog.dismiss();
+                if(addFamilyDialog != null)
+                    addFamilyDialog.dismiss();
 
 
                 headerAvatar = (ImageView) findViewById(R.id.imageViewHeaderAvatar);
@@ -143,6 +149,28 @@ public class ResidentActivity extends AppCompatActivity
                             }
                         };
                         addMedicineDialog.show(fragmentTransaction, "addMedicineDialog");
+                        break;
+
+                    case 2:
+
+                        addFamilyDialog = AddFamilyDialog.newInstance();
+                        addFamilyDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.EduCareAppDialog);
+                        addFamilyDialog.callback  = new AddFamilyDialog.DismissCallback() {
+                            @Override
+                            public void dismissFamilyDialog() {
+
+                                Log.d(TAG, "DISMISS");
+                                Toast.makeText(getApplicationContext(), getString(R.string.adding_family_successful), Toast.LENGTH_LONG).show();
+                                List<Fragment>  fragmentList= getSupportFragmentManager().getFragments();
+                                for (Fragment f:fragmentList) {
+
+                                    if (f instanceof FamilyListFragment)
+                                        ((FamilyListFragment) f).refreshData();
+
+                                }
+                            }
+                        };
+                        addFamilyDialog.show(fragmentTransaction, "addFamilyDialog");
                         break;
                 }
 

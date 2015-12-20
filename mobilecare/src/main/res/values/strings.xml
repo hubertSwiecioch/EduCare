@@ -125,6 +125,13 @@
     <string name="at_least_one_special_character">At least one special character</string>
     <string name="be_at_least_eight_characters">Be at least eight characters</string>
 
+    <string name="add_family">Add family</string>
+    <string name="add_family_username">Username</string>
+    <string name="add_family_full_name">Full name</string>
+    <string name="adding_family">Adding family</string>
+    <string name="adding_family_unsuccessful">Adding unsuccessful</string>
+    <string name="adding_family_successful">Adding successful</string>
+
 
 
 

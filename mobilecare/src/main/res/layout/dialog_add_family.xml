@@ -1,0 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/medicine_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:isScrollContainer="true"
+    android:background="@drawable/rounded_layout"
+    android:padding="@dimen/activity_padding" >
+
+
+
+    <RelativeLayout
+        android:id="@+id/family_scroll_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_layout"
+        android:padding="@dimen/activity_padding" >
+
+
+    <TextView
+        android:id="@+id/add_family_title"
+        android:text="@string/add_family"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/cardview_light_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <EditText android:id="@+id/new_family_user_name"
+        android:layout_below="@+id/add_family_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_family_username"
+        android:textColorHint="@color/cardview_light_background"
+        android:textColor="@color/cardview_light_background"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+
+
+    <EditText android:id="@+id/family_password"
+        android:layout_below="@+id/new_family_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_password"
+        android:textColorHint="@color/cardview_light_background"
+        android:textColor="@color/cardview_light_background"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+        <ProgressBar
+            android:id="@+id/signup_password_strenght"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="5"
+            android:visibility="gone"/>
+
+        <com.hswie.educaremobile.helper.PasswordStrengthRules
+            android:id="@+id/signup_password_strenght_content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.hswie.educaremobile.helper.PasswordStrengthRules>
+
+
+
+        <EditText android:id="@+id/family_full_name"
+            android:layout_below="@+id/family_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_family_full_name"
+            android:textColorHint="@color/cardview_light_background"
+            android:textColor="@color/cardview_light_background"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+
+        <EditText android:id="@+id/family_phone_number"
+            android:layout_below="@+id/family_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_carer_phonenumber"
+            android:textColorHint="@color/cardview_light_background"
+            android:textColor="@color/cardview_light_background"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_below="@id/family_phone_number"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add"
+                android:textColor="@color/colorPrimary"
+                android:width="120dp" />
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_toRightOf="@id/add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/close"
+                android:textColor="@color/colorPrimary"
+                android:width="120dp" />
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

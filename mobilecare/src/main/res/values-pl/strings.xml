@@ -112,5 +112,12 @@
     <string name="at_least_one_special_character">Co najmniej jeden znak specjalny</string>
     <string name="be_at_least_eight_characters">Minimum 8 znaków </string>
 
+    <string name="add_family">Dodaj konto rodziny</string>
+    <string name="add_family_username">Login rodziny</string>
+    <string name="add_family_full_name">Nazwa rodziny</string>
+    <string name="adding_family">Dodawanie rodziny..</string>
+    <string name="adding_family_unsuccessful">Dodanie rodziny niepowiodło się</string>
+    <string name="adding_family_successful">Dodano konto rodziny</string>
+
 
 </resources>
