@@ -2,16 +2,24 @@ package com.hswie.educaremobile.carer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
@@ -19,7 +27,10 @@ import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
+import com.hswie.educaremobile.helper.PasswordStrengthRules;
+import com.hswie.educaremobile.helper.PasswordValidationResult;
 import com.hswie.educaremobile.helper.PasswordValidator;
+import com.hswie.educaremobile.helper.ToggleUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,6 +55,10 @@ public class RegisterCarerActivity extends AppCompatActivity {
 
     private File file;
 
+    private ProgressBar passwordStrenghtProgress;
+    private PasswordStrengthRules passwordStrengthRules;
+    private PasswordValidationResult passwordValidationResult;
+
 
 
     @Override
@@ -62,6 +77,9 @@ public class RegisterCarerActivity extends AppCompatActivity {
     private void initView() {
         carerUsername = (EditText) findViewById(R.id.carer_username);
         carerPassword = (EditText) findViewById(R.id.carer_password);
+        passwordStrenghtProgress = (ProgressBar) findViewById(R.id.signup_password_strenght);
+
+        passwordStrengthRules = (PasswordStrengthRules) findViewById(R.id.signup_password_strenght_content_container);
         carerFullName = (EditText) findViewById(R.id.carer_full_name);
         carerPhoneNumber = (EditText) findViewById(R.id.phone_number);
         getPhoto = (EditText) findViewById(R.id.getPhoto);
@@ -76,6 +94,70 @@ public class RegisterCarerActivity extends AppCompatActivity {
         registerCarerButton.setOnClickListener(registerCarer);
 
 
+        carerPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                passwordValidationResult = PasswordValidator.isValid(carerPassword.getText().toString());
+
+                if (hasFocus) {
+                    passwordStrenghtProgress.setVisibility(View.VISIBLE);
+                    if (!passwordValidationResult.isPasswordValid())
+                        ToggleUtil.toggleContentsDown(getApplicationContext(), passwordStrengthRules.getRelativeLayout());
+                } else {
+                    ToggleUtil.toggleContentsUp(getApplicationContext(), passwordStrengthRules.getRelativeLayout());
+                    passwordStrenghtProgress.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        carerPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                passwordValidationResult = PasswordValidator.isValid(carerPassword.getText().toString());
+                int progress = passwordValidationResult.getValidCount();
+
+                if (!passwordValidationResult.isPasswordValid())
+                    ToggleUtil.toggleContentsDown(getApplicationContext(), passwordStrengthRules.getRelativeLayout());
+                else ToggleUtil.toggleContentsUp(getApplicationContext(), passwordStrengthRules.getRelativeLayout());
+
+                if (progress < 3)
+                    passwordStrenghtProgress.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+
+                if (progress <= 4 && progress >= 3)
+                    passwordStrenghtProgress.getProgressDrawable().setColorFilter(Color.rgb(255, 165, 0), PorterDuff.Mode.SRC_IN);
+
+                if (progress == 5)
+                    passwordStrenghtProgress.getProgressDrawable().setColorFilter(Color.rgb(50, 205, 50), PorterDuff.Mode.SRC_IN);
+
+                passwordStrengthRules.setColorOnTextChanged(passwordValidationResult);
+                passwordStrenghtProgress.setProgress(progress);
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
+        passwordStrenghtProgress.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        passwordStrenghtProgress.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                ToggleUtil.toggleContents(getApplicationContext(), passwordStrengthRules);
+            }
+        });
     }
 
 

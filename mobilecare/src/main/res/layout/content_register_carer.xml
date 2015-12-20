@@ -46,7 +46,22 @@
                     android:maxLines="1"
                     android:singleLine="true" />
 
+                <ProgressBar
+                    android:id="@+id/signup_password_strenght"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="5"
+                    android:visibility="gone"/>
+
+
             </android.support.design.widget.TextInputLayout>
+
+            <com.hswie.educaremobile.helper.PasswordStrengthRules
+                android:id="@+id/signup_password_strenght_content_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </com.hswie.educaremobile.helper.PasswordStrengthRules>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

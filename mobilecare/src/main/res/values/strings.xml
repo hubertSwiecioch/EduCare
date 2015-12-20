@@ -119,6 +119,12 @@
     <string name="internet_not_available">Internet not available</string>
     <string name="ok">OK</string>
 
+    <string name="at_least_one_small_letter">At least one small letter</string>
+    <string name="at_least_one_capital_letter">At least one capital letter</string>
+    <string name="at_least_one_number">At least one number</string>
+    <string name="at_least_one_special_character">At least one special character</string>
+    <string name="be_at_least_eight_characters">Be at least eight characters</string>
+
 
 
 

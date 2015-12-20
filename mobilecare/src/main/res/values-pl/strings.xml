@@ -106,5 +106,11 @@
     <string name="adding_medicine_unsuccessful">Dodawanie leku nie powiodło się</string>
     <string name="adding_medicine_successful">Dodano lek</string>
 
+    <string name="at_least_one_small_letter">Co najmniej jedna mała litera</string>
+    <string name="at_least_one_capital_letter">Co najmniej jedna wielka litera</string>
+    <string name="at_least_one_number">Co najmniej jedna cyfra</string>
+    <string name="at_least_one_special_character">Co najmniej jeden znak specjalny</string>
+    <string name="be_at_least_eight_characters">Minimum 8 znaków </string>
+
 
 </resources>
