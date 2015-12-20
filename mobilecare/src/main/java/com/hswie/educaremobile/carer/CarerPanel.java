@@ -117,6 +117,13 @@ public class CarerPanel extends AppCompatActivity{
                                  public void dismissAddMessageDialog() {
 
                                      Log.d(TAG, "DISMISS");
+                                     List<Fragment>  fragmentList= getSupportFragmentManager().getFragments();
+                                     for (Fragment f:fragmentList) {
+                                         //Log.d(TAG, "DISMISS" + f.getClass());
+                                         if (f instanceof MessagesFragment)
+                                             ((MessagesFragment) f).refreshData();
+
+                                     }
                                  }
                              };
                              addMessageDialog.show(fragmentTransaction, "AddCarerMessageDialog");

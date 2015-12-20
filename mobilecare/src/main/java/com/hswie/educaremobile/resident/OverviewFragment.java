@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.CarerTasksAdapter;
@@ -254,8 +255,23 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
         @Override
         protected Void doInBackground(Void... params) {
 
-            CarerModel.get().setCurrentCarrerTasks();
+            try {
+                CarerModel.get().setCurrentCarrerTasks();
+
+            }catch (Exception e){
+
+                cancel(true);
+            }
+
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

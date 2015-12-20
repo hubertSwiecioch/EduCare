@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
@@ -109,6 +110,13 @@ public class ResidentActivity extends AppCompatActivity
 
 
                                 Log.d(TAG, "DISMISS");
+                                List<Fragment>  fragmentList= getSupportFragmentManager().getFragments();
+                                for (Fragment f:fragmentList) {
+
+                                    if (f instanceof OverviewFragment)
+                                        ((OverviewFragment) f).refreshData();
+
+                                }
 
                             }
                         };
@@ -124,6 +132,7 @@ public class ResidentActivity extends AppCompatActivity
                             public void dismissMedicineDialog() {
 
                                 Log.d(TAG, "DISMISS");
+                                Toast.makeText(getApplicationContext(), getString(R.string.adding_medicine_successful), Toast.LENGTH_LONG).show();
                                 List<Fragment>  fragmentList= getSupportFragmentManager().getFragments();
                                 for (Fragment f:fragmentList) {
 

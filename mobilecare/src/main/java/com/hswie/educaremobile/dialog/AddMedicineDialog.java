@@ -2,6 +2,8 @@ package com.hswie.educaremobile.dialog;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,13 +17,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ExpandableListAdapter;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.helper.CarerModel;
+import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,7 +100,6 @@ public class AddMedicineDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                onReturnToOverview();
                 dismiss();
             }
         });
@@ -105,25 +109,54 @@ public class AddMedicineDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
+                medicineName.setError(null);
+                medicineDose.setError(null);
+                startDate.setError(null);
+                endDate.setError(null);
 
 
-                ArrayList<String> params = new ArrayList<String>();
-                params.add(medicineName.getText().toString());
-                params.add(medicineDose.getText().toString());
-                params.add(ResidentsModel.get().getCurrentResident().getID());
-                params.add(Long.toString(startDateCalendar /1000));
-                params.add(Long.toString(endDateCalendar  / 1000));
-                params.add(CarerModel.get().getCurrentCarer().getID());
 
-                for (String param:params) {
+                boolean error = false;
 
-                    Log.d(TAG, "Dialog param: "  + param);
+                if (medicineName.getText().toString().length() == 0) {
+                    medicineName.setError(getString(R.string.error_field_required));
+                    error = true;
                 }
 
-                new AddMedicine().execute(params);
-                onReturnToOverview();
-                dismiss();
+                if (medicineDose.getText().toString().length() == 0) {
+                    medicineDose.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
 
+                if (startDate.getText().toString().length() == 0) {
+                    startDate.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
+
+                if (endDate.getText().toString().length() == 0) {
+                    endDate.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
+
+
+
+                if(!error) {
+
+                    ArrayList<String> params = new ArrayList<String>();
+                    params.add(medicineName.getText().toString());
+                    params.add(medicineDose.getText().toString());
+                    params.add(ResidentsModel.get().getCurrentResident().getID());
+                    params.add(Long.toString(startDateCalendar / 1000));
+                    params.add(Long.toString(endDateCalendar / 1000));
+                    params.add(CarerModel.get().getCurrentCarer().getID());
+
+                    for (String param : params) {
+
+                        Log.d(TAG, "Dialog param: " + param);
+                    }
+
+                    new AddMedicine(getContext()).execute(params);
+                }
 
             }
         });
@@ -181,16 +214,56 @@ public class AddMedicineDialog extends DialogFragment {
 
     private class AddMedicine extends AsyncTask<Object, Void, Void>{
 
+        private ProgressDialog dialog;
+
+        public AddMedicine(Context context) {
+            dialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage(getString(R.string.adding_medicine));
+            dialog.show();
+        }
+
 
         @Override
         protected Void doInBackground(Object... params) {
 
+            if(NetworkHelper.isConnectedToNetwork(getContext())) {
+                try {
+                ResidentRDH residentRDH = new ResidentRDH();
+                residentRDH.addResidentMedicine((ArrayList<String>) params[0]);
+                } catch (Exception e) {
 
-            ResidentRDH residentRDH = new ResidentRDH();
-            residentRDH.addResidentMedicine((ArrayList<String>) params[0]);
-
+                    cancel(true);
+                }
+            }else
+                cancel(true);
 
             return null;
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Log.d(TAG, "Exepction");
+            Toast.makeText(getActivity(), R.string.adding_medicine_unsuccessful, Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Log.d(TAG, "noExepction");
+            onReturnToOverview();
+            dismiss();
 
         }
     }

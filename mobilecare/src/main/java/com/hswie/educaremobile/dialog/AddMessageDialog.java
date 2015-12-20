@@ -1,6 +1,8 @@
 package com.hswie.educaremobile.dialog;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,13 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ExpandableListAdapter;
 import com.hswie.educaremobile.api.dao.CarerMessageRDH;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
+import com.hswie.educaremobile.carer.CarerPanel;
 import com.hswie.educaremobile.helper.CarerModel;
+import com.hswie.educaremobile.helper.NetworkHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +32,7 @@ import java.util.List;
 
 
 public class AddMessageDialog extends DialogFragment {
-    private static final String TAG = "AddTaskDialog";
+    private static final String TAG = "AddMessageDialog";
 
 
     private ExpandableListAdapter listAdapter;
@@ -38,7 +43,7 @@ public class AddMessageDialog extends DialogFragment {
     private ArrayList<Carer> carers;
     private String carersHeader;
 
-    int carerPosition;
+    int carerPosition = -1;
 
 
 
@@ -101,6 +106,7 @@ public class AddMessageDialog extends DialogFragment {
 
                 if(groupPosition == 0){
 
+                    //Log.d(TAG, "childPosition: " + childPosition);
                     expListView.setSelectedChild(groupPosition, childPosition, true);
                     expListView.setItemChecked(childPosition, true);
                     expListView.collapseGroup(groupPosition);
@@ -109,7 +115,7 @@ public class AddMessageDialog extends DialogFragment {
 
                     carersHeader = carers.get(childPosition).getFullName();
                     prepareListData();
-                    Log.d(TAG, "listDataChild: " + listDataChild.size());
+                    //Log.d(TAG, "listDataChild: " + listDataChild.size());
                     listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
                     expListView.setAdapter(listAdapter);
 
@@ -146,21 +152,44 @@ public class AddMessageDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                Long tsLong = System.currentTimeMillis()/1000;
-                String time = tsLong.toString();
+                messageContents.setError(null);
+                messageTitle.setError(null);
 
 
-                ArrayList<String> params = new ArrayList<String>();
 
-                params.add(messageContents.getText().toString());
-                params.add(time);
-                params.add(CarerModel.get().getCurrentCarer().getID());
-                params.add(messageTitle.getText().toString());
-                params.add(carers.get(carerPosition).getID());
+                boolean error = false;
 
-                new AddCarerMessage().execute(params);
-                dismiss();
+                if (messageContents.getText().toString().length() == 0) {
+                    messageContents.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
 
+                if (messageTitle.getText().toString().length() == 0) {
+                    messageTitle.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
+
+                if(carerPosition == -1){
+                    Toast.makeText(getContext(), getString(R.string.no_carer_selected), Toast.LENGTH_LONG).show();
+                    error = true;
+                }
+
+                if(!error) {
+
+                    Long tsLong = System.currentTimeMillis() / 1000;
+                    String time = tsLong.toString();
+
+
+                    ArrayList<String> params = new ArrayList<String>();
+
+                    params.add(messageContents.getText().toString());
+                    params.add(time);
+                    params.add(CarerModel.get().getCurrentCarer().getID());
+                    params.add(messageTitle.getText().toString());
+                    params.add(carers.get(carerPosition).getID());
+
+                    new AddCarerMessage(getContext()).execute(params);
+                }
 
             }
         });
@@ -192,17 +221,54 @@ public class AddMessageDialog extends DialogFragment {
 
 
     private class AddCarerMessage extends AsyncTask<Object, Void, Void>{
+        private ProgressDialog dialog;
 
+        public AddCarerMessage(Context context) {
+            dialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage(getString(R.string.message_is_current_sending));
+            dialog.show();
+        }
 
         @Override
         protected Void doInBackground(Object... params) {
+            if(NetworkHelper.isConnectedToNetwork(getContext())) {
+                try {
+                    CarerMessageRDH carerMessageRDH = new CarerMessageRDH();
+                    carerMessageRDH.addCarerMessage((ArrayList<String>) params[0]);
+                } catch (Exception e) {
 
-
-            CarerMessageRDH carerMessageRDH = new CarerMessageRDH();
-            carerMessageRDH.addCarerMessage((ArrayList<String>) params[0]);
+                    cancel(true);
+                }
+            }else
+                cancel(true);
 
 
             return null;
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(getContext(), R.string.send_message_unsuccessful, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            Toast.makeText(getContext(), R.string.send_message_successful, Toast.LENGTH_LONG).show();
+            onReturnToOverview();
+            dismiss();
 
         }
     }

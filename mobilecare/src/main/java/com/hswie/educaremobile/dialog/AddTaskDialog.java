@@ -2,6 +2,8 @@ package com.hswie.educaremobile.dialog;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ExpandableListAdapter;
@@ -23,6 +26,7 @@ import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
+import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 import java.text.SimpleDateFormat;
@@ -50,8 +54,8 @@ public class AddTaskDialog extends DialogFragment {
     private String carersHeader;
     private String residentsHeader;
 
-    int carerPosition;
-    int residentPosition;
+    int carerPosition = -1;
+    int residentPosition = -1;
 
 
 
@@ -179,19 +183,54 @@ public class AddTaskDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
+                taskHeader.setError(null);
+                taskDescription.setError(null);
+                taskDate.setError(null);
 
 
-                ArrayList<String> params = new ArrayList<String>();
 
-                params.add(carers.get(carerPosition).getID());
-                params.add(residents.get(residentPosition).getID());
-                params.add(taskHeader.getText().toString());
-                params.add(Long.toString(myCalendar.getTimeInMillis() /1000));
-                params.add(taskDescription.getText().toString());
+                boolean error = false;
 
-                new addTask().execute(params);
-                dismiss();
+                if (taskHeader.getText().toString().length() == 0) {
+                    taskHeader.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
 
+                if (taskDescription.getText().toString().length() == 0) {
+                    taskDescription.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
+
+                if (taskDate.getText().toString().length() == 0) {
+                    taskDate.setError(getString(R.string.error_field_required));
+                    error = true;
+                }
+
+                if(carerPosition == -1){
+                    Toast.makeText(getContext(), getString(R.string.no_carer_selected), Toast.LENGTH_LONG).show();
+                    error = true;
+                }
+
+                if(residentPosition == -1){
+                    Toast.makeText(getContext(), getString(R.string.no_resident_selected), Toast.LENGTH_LONG).show();
+                    error = true;
+                }
+
+
+                if(!error) {
+
+                    ArrayList<String> params = new ArrayList<String>();
+
+                    params.add(carers.get(carerPosition).getID());
+                    params.add(residents.get(residentPosition).getID());
+                    params.add(taskHeader.getText().toString());
+                    params.add(Long.toString(myCalendar.getTimeInMillis() / 1000));
+                    params.add(taskDescription.getText().toString());
+
+                    new addTask(getContext()).execute(params);
+
+
+                }
 
             }
         });
@@ -272,16 +311,54 @@ public class AddTaskDialog extends DialogFragment {
 
     private class addTask extends AsyncTask<Object, Void, Void>{
 
+        private ProgressDialog dialog;
+
+        public addTask(Context context) {
+            dialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage(getString(R.string.adding_task));
+            dialog.show();
+        }
+
 
         @Override
         protected Void doInBackground(Object... params) {
 
+            if(NetworkHelper.isConnectedToNetwork(getContext())) {
+                try {
+                    CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+                    carerTasksRDH.addCarerTask((ArrayList<String>) params[0]);
+                } catch (Exception e) {
 
-            CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
-            carerTasksRDH.addCarerTask((ArrayList<String>) params[0]);
-
+                    cancel(true);
+                }
+            }else
+            cancel(true);
 
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(getContext(), R.string.adding_task_unsuccessful, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            Toast.makeText(getContext(), R.string.adding_task_successful, Toast.LENGTH_LONG).show();
+            onReturnToOverview();
+            dismiss();
 
         }
     }

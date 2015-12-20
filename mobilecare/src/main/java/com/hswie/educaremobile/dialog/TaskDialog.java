@@ -1,6 +1,8 @@
 package com.hswie.educaremobile.dialog;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,12 +15,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
+import com.hswie.educaremobile.helper.NetworkHelper;
 
 import java.util.ArrayList;
 
@@ -102,7 +106,7 @@ public class TaskDialog extends DialogFragment {
                 params.add("1");
 
 
-                new setIsDone().execute(params);
+                new setIsDone(getContext()).execute(params);
 
                 onReturnToOverview();
                 dismiss();
@@ -115,15 +119,56 @@ public class TaskDialog extends DialogFragment {
 
     private class setIsDone extends AsyncTask<Object, Void, Void>{
 
+        private ProgressDialog dialog;
+
+        public setIsDone(Context context) {
+            dialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage(getString(R.string.message_is_current_sending));
+            dialog.show();
+        }
+
 
         @Override
         protected Void doInBackground(Object... params) {
 
-            CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
-            carerTasksRDH.setIsDone((ArrayList<String>) params[0]);
-            CarerModel.get().getCurrentCarer().setCarerTasks(carerTasksRDH.getCarerTasks(CarerModel.get().getCurrentCarer().getID()));
+            if(NetworkHelper.isConnectedToNetwork(getContext())) {
+                try {
+                    CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+                    carerTasksRDH.setIsDone((ArrayList<String>) params[0]);
+                    CarerModel.get().getCurrentCarer().setCarerTasks(carerTasksRDH.getCarerTasks(CarerModel.get().getCurrentCarer().getID()));
+                }catch (Exception e) {
+
+                        cancel(true);
+                    }
+                }else
+                cancel(true);
 
             return null;
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(getContext(), getString(R.string.done), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            Toast.makeText(getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
+            onReturnToOverview();
+            dismiss();
 
         }
     }

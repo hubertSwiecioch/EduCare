@@ -23,8 +23,13 @@
     <string name="register_resident_successful">Resident add successful</string>
     <string name="register_error">Carer register unsuccessful</string>
     <string name="adding_error">Adding unsuccessful</string>
+    <string name="send_message_unsuccessful">Send message unsuccessful</string>
+    <string name="send_message_successful">Send message successful</string>
     <string name="carer_is_current_adding">Registering a carer...</string>
     <string name="resident_is_current_adding">Adding resident...</string>
+    <string name="message_is_current_sending">Sending message...</string>
+    <string name="no_carer_selected">Not selected carer</string>
+    <string name="no_resident_selected">Not selected resident</string>
 
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
@@ -101,9 +106,18 @@
     <string name="medicine_empty">Medicine list is empty</string>
     <string name="add_medicine">Add medicine</string>
 
+    <string name="error">Error</string>
+    <string name="adding_task">Adding task...</string>
+    <string name="adding_task_unsuccessful">Adding task unsuccessful</string>
+    <string name="adding_task_successful">Adding task successful</string>
+
+    <string name="adding_medicine">Adding medicine...</string>
+    <string name="adding_medicine_unsuccessful">Adding medicine unsuccessful</string>
+    <string name="adding_medicine_successful">Adding medicine successful</string>
 
 
-
+    <string name="internet_not_available">Internet not available</string>
+    <string name="ok">OK</string>
 
 
 

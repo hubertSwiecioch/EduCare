@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.MessagesAdapter;
@@ -234,13 +235,23 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
         protected Boolean doInBackground(String... params) {
             CarerMessageRDH carerMessagesRDH = new CarerMessageRDH();
 
+            try{
+                carerMessagesRDH.setIsRead(params[0]);
+                Log.d(TAG, "ConfirmMessage doInBackground params[0] = " + params[0]);
+            }catch (Exception e){
 
+                cancel(true);
+            }
 
-            carerMessagesRDH.setIsRead(params[0]);
-
-            Log.d(TAG, "ConfirmMessage doInBackground params[0] = " + params[0]);
-            //return carerMessagesRDH.setIsRead(params[0]);
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

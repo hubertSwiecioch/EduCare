@@ -26,10 +26,16 @@
     <string name="field_is_required">To pole jest wymagane</string>
     <string name="register_successful">Zarejstrowano nowego opiekuna</string>
     <string name="register_resident_successful">Dodano nowego pacjenta</string>
+    <string name="send_message_successful">Wysłano wiadomość</string>
     <string name="register_error">Rejestracja nie powiodła się</string>
     <string name="adding_error">Dodawanie nie powiodło się</string>
+    <string name="send_message_unsuccessful">Wysłanie wiadomości nie powiodło się</string>
     <string name="carer_is_current_adding">Rejstracja opiekuna...</string>
     <string name="resident_is_current_adding">Dodawanie rezydenta...</string>
+    <string name="message_is_current_sending">Wysyłanie wiadomości...</string>
+    <string name="no_carer_selected">Nie wybrano opiekuna</string>
+    <string name="no_resident_selected">Nie wybrano rezydenta</string>
+
 
     <string name="title_activity_add_resident">Dodaj Pacjenta</string>
     <string name="title_activity_carer_register">Rejestruj Opiekuna</string>
@@ -90,6 +96,15 @@
     <string name="medicine_to">do</string>
     <string name="medicine_empty">Lista leków jest pusta</string>
     <string name="add_medicine">Dodaj lek</string>
+
+    <string name="error">Błąd</string>
+    <string name="adding_task">Dodawanie zadania...</string>
+    <string name="adding_task_unsuccessful">Dodawanie zadania nie powiodło się</string>
+    <string name="adding_task_successful">Dodano zadanie</string>
+
+    <string name="adding_medicine">Dodawanie leku...</string>
+    <string name="adding_medicine_unsuccessful">Dodawanie leku nie powiodło się</string>
+    <string name="adding_medicine_successful">Dodano lek</string>
 
 
 </resources>

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.CarerAdapter;
@@ -130,12 +131,25 @@ public class CarerListFragment extends Fragment implements CarerAdapter.CarerAda
         protected Void doInBackground(Void... params) {
             CarerRDH carerRDH = new CarerRDH();
 
-            CarerModel.get().setCarers(carerRDH.getAllCarers());
-            CarerModel.get().setCurrentCarrerMessages();
-            CarerModel.get().setCurrentCarrerTasks();
-            CarerModel.get().getCarerImages(getContext());
+            try {
+                CarerModel.get().setCarers(carerRDH.getAllCarers());
+                CarerModel.get().setCurrentCarrerMessages();
+                CarerModel.get().setCurrentCarrerTasks();
+                CarerModel.get().getCarerImages(getContext());
+            }catch (Exception e){
+
+                cancel(true);
+            }
 
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

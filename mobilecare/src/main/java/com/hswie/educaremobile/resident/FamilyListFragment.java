@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.FamilyAdapter;
@@ -171,9 +172,22 @@ public class FamilyListFragment extends Fragment {
         protected Void doInBackground(Void... params) {
             FamilyRDH familyRDH = new FamilyRDH();
 
-            resident.setFamilies(familyRDH.getResidentFamily(resident.getID()));
+            try {
+                resident.setFamilies(familyRDH.getResidentFamily(resident.getID()));
+            }catch (Exception e){
+
+                cancel(true);
+            }
 
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

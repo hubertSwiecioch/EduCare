@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.MedicineAdapter;
@@ -205,12 +206,24 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         @Override
         protected Void doInBackground(Void... params) {
 
+                try {
+                    ResidentRDH residentRDH = new ResidentRDH();
+                    resident.setMedicines(residentRDH.getResidentMedicines(resident.getID()));
+                    ResidentsModel.get().getCurrentResident().setMedicines(resident.getMedicines());
+                }catch (Exception e){
 
-                ResidentRDH residentRDH = new ResidentRDH();
-                resident.setMedicines(residentRDH.getResidentMedicines(resident.getID()));
-                ResidentsModel.get().getCurrentResident().setMedicines(resident.getMedicines());
+                    cancel(true);
+                }
 
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

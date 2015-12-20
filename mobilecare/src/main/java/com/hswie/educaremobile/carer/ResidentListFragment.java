@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
@@ -156,10 +157,23 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         protected Void doInBackground(Void... params) {
            ResidentRDH residentRDH = new ResidentRDH();
 
-            ResidentsModel.get().setResidents(residentRDH.getAllResidents());
-            ResidentsModel.get().getResidentsImages(getContext());
+            try {
+                ResidentsModel.get().setResidents(residentRDH.getAllResidents());
+                ResidentsModel.get().getResidentsImages(getContext());
+            }catch (Exception e){
+
+                cancel(true);
+            }
 
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override
