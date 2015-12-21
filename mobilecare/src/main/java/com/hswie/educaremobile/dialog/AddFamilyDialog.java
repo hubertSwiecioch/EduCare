@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.FamilyRDH;
+import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.helper.FamilyModel;
 import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
@@ -161,9 +163,10 @@ public class AddFamilyDialog extends DialogFragment {
 
             if(NetworkHelper.isConnectedToNetwork(getContext())) {
                 try {
+                    Resident resident = ResidentsModel.get().getCurrentResident();
                     FamilyRDH familyRDH = new FamilyRDH();
                     familyRDH.addFamily((ArrayList<String>) params[0]);
-                    ResidentsModel.get().getCurrentResident().setFamilies(ResidentsModel.get().getCurrentResident().getFamilies());
+                    FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
                 } catch (Exception e) {
 
                     cancel(true);
