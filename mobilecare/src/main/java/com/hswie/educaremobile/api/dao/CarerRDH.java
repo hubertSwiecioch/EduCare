@@ -69,6 +69,29 @@ public class CarerRDH {
 
     }
 
+    public void updateCarer(ArrayList<String> params){
+
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        for (String param:params) {
+
+            Log.d(TAG, "RDH param: "  + param);
+        }
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_UPDATE_CARER));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_USERNAME, params.get(1)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_PASSWORD, params.get(2)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_CARER_FULLNAME, params.get(3)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_IMAGE, params.get(4)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_PHONENUMBER, params.get(5)));
+
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+        Log.d(TAG, "JSONString: "  + JSONString);
+
+    }
+
     public Carer parseCarer(JSONObject obj) {
         Carer carer = new Carer();
         try {

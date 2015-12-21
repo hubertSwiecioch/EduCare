@@ -111,4 +111,15 @@ public class CarerMessageRDH {
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
         Log.d(TAG, "JSONString: "  + JSONString);
     }
+
+    public void removeMessage(String messageID){
+
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_MESSAGE));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MESSAGE_ID, messageID));
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+        Log.d(TAG, "JSONString: "  + JSONString);
+    }
 }

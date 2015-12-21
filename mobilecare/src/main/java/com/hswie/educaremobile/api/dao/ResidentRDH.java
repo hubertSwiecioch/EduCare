@@ -181,6 +181,24 @@ public class ResidentRDH {
 
     }
 
+    public void removeResident(ArrayList<String> params){
+
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        for (String param:params) {
+
+            Log.d(TAG, "RDH param: "  + param);
+        }
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_RESIDENT));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
+
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+        Log.d(TAG, "JSONString: "  + JSONString);
+
+    }
+
 
     public Resident parseResident(JSONObject obj) {
         Resident resident = new Resident();

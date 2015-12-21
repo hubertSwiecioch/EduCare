@@ -174,11 +174,8 @@ public class ResidentActivity extends AppCompatActivity
                         break;
                 }
 
-
-
             }
         });
-
 
     }
 

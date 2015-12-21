@@ -79,11 +79,8 @@ public class FamilyRDH {
             Log.d(TAG, "RDH param: "  + param);
         }
 
-
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_FAMILY));
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
-
-
 
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
         Log.d(TAG, "JSONString: "  + JSONString);
