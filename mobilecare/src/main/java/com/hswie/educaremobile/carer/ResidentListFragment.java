@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
+import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
 import com.hswie.educaremobile.resident.ResidentActivity;
@@ -146,6 +147,59 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         getActivity().startActivity(myIntent);
     }
 
+    @Override
+    public void onListItemLongClick(int position) {
+        Log.d(TAG, "removeItem " + residentAdapter.getItem(position).getID());
+        if (!asyncTaskWorking) {
+            asyncTaskWorking = true;
+
+            new RemoveResident().execute(residentAdapter.getItem(position).getID());
+        }
+    }
+
+    private class RemoveResident extends AsyncTask<String, Void, Void>{
+        ResidentRDH residentRDH = new ResidentRDH();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            asyncTaskWorking = true;
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            if(NetworkHelper.isConnectedToNetwork(getContext())) {
+                try {
+                    residentRDH.removeResident(params[0]);
+                } catch (Exception e) {
+
+                    cancel(true);
+                }
+            }else
+                cancel(true);
+
+
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            asyncTaskWorking = false;
+            refreshData();
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), getString(R.string.done), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private class DownloadResidentsList extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -173,7 +227,6 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
             super.onCancelled();
             asyncTaskWorking = false;
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

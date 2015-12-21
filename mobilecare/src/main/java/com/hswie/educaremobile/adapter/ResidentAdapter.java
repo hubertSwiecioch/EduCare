@@ -35,6 +35,7 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
 
     public interface ResidentAdapterCallbacks {
         void onListItemClick(int position);
+        void onListItemLongClick(int position);
     }
 
     int itemSelected = -1;
@@ -71,7 +72,15 @@ public class ResidentAdapter extends RecyclerView.Adapter<ResidentAdapter.ViewHo
                     }
                 });
 
-        viewHolder.firstnameView.setText(resident.getFirstName());
+        viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                    residentAdapterCallbacks.onListItemLongClick(position);
+                return false;
+            }
+        });
+
+                viewHolder.firstnameView.setText(resident.getFirstName());
         viewHolder.lastnameView.setText(resident.getLastName());
 
         Bitmap bitmap;

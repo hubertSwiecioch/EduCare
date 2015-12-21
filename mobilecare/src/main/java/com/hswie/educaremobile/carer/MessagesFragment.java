@@ -251,7 +251,6 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
             super.onCancelled();
             asyncTaskWorking = false;
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

@@ -22,6 +22,7 @@ import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.MedicineAdapter;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 
@@ -170,7 +171,6 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             asyncTaskWorking = true;
 
         }
@@ -178,10 +178,25 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         @Override
         protected Void doInBackground(String... params) {
 
-
+            if(NetworkHelper.isConnectedToNetwork(context)) {
+                try {
             residentRDH.removeResidentMedicine(params[0]);
+                } catch (Exception e) {
+
+                    cancel(true);
+                }
+            }else
+                cancel(true);
+
 
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
         }
 
         @Override
@@ -189,6 +204,8 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
             super.onPostExecute(aVoid);
             asyncTaskWorking = false;
             refreshData();
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), getString(R.string.done), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -206,14 +223,17 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
         @Override
         protected Void doInBackground(Void... params) {
 
-                try {
-                    ResidentRDH residentRDH = new ResidentRDH();
-                    resident.setMedicines(residentRDH.getResidentMedicines(resident.getID()));
-                    ResidentsModel.get().getCurrentResident().setMedicines(resident.getMedicines());
-                }catch (Exception e){
+                if(NetworkHelper.isConnectedToNetwork(context)) {
+                    try {
+                        ResidentRDH residentRDH = new ResidentRDH();
+                        resident.setMedicines(residentRDH.getResidentMedicines(resident.getID()));
+                        ResidentsModel.get().getCurrentResident().setMedicines(resident.getMedicines());
+                    } catch (Exception e) {
 
+                        cancel(true);
+                    }
+                }else
                     cancel(true);
-                }
 
             return null;
         }
@@ -223,7 +243,6 @@ public class PrescribedMedicines extends Fragment implements MedicineAdapter.Med
             super.onCancelled();
             asyncTaskWorking = false;
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

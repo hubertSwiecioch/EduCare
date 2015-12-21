@@ -187,7 +187,6 @@ public class FamilyListFragment extends Fragment {
             super.onCancelled();
             asyncTaskWorking = false;
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(getContext(), R.string.error, Toast.LENGTH_LONG).show();
         }
 
         @Override

@@ -181,17 +181,14 @@ public class ResidentRDH {
 
     }
 
-    public void removeResident(ArrayList<String> params){
+    public void removeResident(String residentID){
 
         List<NameValuePair> paramss = new ArrayList<NameValuePair>();
 
-        for (String param:params) {
-
-            Log.d(TAG, "RDH param: "  + param);
-        }
+        Log.d(TAG, "remove:" + residentID);
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_RESIDENT));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, residentID));
 
 
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
