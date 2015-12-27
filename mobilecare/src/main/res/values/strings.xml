@@ -132,6 +132,12 @@
     <string name="adding_family_unsuccessful">Adding unsuccessful</string>
     <string name="adding_family_successful">Adding successful</string>
 
+    <string name="remove_question">Do you want to remove?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
+
 
 
 

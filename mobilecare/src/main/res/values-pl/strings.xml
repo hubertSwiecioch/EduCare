@@ -119,5 +119,9 @@
     <string name="adding_family_unsuccessful">Dodanie rodziny niepowiodło się</string>
     <string name="adding_family_successful">Dodano konto rodziny</string>
 
+    <string name="remove_question">Czy chcesz usunąć?</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+
 
 </resources>

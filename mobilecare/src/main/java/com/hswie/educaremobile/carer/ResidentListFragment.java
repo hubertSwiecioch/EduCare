@@ -1,13 +1,17 @@
 package com.hswie.educaremobile.carer;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +24,7 @@ import android.widget.Toast;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
+import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
@@ -141,20 +146,43 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
         Log.d(TAG, "Click: " + residentAdapter.getItem(position).getFirstName());
         PreferencesManager.setCurrentResidentIndex(Integer.parseInt(residentAdapter.getItem(position).getID()));
         ResidentsModel.get().setCurrentResidentIndex((position));
-        //ResidentsModel.get().setCurrentResident(residentAdapter.getItem(position));
 
         Intent myIntent = new Intent(getActivity(), ResidentActivity.class);
         getActivity().startActivity(myIntent);
     }
 
     @Override
-    public void onListItemLongClick(int position) {
-        Log.d(TAG, "removeItem " + residentAdapter.getItem(position).getID());
-        if (!asyncTaskWorking) {
-            asyncTaskWorking = true;
+    public void onListItemLongClick(final int position) {
 
-            new RemoveResident().execute(residentAdapter.getItem(position).getID());
-        }
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setTitle(residentAdapter.getItem(position).getFirstName() +
+                " " + residentAdapter.getItem(position).getLastName() );
+        alertDialogBuilder.setMessage(getString(R.string.remove_question));
+        alertDialogBuilder.setIcon(R.drawable.ic_delete_black_24dp );
+
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Log.d(TAG, "removeItem " + residentAdapter.getItem(position).getID());
+                if (!asyncTaskWorking) {
+                    asyncTaskWorking = true;
+
+                    new RemoveResident().execute(residentAdapter.getItem(position).getID());
+                }
+
+            }
+        });
+
+
+        alertDialogBuilder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialogBuilder.show();
     }
 
     private class RemoveResident extends AsyncTask<String, Void, Void>{
