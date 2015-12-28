@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
+import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -83,7 +85,6 @@ public class AddResidentActivity extends AppCompatActivity {
 
         addResidentButton = (Button) findViewById(R.id.add_resident);
         addResidentButton.setOnClickListener(addResident);
-
 
     }
 
@@ -309,13 +310,16 @@ public class AddResidentActivity extends AppCompatActivity {
             FileHelper fileHelper = new FileHelper();
             ResidentRDH residentRDH = new ResidentRDH();
 
-            try {
-                fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_RESIDENT);
-                residentRDH.addResident((ArrayList<String>)params[1]);
-            }catch (Exception e){
+            if(NetworkHelper.isConnectedToNetwork(getApplicationContext())) {
+                try {
+                    fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_RESIDENT);
+                    residentRDH.addResident((ArrayList<String>) params[1]);
+                } catch (Exception e) {
 
+                    cancel(true);
+                }
+            }else
                 cancel(true);
-            }
 
             return null;
         }

@@ -1,9 +1,11 @@
 package com.hswie.educaremobile.api.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by hswie on 11/12/2015.
  */
-public class CarerTask {
+public class CarerTask implements Serializable {
 
     private String id;
     private String header;

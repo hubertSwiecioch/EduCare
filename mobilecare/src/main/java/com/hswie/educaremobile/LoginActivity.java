@@ -115,6 +115,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 Log.d(TAG, "StartRegisterCarerFragment");
                 Intent myIntent = new Intent(LoginActivity.this, RegisterCarerActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isEdit", false);
+                myIntent.putExtras(bundle);
                 LoginActivity.this.startActivity(myIntent);
 
 

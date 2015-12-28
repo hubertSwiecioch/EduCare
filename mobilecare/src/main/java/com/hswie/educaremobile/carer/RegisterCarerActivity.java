@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.CarerRDH;
+import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.JsonHelper;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.xml.datatype.Duration;
@@ -59,6 +61,9 @@ public class RegisterCarerActivity extends AppCompatActivity {
     private PasswordStrengthRules passwordStrengthRules;
     private PasswordValidationResult passwordValidationResult;
 
+    private boolean isEdit;
+    private Carer currentCarer;
+
 
 
     @Override
@@ -68,6 +73,19 @@ public class RegisterCarerActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+
+
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        isEdit = bundle.getBoolean("isEdit", false);
+        if(isEdit) {
+            getSupportActionBar().setTitle(getString(R.string.edit_profile));
+            currentCarer = (Carer) bundle.getSerializable("currentCarer");
+
+        }
 
         initView();
 
@@ -92,6 +110,9 @@ public class RegisterCarerActivity extends AppCompatActivity {
 
         registerCarerButton = (Button) findViewById(R.id.register_carer);
         registerCarerButton.setOnClickListener(registerCarer);
+
+        if (isEdit)
+            registerCarerButton.setText(getString(R.string.confirm));
 
 
         carerPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -158,6 +179,13 @@ public class RegisterCarerActivity extends AppCompatActivity {
                 ToggleUtil.toggleContents(getApplicationContext(), passwordStrengthRules);
             }
         });
+
+
+        if (isEdit){
+
+            carerFullName.setText(currentCarer.getFullName());
+            carerPhoneNumber.setText(currentCarer.getPhoneNumber());
+        }
     }
 
 
@@ -332,7 +360,10 @@ public class RegisterCarerActivity extends AppCompatActivity {
 
             try {
                 fileHelper.uploadFile((File) params[0], JsonHelper.PERSON_TYPE_CARER);
-                carerRDH.addCarer((ArrayList<String>) params[1]);
+                if(!isEdit)
+                    carerRDH.addCarer((ArrayList<String>) params[1]);
+                else
+                    carerRDH.updateCarer((ArrayList<String>) params[1]);
             }catch (Exception e){
 
                 cancel(true);

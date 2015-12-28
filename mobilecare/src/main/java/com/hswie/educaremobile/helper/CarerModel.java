@@ -11,12 +11,13 @@ import com.hswie.educaremobile.api.pojo.CarerTask;
 
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by hswie on 11/5/2015.
  */
-public class CarerModel {
+public class CarerModel implements Serializable {
 
     private static final String TAG = "CarerModel";
     private static CarerModel carerModel = null;

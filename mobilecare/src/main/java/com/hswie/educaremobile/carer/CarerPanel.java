@@ -24,7 +24,9 @@ import android.view.ViewGroup;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.dialog.AddMessageDialog;
 import com.hswie.educaremobile.dialog.AddTaskDialog;
+import com.hswie.educaremobile.helper.CarerModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CarerPanel extends AppCompatActivity{
@@ -152,6 +154,14 @@ public class CarerPanel extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            Log.d(TAG, "Edit Profile");
+            Intent myIntent = new Intent(CarerPanel.this, RegisterCarerActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("isEdit", true);
+            bundle.putSerializable("currentCarer", CarerModel.get().getCurrentCarer() );
+            myIntent.putExtras(bundle);
+            CarerPanel.this.startActivity(myIntent);
 
         }
 

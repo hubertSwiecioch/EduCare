@@ -18,6 +18,7 @@
     <string name="permission_rationale">"Kontakt uprawnienia są potrzebne do zapewnienia uzupełnienia e-mail."</string>
     <string name="title_activity_nurse_panel">Panel opiekuna</string>
     <string name="action_settings">Ustawienia</string>
+    <string name="action_edit_carer">Edytuj profil</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_login_activityl">Zaloguj</string>
     <string name="residents_list_tab">Rezydenci</string>
@@ -122,6 +123,9 @@
     <string name="remove_question">Czy chcesz usunąć?</string>
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
+
+    <string name="confirm">Zatwierdź</string>
+    <string name="edit_profile">Edycja profilu</string>
 
 
 </resources>
