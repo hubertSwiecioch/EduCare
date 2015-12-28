@@ -20,11 +20,9 @@ import android.widget.Toast;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ExpandableListAdapter;
 import com.hswie.educaremobile.api.dao.CarerMessageRDH;
-import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
-import com.hswie.educaremobile.carer.CarerPanel;
 import com.hswie.educaremobile.helper.CarerModel;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

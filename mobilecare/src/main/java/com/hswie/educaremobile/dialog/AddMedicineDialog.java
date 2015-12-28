@@ -16,22 +16,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
-import com.hswie.educaremobile.adapter.ExpandableListAdapter;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.helper.CarerModel;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 

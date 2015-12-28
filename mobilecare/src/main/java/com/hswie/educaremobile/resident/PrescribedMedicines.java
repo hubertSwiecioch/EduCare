@@ -24,7 +24,7 @@ import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.MedicineAdapter;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Resident;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 

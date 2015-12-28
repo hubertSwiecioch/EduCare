@@ -1,14 +1,12 @@
 package com.hswie.educaremobile.carer;
 
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -23,11 +21,8 @@ import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
-import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
-import com.hswie.educaremobile.api.pojo.Resident;
-import com.hswie.educaremobile.helper.CarerModel;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
 import com.hswie.educaremobile.resident.ResidentActivity;

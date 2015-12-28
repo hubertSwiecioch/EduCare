@@ -22,7 +22,7 @@ import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 
 import java.util.ArrayList;
 

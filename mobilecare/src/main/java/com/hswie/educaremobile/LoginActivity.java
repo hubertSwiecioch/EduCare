@@ -28,6 +28,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.carer.CarerPanel;
@@ -36,6 +37,8 @@ import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.JsonHelper;
 import com.hswie.educaremobile.helper.LoaderDataLoader;
 import com.hswie.educaremobile.helper.PreferencesManager;
+import com.hswie.educaremobile.network.NetworkChangeReceiver;
+import com.hswie.educaremobile.network.NetworkHelper;
 
 import org.json.JSONObject;
 
@@ -122,7 +125,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                if(NetworkHelper.isConnectedToNetwork(getApplicationContext())) {
+                    attemptLogin();
+                }else
+                    Toast.makeText(getApplicationContext(), "Not connected to Internet", Toast.LENGTH_SHORT).show();
             }
         });
 

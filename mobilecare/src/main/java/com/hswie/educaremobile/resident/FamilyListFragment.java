@@ -25,7 +25,7 @@ import com.hswie.educaremobile.adapter.FamilyAdapter;
 import com.hswie.educaremobile.api.dao.FamilyRDH;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.FamilyModel;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 

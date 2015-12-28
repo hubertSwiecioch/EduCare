@@ -20,7 +20,7 @@ import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.dao.FamilyRDH;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.helper.FamilyModel;
-import com.hswie.educaremobile.helper.NetworkHelper;
+import com.hswie.educaremobile.network.NetworkHelper;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 import java.util.ArrayList;
