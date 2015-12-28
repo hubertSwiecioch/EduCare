@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hswie.educaremobile.R;
@@ -33,9 +34,18 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
     private ArrayList<Family> filteredItems;
     private Context context;
 
-    public FamilyAdapter(Context context) {
-        this.context = context;
+    public interface FamilyAdapterCallbacks {
+        public void onListItemLongClick(int position);
     }
+    private FamilyAdapterCallbacks familyAdapterCallbacks;
+
+    public FamilyAdapter(Context context, FamilyAdapterCallbacks familyAdapterCallbacks) {
+
+        this.context = context;
+        this.familyAdapterCallbacks = familyAdapterCallbacks;
+    }
+
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,16 +56,21 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         final Family family;
 
-        if (filterItems)
-            family = filteredItems.get(position);
-        else
-            family = FamilyModel.get().getResidentFamily(ResidentsModel.get().getCurrentResident().getID()).get(position);
+        family = FamilyModel.get().getResidentFamily(ResidentsModel.get().getCurrentResident().getID()).get(position);
 
 
         viewHolder.fullnameView.setText(family.getFullName());
+
+        viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                familyAdapterCallbacks.onListItemLongClick(position);
+                return false;
+            }
+        });
 
 
         viewHolder.callView.setBackgroundResource(R.drawable.ic_phone_black_48dp);
@@ -121,19 +136,23 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
 
 
     public void resetItems(){
-        filterItems = false;
-        filteredItems = ResidentsModel.get().getCurrentResident().getFamilies();
+
+        ResidentsModel.get().getCurrentResident().setFamilies(FamilyModel.get().getResidentFamily(ResidentsModel.get().getCurrentResident().getID()));
+    }
+
+    public Family getItem(int position){
+        return FamilyModel.get().getResidentFamily(ResidentsModel.get().getCurrentResident().getID()).get(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView fullnameView;
-
+        public RelativeLayout parentLayout;
         public Button callView;
         public LinearLayout callLayout;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-
+            parentLayout = (RelativeLayout) itemLayoutView.findViewById(R.id.family_row);
             fullnameView = (TextView) itemLayoutView.findViewById(R.id.text_fullname);
             callView = (Button) itemLayoutView.findViewById(R.id.button_call);
             callLayout = (LinearLayout) itemLayoutView.findViewById(R.id.layout_call);

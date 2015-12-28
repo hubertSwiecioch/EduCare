@@ -2,6 +2,7 @@ package com.hswie.educaremobile.carer;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -171,6 +173,40 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
 
     }
 
+    @Override
+    public void onListItemLongClick(final int  position) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setTitle(adapter.getItem(position).getTitle());
+        alertDialogBuilder.setMessage(getString(R.string.remove_question));
+        alertDialogBuilder.setIcon(R.drawable.ic_delete_black_24dp );
+
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Log.d(TAG, "removeItem " + adapter.getItem(position).getId());
+                if (!asyncTaskWorking) {
+                    asyncTaskWorking = true;
+
+                    new RemoveMessage().execute(adapter.getItem(position).getId());
+                }
+
+            }
+        });
+
+
+        alertDialogBuilder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     private void checkAdapterIsEmpty() {
         if (adapter.getItemCount() == 0) {
             emptyTV.setVisibility(View.VISIBLE);
@@ -260,6 +296,44 @@ public class MessagesFragment extends Fragment implements MessagesAdapter.Messag
             adapter.notifyDataSetChanged();
             checkAdapterIsEmpty();
             swipeRefreshLayout.setRefreshing(false);
+
+        }
+    }
+
+    private class RemoveMessage extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            asyncTaskWorking = true;
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            CarerMessageRDH carerMessagesRDH = new CarerMessageRDH();
+
+            try{
+                carerMessagesRDH.removeMessage(params[0]);
+                Log.d(TAG, "RemoveMessage doInBackground params[0] = " + params[0]);
+            }catch (Exception e){
+
+                cancel(true);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            asyncTaskWorking = false;
+            swipeRefreshLayout.setRefreshing(false);
+            refreshData();
 
         }
     }

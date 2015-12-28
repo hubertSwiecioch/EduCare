@@ -23,7 +23,7 @@ import com.hswie.educaremobile.helper.ResidentsModel;
 public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHolder> {
 
     public interface MedicineAdapterCallbacks {
-        public void onListItemClick(int position);
+        public void onListItemLongClick(int position);
     }
     private MedicineAdapterCallbacks medicineAdapterCallbacks;
 
@@ -50,7 +50,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
         viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                medicineAdapterCallbacks.onListItemClick(position);
+                medicineAdapterCallbacks.onListItemLongClick(position);
                 return false;
             }
         });
@@ -84,6 +84,10 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
         } catch (NullPointerException e){
             return 0;
         }
+    }
+
+    public Medicine getItem(int position){
+        return ResidentsModel.get().getCurrentResident().getMedicines().get(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

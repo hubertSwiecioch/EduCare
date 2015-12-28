@@ -115,6 +115,7 @@ public class CarerMessageRDH {
     public void removeMessage(String messageID){
 
         List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+        Log.d(TAG, "params:" + messageID);
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_MESSAGE));
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MESSAGE_ID, messageID));

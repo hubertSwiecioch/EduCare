@@ -23,8 +23,10 @@ import android.widget.Toast;
 
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
+import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Resident;
+import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.NetworkHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
@@ -182,7 +184,8 @@ public class ResidentListFragment extends Fragment implements ResidentAdapter.Re
             }
         });
 
-        alertDialogBuilder.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private class RemoveResident extends AsyncTask<String, Void, Void>{

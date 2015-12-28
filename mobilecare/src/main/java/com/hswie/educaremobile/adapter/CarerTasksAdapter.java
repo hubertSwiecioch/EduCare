@@ -117,13 +117,15 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
 
     public void resetItems(){
         residentTasks = new ArrayList<>();
-        for (CarerTask carerTask:CarerModel.get().getCurrentCarer().getCarerTasks()) {
+        if (CarerModel.get().getCurrentCarer().getCarerTasks() != null) {
+            for (CarerTask carerTask : CarerModel.get().getCurrentCarer().getCarerTasks()) {
 
-            if(carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
-                residentTasks.add(carerTask);
+                if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
+                    residentTasks.add(carerTask);
 
-            Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
-            Log.d(TAG, "getCurrentResident: " +  ResidentsModel.get().getCurrentResident().getID());
+                Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
+                Log.d(TAG, "getCurrentResident: " + ResidentsModel.get().getCurrentResident().getID());
+            }
         }
         notifyDataSetChanged();
     }

@@ -70,17 +70,16 @@ public class FamilyRDH {
 
     }
 
-    public void removeFamily(ArrayList<String> params){
+    public void removeFamily(String familyID){
 
         List<NameValuePair> paramss = new ArrayList<NameValuePair>();
 
-        for (String param:params) {
 
-            Log.d(TAG, "RDH param: "  + param);
-        }
+        Log.d(TAG, "RDH param: "  + familyID);
+
 
         paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_REMOVE_FAMILY));
-        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, params.get(0)));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ID, familyID));
 
         String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
         Log.d(TAG, "JSONString: "  + JSONString);

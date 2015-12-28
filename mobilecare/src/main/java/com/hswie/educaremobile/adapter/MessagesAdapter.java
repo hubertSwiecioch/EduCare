@@ -27,7 +27,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     public interface MessagesAdapterCallbacks {
         public void onListItemClick(int position);
+        public void onListItemLongClick(int position);
     }
+
+
 
     private MessagesAdapterCallbacks messagesAdapterCallbacks;
     private Context context;
@@ -56,6 +59,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 messagesAdapterCallbacks.onListItemClick(position);
+            }
+        });
+
+        viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                messagesAdapterCallbacks.onListItemLongClick(position);
+                return false;
             }
         });
 
