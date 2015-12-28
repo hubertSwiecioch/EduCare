@@ -1,4 +1,7 @@
+import groovy.transform.Field
+
 apply plugin: 'com.android.application'
+
 
 android {
     compileSdkVersion 23
@@ -17,6 +20,18 @@ android {
         }
     }
     productFlavors {
+
+        carer {
+            applicationId  "com.hswie.educaremobile"
+            buildConfigField "boolean", "IS_FAMILY", "false"
+            resValue "string", "app_name", "EduCareMobile Carer"
+        }
+
+        family {
+            applicationId  "com.hswie.educaremobile.family"
+            buildConfigField "boolean", "IS_FAMILY", "true"
+            resValue "string", "app_name", "EduCareMobile Family"
+        }
     }
 }
 

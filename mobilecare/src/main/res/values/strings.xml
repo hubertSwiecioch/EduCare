@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">EduCareMobile</string>
-    
 
     <string name="prompt_email">Email</string>
     <string name="prompt_first_name">First Name</string>
@@ -140,6 +138,9 @@
 
     <string name="confirm">Confirm</string>
     <string name="edit_profile">Edit profile</string>
+
+
+    <string name="family">EduCareMobile Family</string>
 
 
 
