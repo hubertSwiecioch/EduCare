@@ -128,8 +128,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        mEmailView.setText("hswie@hswie.com");
-        mPasswordView.setText("hubert");
+        if (!isFamily) {
+            mEmailView.setText("hswie@hswie.com");
+            mPasswordView.setText("hubert");
+        }
+        else if (isFamily){
+            mEmailView.setText("testowa@rodzina.pl");
+            mPasswordView.setText("Zaqplm#4tfc");
+        }
     }
 
     @Override
@@ -343,56 +349,109 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             Log.d(TAG, "doInBackground");
-
-            try {
-                int success;
-                int currentID;
+            int success;
+            int currentID;
 
 
-                    Long tsLong = System.currentTimeMillis()/1000;
-                    String time = tsLong.toString();
-
-                    List<NameValuePair> paramss = new ArrayList<NameValuePair>();
-                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_LOGIN));
-                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_USERNAME, mEmail));
-                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_PASSWORD, mPassword));
-                    paramss.add(new BasicNameValuePair(JsonHelper.TAG_ONLINETEST, time));
-
-                    Log.d("request!", "starting");
-
-                    String JSONString = (JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss));
-                    JSONObject json = JsonHelper.getJSONObjectFromString(JSONString);
+                try {
+                    if (!isFamily) {
 
 
-                    Log.d("Login attempt", json.toString());
+                        Long tsLong = System.currentTimeMillis() / 1000;
+                        String time = tsLong.toString();
+
+                        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+                        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_LOGIN));
+                        paramss.add(new BasicNameValuePair(JsonHelper.TAG_USERNAME, mEmail));
+                        paramss.add(new BasicNameValuePair(JsonHelper.TAG_PASSWORD, mPassword));
+                        paramss.add(new BasicNameValuePair(JsonHelper.TAG_ONLINETEST, time));
 
 
-                    success = json.getInt(JsonHelper.TAG_SUCCESS);
-                    currentID = json.getInt(JsonHelper.TAG_ID);
+                        for (NameValuePair param: paramss) {
 
-                    if (success == 1) {
-                        Log.d("Login Successful!", json.toString());
-                        Log.d(TAG, "CurrnetCarerID: " + currentID);
-                        PreferencesManager.setCurrentCarerID(currentID);
-                        Log.d(TAG, "CurrnetCarerID: " + PreferencesManager.getCurrentCarerID());
-                        Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
-                        LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
-                        loaderDataLoader.loadInBackground();
+                            Log.d(TAG, "LogInCarerParam: " + param);
 
-                        return true;
-                    } else {
-                        Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
-                        Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                        }
+
+                        Log.d("request!", "starting");
+
+                        String JSONString = (JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss));
+                        JSONObject json = JsonHelper.getJSONObjectFromString(JSONString);
+
+
+                        Log.d("Login attempt", json.toString());
+
+
+                        success = json.getInt(JsonHelper.TAG_SUCCESS);
+                        currentID = json.getInt(JsonHelper.TAG_ID);
+
+                        if (success == 1) {
+                            Log.d("Login Successful!", json.toString());
+                            Log.d(TAG, "CurrnetCarerID: " + currentID);
+                            PreferencesManager.setCurrentCarerID(currentID);
+                            Log.d(TAG, "CurrnetCarerID: " + PreferencesManager.getCurrentCarerID());
+                            Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                            LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
+                            loaderDataLoader.loadInBackground();
+
+                            return true;
+                        } else {
+                            Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
+                            Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                            return false;
+                        }
+
+                    } else if (isFamily) {
+
+
+                            List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+                            paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_LOGIN_FAMILY));
+                            paramss.add(new BasicNameValuePair(JsonHelper.TAG_USERNAME, mEmail));
+                            paramss.add(new BasicNameValuePair(JsonHelper.TAG_PASSWORD, mPassword));
+
+                        for (NameValuePair param: paramss) {
+
+                            Log.d(TAG, "LogInFamilyParam: " + param);
+
+                        }
+                            Log.d("request!", "starting");
+
+                            String JSONString = (JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss));
+                            JSONObject json = JsonHelper.getJSONObjectFromString(JSONString);
+
+
+                            Log.d("Login attempt", json.toString());
+
+
+                            success = json.getInt(JsonHelper.TAG_SUCCESS);
+                            currentID = json.getInt(JsonHelper.TAG_ID);
+
+                        if (success == 1) {
+                            Log.d("Login Successful!", json.toString());
+                            Log.d(TAG, "CurrnetFamilyID: " + currentID);
+                            PreferencesManager.setCurrentFamilyID(currentID);
+                            Log.d(TAG, "CurrnetFamilyID: " + PreferencesManager.getCurrentFamilyID());
+                            Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                            LoaderDataLoader loaderDataLoader = new LoaderDataLoader(getApplicationContext());
+                            loaderDataLoader.loadInBackground();
+
+                            return true;
+                        } else {
+                            Log.d("Login Failure!", json.getString(JsonHelper.TAG_MESSAGE));
+                            Log.d(TAG, json.getString(JsonHelper.TAG_MESSAGE));
+                            return false;
+                        }
+
+
+                        }
+
+                    }catch(Exception e){
+                        e.printStackTrace();
                         return false;
+
                     }
 
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return false;
-
-            }
-
+                return false;
 
         }
 
@@ -405,8 +464,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 finish();
 
-                Intent intent = new Intent(LoginActivity.this, CarerPanel.class);
-                startActivity(intent);
+                if(!isFamily) {
+                    Intent intent = new Intent(LoginActivity.this, CarerPanel.class);
+                    startActivity(intent);
+                }
+
 
 
             } else {

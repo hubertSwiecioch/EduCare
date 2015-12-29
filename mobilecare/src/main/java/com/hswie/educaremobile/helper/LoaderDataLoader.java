@@ -4,6 +4,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
+import com.hswie.educaremobile.BuildConfig;
 import com.hswie.educaremobile.api.dao.CarerMessageRDH;
 import com.hswie.educaremobile.api.dao.CarerRDH;
 import com.hswie.educaremobile.api.dao.CarerTasksRDH;
@@ -22,33 +23,45 @@ import java.util.ArrayList;
  */
 public class LoaderDataLoader extends AsyncTaskLoader {
 
+    private boolean isFamily;
+
 
     private static final String TAG = "LoaderDataLoader";
 
     public LoaderDataLoader(Context context) {
         super(context);
+        isFamily = BuildConfig.IS_FAMILY;
     }
 
     @Override
     public Object loadInBackground() {
 
         ResidentRDH residentRDH = new ResidentRDH();
-        CarerRDH carerRDH = new CarerRDH();
         FamilyRDH familyRDH = new FamilyRDH();
 
+        if(!isFamily) {
 
-        ResidentsModel.get().setResidents(residentRDH.getAllResidents());
-        ResidentsModel.get().setResidentsMedicines(residentRDH.getMedicines());
-        ResidentsModel.get().getResidentsImages(getContext());
+            CarerRDH carerRDH = new CarerRDH();
 
-        CarerModel.get().setCarers(carerRDH.getAllCarers());
-        CarerModel.get().setCurrentCarrer();
-        CarerModel.get().setCurrentCarrerTasks();
-        CarerModel.get().setCurrentCarrerMessages();
-        CarerModel.get().getCarerImages(getContext());
+            ResidentsModel.get().setResidents(residentRDH.getAllResidents());
+            ResidentsModel.get().setResidentsMedicines(residentRDH.getMedicines());
+            ResidentsModel.get().getResidentsImages(getContext());
 
-        FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
+            CarerModel.get().setCarers(carerRDH.getAllCarers());
+            CarerModel.get().setCurrentCarrer();
+            CarerModel.get().setCurrentCarrerTasks();
+            CarerModel.get().setCurrentCarrerMessages();
+            CarerModel.get().getCarerImages(getContext());
 
+            FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
+        }
+
+        else if (isFamily){
+
+
+            //ResidentsModel.get().setCurrentResident(residentRDH.get());
+
+        }
 
 
 

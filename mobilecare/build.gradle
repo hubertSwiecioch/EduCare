@@ -24,13 +24,13 @@ android {
         carer {
             applicationId  "com.hswie.educaremobile"
             buildConfigField "boolean", "IS_FAMILY", "false"
-            resValue "string", "app_name", "EduCareMobile Carer"
+            resValue "string", "app_name", "Carer EduCareMobile "
         }
 
         family {
             applicationId  "com.hswie.educaremobile.family"
             buildConfigField "boolean", "IS_FAMILY", "true"
-            resValue "string", "app_name", "EduCareMobile Family"
+            resValue "string", "app_name", "Family EduCareMobile"
         }
     }
 }

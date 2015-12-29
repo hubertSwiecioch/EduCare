@@ -34,6 +34,7 @@ public class JsonHelper {
     public static final String HOSTNAME_CARERIMAGE = "http://serwer1552055.home.pl/EduCare/images/carersImages/";
     public static final String TAG_MOD = "mod";
     public static final String MOD_LOGIN = "LogIn";
+    public static final String MOD_LOGIN_FAMILY = "LogInFamily";
     public static final String MOD_GET_RESIDENTS = "getResidentsList";
     public static final String MOD_GET_RESIDENT_MEDICINES = "getMedicines";
     public static final String MOD_ADD_RESIDENT_MEDICINE = "addMedicine";

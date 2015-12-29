@@ -52,6 +52,19 @@ public class FamilyModel {
         return null;
     }
 
+    public void setCurrentFamily(){
+
+        for (Family family: FamilyModel.get().getFamilies()) {
+
+            if(Integer.parseInt(family.getID()) == PreferencesManager.getCurrentCarerID()){
+                FamilyModel.get().setCurrentFamilyIndex(family);
+                Log.d(TAG, "SetCurrentFamilyID: " + FamilyModel.get().getCurrentFamily().getID());
+            }
+
+
+        }
+    }
+
     public ArrayList<Family> getResidentFamily(String residentID){
 
         ArrayList<Family> residentFamilies = new ArrayList<>();
