@@ -4,6 +4,7 @@ package com.hswie.educaremobile.resident;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Network;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hswie.educaremobile.BuildConfig;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.adapter.CarerTasksAdapter;
 import com.hswie.educaremobile.adapter.ResidentAdapter;
@@ -37,6 +39,7 @@ import com.hswie.educaremobile.helper.DrawableConverter;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
+import com.hswie.educaremobile.network.NetworkHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -63,11 +66,14 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private static boolean isFamily;
+
     private boolean asyncTaskWorking = false;
 
 
     public static OverviewFragment newInstance(String param1, String param2) {
         OverviewFragment fragment = new OverviewFragment();
+        isFamily = BuildConfig.IS_FAMILY;
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -255,11 +261,21 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
         @Override
         protected Void doInBackground(Void... params) {
 
+            if (NetworkHelper.isConnectedToNetwork(context)){
             try {
-                CarerModel.get().setCurrentCarrerTasks();
+
+                if (!isFamily) {
+                    CarerModel.get().setCurrentCarrerTasks();
+                }
+                else if (isFamily) {
+                    CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+                    ResidentsModel.get().getCurrentResident().setCarerTasks(carerTasksRDH.getResidentTasks(ResidentsModel.get().getCurrentResident().getID()));
+                }
 
             }catch (Exception e){
 
+                cancel(true);
+            }}else{
                 cancel(true);
             }
 

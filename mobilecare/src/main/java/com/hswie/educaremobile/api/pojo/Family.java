@@ -1,6 +1,7 @@
 package com.hswie.educaremobile.api.pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by hswie on 11/5/2015.
@@ -14,6 +15,8 @@ public class Family implements Serializable {
     private String password;
     private String username;
     private String phoneNumber;
+
+    private ArrayList<CarerTask> carersTasks;
 
     public String getID() {
         return ID;
@@ -61,5 +64,13 @@ public class Family implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public ArrayList<CarerTask> getCarersTasks() {
+        return carersTasks;
+    }
+
+    public void setCarersTasks(ArrayList<CarerTask> carersTasks) {
+        this.carersTasks = carersTasks;
     }
 }

@@ -49,6 +49,33 @@ public class CarerTasksRDH {
         return tasks;
     }
 
+    public ArrayList<CarerTask> getResidentTasks(String residentID){
+        ArrayList<CarerTask> tasks = new ArrayList<CarerTask>();
+        List<NameValuePair> paramss = new ArrayList<NameValuePair>();
+
+        Log.d(TAG, "param ResidentID: " + residentID);
+
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_MOD, JsonHelper.MOD_GET_RESIDENT_TASKS));
+        paramss.add(new BasicNameValuePair(JsonHelper.TAG_RESIDENT_ID, residentID));
+
+        String JSONString = JsonHelper.makeHttpRequest(JsonHelper.HOSTNAME, "POST", paramss);
+
+        JSONArray jsonArray = JsonHelper.getJSONArrayFromString(JSONString);
+
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    tasks.add(parseTask(obj));
+                } catch (JSONException e) {
+                    Log.d(TAG, "getCarerMessages " + "JSONException e = " + e.getMessage());
+                }
+            }
+        }
+
+        return tasks;
+    }
+
     public CarerTask parseTask(JSONObject obj) {
         CarerTask task = new CarerTask();
         try {

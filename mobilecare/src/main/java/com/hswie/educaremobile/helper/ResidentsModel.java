@@ -74,8 +74,23 @@ public class ResidentsModel {
     }
 
     public void setCurrentResident(Resident resident) {
+        Log.d(TAG, "currentResidentIndex " + currentResidentIndex);
         if(currentResidentIndex >= 0 && residents.size() > 0)
             residents.set(currentResidentIndex, resident);
+    }
+
+    public void setCurrentResidentByID(String ID){
+
+        for (Resident resident:residents) {
+
+            if (resident.getID().equals(ID)){
+
+                Log.d(TAG, "CurrentResidentByID " + resident.getID());
+                setCurrentResident(resident);
+
+
+            }
+        }
     }
 
     public Resident getCurrentResident() throws NullPointerException{

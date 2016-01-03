@@ -24,6 +24,7 @@ public class Resident implements Serializable {
     private String TAG = "Resident";
     private ArrayList<Family> families = new ArrayList<Family>();
     private ArrayList<Medicine> medicines = new ArrayList<>();
+    private ArrayList<CarerTask> carerTasks;
 
 
     public boolean contains(String query) {
@@ -147,5 +148,13 @@ public class Resident implements Serializable {
 
     public void setMedicines(ArrayList<Medicine> medicines) {
         this.medicines = medicines;
+    }
+
+    public ArrayList<CarerTask> getCarerTasks() {
+        return carerTasks;
+    }
+
+    public void setCarerTasks(ArrayList<CarerTask> carerTasks) {
+        this.carerTasks = carerTasks;
     }
 }

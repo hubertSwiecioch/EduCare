@@ -30,15 +30,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hswie.educaremobile.api.dao.CarerTasksRDH;
+import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
+import com.hswie.educaremobile.api.pojo.Family;
+import com.hswie.educaremobile.api.pojo.Medicine;
+import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.carer.CarerPanel;
 import com.hswie.educaremobile.carer.RegisterCarerActivity;
 import com.hswie.educaremobile.helper.CarerModel;
+import com.hswie.educaremobile.helper.FamilyModel;
 import com.hswie.educaremobile.helper.JsonHelper;
 import com.hswie.educaremobile.helper.LoaderDataLoader;
 import com.hswie.educaremobile.helper.PreferencesManager;
+import com.hswie.educaremobile.helper.ResidentsModel;
 import com.hswie.educaremobile.network.NetworkChangeReceiver;
 import com.hswie.educaremobile.network.NetworkHelper;
+import com.hswie.educaremobile.resident.ResidentActivity;
 
 import org.json.JSONObject;
 
@@ -451,13 +459,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     }
 
-                return false;
+              return false;
 
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            Log.d(TAG, "onPostExecute");
+            Log.d(TAG, "onPostExecute " + success);
             mAuthTask = null;
             showProgress(false);
 
@@ -467,6 +475,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(!isFamily) {
                     Intent intent = new Intent(LoginActivity.this, CarerPanel.class);
                     startActivity(intent);
+                }
+
+                if(isFamily){
+
+
+
+
+
+                    Log.d(TAG, "CurrnetResidentID: " + ResidentsModel.get().getCurrentResident().getID());
+
+                    Intent myIntent = new Intent(LoginActivity.this, ResidentActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
                 }
 
 

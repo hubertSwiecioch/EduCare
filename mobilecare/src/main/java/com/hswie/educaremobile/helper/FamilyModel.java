@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.Family;
+import com.hswie.educaremobile.api.pojo.Resident;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public class FamilyModel {
     private static FamilyModel familyModel = null;
     private ArrayList<Family> families;
     private int currentFamilyIndex;
+    private Resident resident;
 
     private FamilyModel() {
     }
@@ -28,6 +30,14 @@ public class FamilyModel {
         }
 
         return familyModel;
+    }
+
+    public Resident getResident() {
+        return resident;
+    }
+
+    public void setResident(Resident resident) {
+        this.resident = resident;
     }
 
     public void setCurrentFamilyIndex(Family family) {
@@ -56,7 +66,7 @@ public class FamilyModel {
 
         for (Family family: FamilyModel.get().getFamilies()) {
 
-            if(Integer.parseInt(family.getID()) == PreferencesManager.getCurrentCarerID()){
+            if(Integer.parseInt(family.getID()) == PreferencesManager.getCurrentFamilyID()){
                 FamilyModel.get().setCurrentFamilyIndex(family);
                 Log.d(TAG, "SetCurrentFamilyID: " + FamilyModel.get().getCurrentFamily().getID());
             }

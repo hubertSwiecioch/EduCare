@@ -55,6 +55,7 @@ public class JsonHelper {
     public static final String MOD_REGISTER_CARER = "registerCarer";
     public static final String MOD_REGISTER_FAMILY = "registerFamily";
     public static final String MOD_GET_CARER_TASKS = "getCarerTasks";
+    public static final String MOD_GET_RESIDENT_TASKS = "getResidentTasks";
     public static final String MOD_GET_CARER_MESSAGES = "getCarerMessages";
     public static final String MOD_ADD_TASK = "addTask";
     public static final String MOD_ADD_CARER_MESSAGE = "addCarerMessage";

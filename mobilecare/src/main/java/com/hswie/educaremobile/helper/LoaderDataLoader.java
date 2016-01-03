@@ -13,6 +13,7 @@ import com.hswie.educaremobile.api.dao.ResidentRDH;
 import com.hswie.educaremobile.api.pojo.Carer;
 import com.hswie.educaremobile.api.pojo.CarerMessage;
 import com.hswie.educaremobile.api.pojo.CarerTask;
+import com.hswie.educaremobile.api.pojo.Family;
 import com.hswie.educaremobile.api.pojo.Resident;
 
 import java.io.IOException;
@@ -36,38 +37,41 @@ public class LoaderDataLoader extends AsyncTaskLoader {
     @Override
     public Object loadInBackground() {
 
-        ResidentRDH residentRDH = new ResidentRDH();
-        FamilyRDH familyRDH = new FamilyRDH();
-
-        if(!isFamily) {
 
             CarerRDH carerRDH = new CarerRDH();
-
+            ResidentRDH residentRDH = new ResidentRDH();
+            FamilyRDH familyRDH = new FamilyRDH();
             ResidentsModel.get().setResidents(residentRDH.getAllResidents());
             ResidentsModel.get().setResidentsMedicines(residentRDH.getMedicines());
             ResidentsModel.get().getResidentsImages(getContext());
 
             CarerModel.get().setCarers(carerRDH.getAllCarers());
+
+        if (!isFamily) {
             CarerModel.get().setCurrentCarrer();
             CarerModel.get().setCurrentCarrerTasks();
             CarerModel.get().setCurrentCarrerMessages();
             CarerModel.get().getCarerImages(getContext());
+        }
 
             FamilyModel.get().setFamilies(familyRDH.getAllFamilies());
+
+        if (isFamily){
+
+            FamilyModel.get().setCurrentFamily();
+            Family family = FamilyModel.get().getCurrentFamily();
+
+            PreferencesManager.setCurrentResidentIndex(Integer.parseInt(family.getResidentID()));
+            ResidentsModel.get().setCurrentResidentIndex(Integer.parseInt(family.getResidentID()));
+            ResidentsModel.get().setCurrentResidentByID(family.getResidentID());
+
+            CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
+            ResidentsModel.get().getCurrentResident().setCarerTasks(carerTasksRDH.getResidentTasks(ResidentsModel.get().getCurrentResident().getID()));
         }
 
-        else if (isFamily){
 
-
-            //ResidentsModel.get().setCurrentResident(residentRDH.get());
-
-        }
-
-
-
-        return null;
+       return null;
     }
-
 
 
 }

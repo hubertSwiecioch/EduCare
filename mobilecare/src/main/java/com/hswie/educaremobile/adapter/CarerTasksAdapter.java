@@ -12,10 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.hswie.educaremobile.BuildConfig;
 import com.hswie.educaremobile.R;
+import com.hswie.educaremobile.api.dao.CarerTasksRDH;
 import com.hswie.educaremobile.api.pojo.CarerTask;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DateTimeConvert;
+import com.hswie.educaremobile.helper.FamilyModel;
 import com.hswie.educaremobile.helper.ResidentsModel;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +31,7 @@ import java.util.Date;
 public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.ViewHolder> {
 
     private static final String TAG = "CarerTasksAdapter";
+    private  boolean isFamily;
 
     public interface CarerTasksAdapterCallbacks {
         public void onListItemClick(int position);
@@ -40,6 +44,7 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
 
     public CarerTasksAdapter(CarerTasksAdapterCallbacks carerTasksAdapterCallbacks){
         this.carerTasksAdapterCallbacks = carerTasksAdapterCallbacks;
+        isFamily = BuildConfig.IS_FAMILY;
         resetItems();
         Log.d(TAG, "ResidentTasksSize: "  + residentTasks.size());
     }
@@ -117,15 +122,31 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
 
     public void resetItems(){
         residentTasks = new ArrayList<>();
-        if (CarerModel.get().getCurrentCarer().getCarerTasks() != null) {
-            for (CarerTask carerTask : CarerModel.get().getCurrentCarer().getCarerTasks()) {
 
-                if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
-                    residentTasks.add(carerTask);
+        if(!isFamily) {
+            if (CarerModel.get().getCurrentCarer().getCarerTasks() != null) {
+                for (CarerTask carerTask : CarerModel.get().getCurrentCarer().getCarerTasks()) {
 
-                Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
-                Log.d(TAG, "getCurrentResident: " + ResidentsModel.get().getCurrentResident().getID());
+                    if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
+                        residentTasks.add(carerTask);
+
+                    Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
+                    Log.d(TAG, "getCurrentResident: " + ResidentsModel.get().getCurrentResident().getID());
+                }
             }
+        } else if (isFamily){
+
+            if (ResidentsModel.get().getCurrentResident().getCarerTasks() != null) {
+                for (CarerTask carerTask : ResidentsModel.get().getCurrentResident().getCarerTasks()) {
+
+                    if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
+                        residentTasks.add(carerTask);
+
+                    Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
+                    Log.d(TAG, "getCurrentResident: " + ResidentsModel.get().getCurrentResident().getID());
+                }
+            }
+
         }
         notifyDataSetChanged();
     }
