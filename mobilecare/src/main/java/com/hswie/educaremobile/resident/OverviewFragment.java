@@ -36,6 +36,7 @@ import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.dialog.TaskDialog;
 import com.hswie.educaremobile.helper.CarerModel;
 import com.hswie.educaremobile.helper.DrawableConverter;
+import com.hswie.educaremobile.helper.FileHelper;
 import com.hswie.educaremobile.helper.ImageHelper;
 import com.hswie.educaremobile.helper.PreferencesManager;
 import com.hswie.educaremobile.helper.ResidentsModel;
@@ -152,28 +153,35 @@ public class OverviewFragment extends Fragment implements CarerTasksAdapter.Care
 
 
             Bitmap bitmap;
-            if(resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()){
-                bitmap = DrawableConverter.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_person_black_48dp));
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, ImageHelper.AVATAR_QUALITY, stream);
+            String cachePath;
 
-                String cachePath = ImageHelper.cacheImageOnDisk(context, stream.toByteArray(),
-                        "resident_" + resident.getID() + ".jpg",
-                        ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
+            try {
+
+                if (resident.getPhotoCache() == null || resident.getPhotoCache().isEmpty()) {
+
+
+                    cachePath = ImageHelper.cacheImageOnDisk(context, resident.getPhotoByte(),
+                            FileHelper.parsePhotoString(resident.getPhoto(), "/resident_" + resident.getID()),
+                            ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_SIZE, ImageHelper.AVATAR_QUALITY);
+                    resident.setPhotoCache(cachePath);
+                    resident.setPhotoByte(null);
+
+                }
+
+
+                bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
+                photoIV.setImageBitmap(bitmap);
+            }catch (NullPointerException e){
+
+                cachePath = context.getFilesDir() +  FileHelper.parsePhotoString(resident.getPhoto(), "/resident_" + resident.getID());
                 resident.setPhotoCache(cachePath);
-                try {
-                    stream.close();
-                    stream = null;
-                }
-                catch(IOException e){
-                    Log.e(TAG, "IOException e = ", e);
-                }
-                bitmap = null;
+                resident.setPhotoByte(null);
+
+                bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
+                photoIV.setImageBitmap(bitmap);
+                e.printStackTrace();
             }
 
-            bitmap = BitmapFactory.decodeFile(resident.getPhotoCache());
-            photoIV.setImageBitmap(bitmap);
-//            ImageManager.get().displayImage("file://" + resident.getPhotoCache(), photoIV);
 
 
             nameTV.setText(resident.getFirstName() + " " + resident.getLastName());

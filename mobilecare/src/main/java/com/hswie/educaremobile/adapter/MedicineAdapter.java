@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hswie.educaremobile.BuildConfig;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Medicine;
 import com.hswie.educaremobile.api.pojo.Resident;
@@ -30,9 +31,11 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
 
 
     private Context context;
+    private  boolean isFamily;
 
     public MedicineAdapter(Context context, MedicineAdapterCallbacks medicineAdapterCallbacks) {
         this.context = context;
+        isFamily = BuildConfig.IS_FAMILY;
         this.medicineAdapterCallbacks = medicineAdapterCallbacks;
     }
 
@@ -47,13 +50,16 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                medicineAdapterCallbacks.onListItemLongClick(position);
-                return false;
-            }
-        });
+
+        if(!isFamily) {
+            viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    medicineAdapterCallbacks.onListItemLongClick(position);
+                    return false;
+                }
+            });
+        }
 
         int medicineSize = ResidentsModel.get().getCurrentResident().getMedicines().size();
         Medicine medicine = ResidentsModel.get().getCurrentResident().getMedicines().get(position);

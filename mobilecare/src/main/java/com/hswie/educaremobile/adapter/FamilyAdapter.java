@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hswie.educaremobile.BuildConfig;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Family;
 import com.hswie.educaremobile.helper.FamilyModel;
@@ -33,6 +34,7 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
     private boolean filterItems = false;
     private ArrayList<Family> filteredItems;
     private Context context;
+    private  boolean isFamily;
 
     public interface FamilyAdapterCallbacks {
         public void onListItemLongClick(int position);
@@ -42,6 +44,7 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
     public FamilyAdapter(Context context, FamilyAdapterCallbacks familyAdapterCallbacks) {
 
         this.context = context;
+        isFamily = BuildConfig.IS_FAMILY;
         this.familyAdapterCallbacks = familyAdapterCallbacks;
     }
 
@@ -64,13 +67,15 @@ public class FamilyAdapter extends RecyclerView.Adapter<FamilyAdapter.ViewHolder
 
         viewHolder.fullnameView.setText(family.getFullName());
 
-        viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                familyAdapterCallbacks.onListItemLongClick(position);
-                return false;
-            }
-        });
+        if(!isFamily) {
+            viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    familyAdapterCallbacks.onListItemLongClick(position);
+                    return false;
+                }
+            });
+        }
 
 
         viewHolder.callView.setBackgroundResource(R.drawable.ic_phone_black_48dp);

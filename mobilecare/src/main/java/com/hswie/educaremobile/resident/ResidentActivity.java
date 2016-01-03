@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.hswie.educaremobile.BuildConfig;
 import com.hswie.educaremobile.R;
 import com.hswie.educaremobile.api.pojo.Resident;
 import com.hswie.educaremobile.dialog.AddFamilyDialog;
@@ -45,11 +46,14 @@ public class ResidentActivity extends AppCompatActivity
 
     public static int currentPage;
 
+    private static boolean isFamily;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isFamily = BuildConfig.IS_FAMILY;
         setContentView(R.layout.activity_resident);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,6 +100,8 @@ public class ResidentActivity extends AppCompatActivity
 
 
         fab = (FloatingActionButton) findViewById(R.id.fabResidentActivity);
+        if(isFamily)
+            fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,6 +254,9 @@ public class ResidentActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(isFamily)
+            fab.setVisibility(View.INVISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment, "currentFragment").commit();

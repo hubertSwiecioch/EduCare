@@ -43,6 +43,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
             FamilyRDH familyRDH = new FamilyRDH();
             ResidentsModel.get().setResidents(residentRDH.getAllResidents());
             ResidentsModel.get().setResidentsMedicines(residentRDH.getMedicines());
+        if(!isFamily)
             ResidentsModel.get().getResidentsImages(getContext());
 
             CarerModel.get().setCarers(carerRDH.getAllCarers());
@@ -64,6 +65,7 @@ public class LoaderDataLoader extends AsyncTaskLoader {
             PreferencesManager.setCurrentResidentIndex(Integer.parseInt(family.getResidentID()));
             ResidentsModel.get().setCurrentResidentIndex(Integer.parseInt(family.getResidentID()));
             ResidentsModel.get().setCurrentResidentByID(family.getResidentID());
+            ResidentsModel.get().getCurrentResidentImage(getContext());
 
             CarerTasksRDH carerTasksRDH = new CarerTasksRDH();
             ResidentsModel.get().getCurrentResident().setCarerTasks(carerTasksRDH.getResidentTasks(ResidentsModel.get().getCurrentResident().getID()));

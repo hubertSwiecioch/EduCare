@@ -64,12 +64,15 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
         CarerTask carerTask = residentTasks.get(position);
         //Log.d(TAG, "CarerTasksSize: " + CarerModel.get().getCurrentCarer().getCarerTasks().size() );
 
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                carerTasksAdapterCallbacks.onListItemClick(position);
-            }
-        });
+
+        if(!isFamily) {
+            viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    carerTasksAdapterCallbacks.onListItemClick(position);
+                }
+            });
+        }
 
         int substringEnd = 15;
         if(carerTask.getHeader().length() < substringEnd)

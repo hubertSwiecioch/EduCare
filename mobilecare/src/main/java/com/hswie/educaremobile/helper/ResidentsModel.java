@@ -63,6 +63,32 @@ public class ResidentsModel {
 
     }
 
+    public void getCurrentResidentImage(Context context){
+
+            Resident resident = ResidentsModel.get().getCurrentResident();
+
+            String url = resident.getPhoto();
+            try {
+                if (!FileHelper.checkPhotoCache(context,url, "/resident_" + resident.getID(), FileHelper.RESIDENT_CACHE)) {
+                    byte[] imageByte = ImageHelper.scaleFromHttp(url, 100, 100);
+                    resident.setPhotoByte(imageByte);
+                    Log.d(TAG, "GetResidentImageFromHttpSuccess");
+                }
+//                    else{
+//                        String filePath = context.getFilesDir() + "/resident_" + resident.getID() + ".jpg";
+//                        byte[] imageByte = ImageHelper.scale(filePath, 100, 100, 100);
+//                        resident.setPhotoByte(imageByte);
+//                        //Log.d(TAG, "GetResidentImageFromCacheSuccess");
+//                    }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+    }
+
     public void setCurrentResidentIndex(Resident resident) {
         currentResidentIndex = residents.indexOf(resident);
         PreferencesManager.setCurrentResidentIndex(currentResidentIndex);
