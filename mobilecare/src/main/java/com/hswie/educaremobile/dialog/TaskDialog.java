@@ -109,7 +109,7 @@ public class TaskDialog extends DialogFragment {
                 new setIsDone(getContext()).execute(params);
 
                 onReturnToOverview();
-                dismiss();
+                //dismiss();
             }
         });
 
@@ -157,7 +157,7 @@ public class TaskDialog extends DialogFragment {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
-            Toast.makeText(getContext(), getString(R.string.done), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -166,7 +166,7 @@ public class TaskDialog extends DialogFragment {
                 dialog.dismiss();
             }
 
-            Toast.makeText(getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.done), Toast.LENGTH_LONG).show();
             onReturnToOverview();
             dismiss();
 
