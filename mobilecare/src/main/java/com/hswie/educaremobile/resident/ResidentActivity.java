@@ -44,7 +44,7 @@ public class ResidentActivity extends AppCompatActivity
     private AddFamilyDialog addFamilyDialog;
     private Toolbar toolbar;
 
-    public static int currentPage;
+    public int currentPage;
 
     private static boolean isFamily;
 
