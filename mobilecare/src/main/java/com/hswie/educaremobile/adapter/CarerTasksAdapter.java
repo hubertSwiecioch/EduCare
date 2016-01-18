@@ -130,8 +130,10 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
             if (CarerModel.get().getCurrentCarer().getCarerTasks() != null) {
                 for (CarerTask carerTask : CarerModel.get().getCurrentCarer().getCarerTasks()) {
 
-                    if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
+                    if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()) &&
+                        carerTask.getTargetCarerID().equals(CarerModel.get().getCurrentCarer().getID())) {
                         residentTasks.add(carerTask);
+                    }
 
                     Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
                     Log.d(TAG, "getCurrentResident: " + ResidentsModel.get().getCurrentResident().getID());
@@ -142,8 +144,9 @@ public class CarerTasksAdapter extends RecyclerView.Adapter<CarerTasksAdapter.Vi
             if (ResidentsModel.get().getCurrentResident().getCarerTasks() != null) {
                 for (CarerTask carerTask : ResidentsModel.get().getCurrentResident().getCarerTasks()) {
 
-                    if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID()))
+                    if (carerTask.getTargetResidentID().equals(ResidentsModel.get().getCurrentResident().getID())) {
                         residentTasks.add(carerTask);
+                    }
 
                     Log.d(TAG, "getTargetResidentID: " + carerTask.getTargetResidentID());
                     Log.d(TAG, "getCurrentResident: " + ResidentsModel.get().getCurrentResident().getID());
