@@ -8,7 +8,7 @@
     <string name="prompt_last_name">Nazwisko</string>
     <string name="action_sign_in">Zaloguj</string>
     <string name="action_register_carer">Rejestruj Opiekuna</string>
-    <string name="action_add_resident">Dodaj pacjenta</string>
+    <string name="action_add_resident">Dodaj rezydenta</string>
     <string name="action_sign_in_short">Zaloguj</string>
     <string name="error_invalid_email">Ten adres e-mail jest nieprawidłowy</string>
     <string name="error_invalid_password">To hasło jest za krótkie</string>
@@ -25,7 +25,7 @@
     <string name="messages_tab">Wiadomości</string>
     <string name="field_is_required">To pole jest wymagane</string>
     <string name="register_successful">Zarejstrowano nowego opiekuna</string>
-    <string name="register_resident_successful">Dodano nowego pacjenta</string>
+    <string name="register_resident_successful">Dodano nowego rezydenta</string>
     <string name="send_message_successful">Wysłano wiadomość</string>
     <string name="register_error">Rejestracja nie powiodła się</string>
     <string name="adding_error">Dodawanie nie powiodło się</string>
@@ -37,7 +37,7 @@
     <string name="no_resident_selected">Nie wybrano rezydenta</string>
 
 
-    <string name="title_activity_add_resident">Dodaj Pacjenta</string>
+    <string name="title_activity_add_resident">Dodaj rezydenta</string>
     <string name="title_activity_carer_register">Rejestruj Opiekuna</string>
     <string name="prompt_dat_of_adoption">Data przyjęcia</string>
     <string name="prompt_birth_date">Data urodzin</string>
@@ -52,13 +52,13 @@
     <string name="prompt_carer_fullname">Nazwa</string>
     <string name="prompt_carer_phonenumber">Numer telefonu</string>
 
-    <string name="title_activity_resident">Dane pacjenta</string>
+    <string name="title_activity_resident">Dane rezydenta</string>
     <string name="label_resident_name">Imię i Nazwisko</string>
     <string name="label_resident_address">Adres</string>
     <string name="label_resident_tasks">Zadania</string>
     <string name="label_resident_no_tasks">Brak zadań</string>
 
-    <string name="drawer_label_overview">Dane pacjenta</string>
+    <string name="drawer_label_overview">Dane rezydenta</string>
     <string name="drawer_label_medicines">Przepisane leki</string>
     <string name="drawer_label_family">Rodzina</string>
 
@@ -72,11 +72,11 @@
     <string name="prompt_task_description">Opis</string>
     <string name="prompt_task_date">Date</string>
     <string name="prompt_task_carer">Opiekun</string>
-    <string name="prompt_task_resident">Pacjent</string>
+    <string name="prompt_task_resident">Rezydent</string>
     <string name="title_add_task">NOWE ZADANIE</string>
 
     <string name="carer">Opiekun</string>
-    <string name="resident">Pacjent</string>
+    <string name="resident">Rezydent</string>
 
     <string name="from">Od</string>
     <string name="message_empty">Lista wiadomości jest pusta</string>
