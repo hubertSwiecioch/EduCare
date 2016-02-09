@@ -70,7 +70,7 @@
 
     <string name="prompt_task_title">Tytuł</string>
     <string name="prompt_task_description">Opis</string>
-    <string name="prompt_task_date">Date</string>
+    <string name="prompt_task_date">Data</string>
     <string name="prompt_task_carer">Opiekun</string>
     <string name="prompt_task_resident">Rezydent</string>
     <string name="title_add_task">NOWE ZADANIE</string>

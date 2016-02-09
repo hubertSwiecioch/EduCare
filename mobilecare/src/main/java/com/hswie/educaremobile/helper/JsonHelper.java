@@ -123,7 +123,7 @@ public class JsonHelper {
                 Log.d(TAG, "POST");
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(loginUrl);
-                httpPost.setEntity(new UrlEncodedFormEntity(params));
+                httpPost.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
                 Log.d(TAG,"Params: " + new UrlEncodedFormEntity(params));
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
@@ -151,7 +151,7 @@ public class JsonHelper {
 
         try {
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(is, "iso-8859-1"),8);
+                    new InputStreamReader(is, "utf-8"),8);
             StringBuilder sb = new StringBuilder();
             String  line = null;
 
